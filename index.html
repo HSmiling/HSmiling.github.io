@@ -173,19 +173,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
+        
       
 
       
@@ -235,92 +223,7 @@
         <h3 id="基础环境搭建-笔记"><a href="#基础环境搭建-笔记" class="headerlink" title="基础环境搭建-笔记"></a>基础环境搭建-笔记</h3><p>[TOC]</p>
 <h4 id="1-基本环境说明"><a href="#1-基本环境说明" class="headerlink" title="1 基本环境说明"></a>1 基本环境说明</h4><p>虚拟机环境：vmware15+ubuntus18</p>
 <p>nginx1.14.0+php7.2.17-0+php7.2-fpm</p>
-<h4 id="2-php-nginx环境搭建"><a href="#2-php-nginx环境搭建" class="headerlink" title="2 php+nginx环境搭建"></a>2 php+nginx环境搭建</h4><p>参考博客：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/silentdoer/p/12864292.html">Ubuntu 18.04上nginx+php环境搭建 - Silentdoer - 博客园 (cnblogs.com)</a></p>
-<h5 id="2-1-安装指令"><a href="#2-1-安装指令" class="headerlink" title="2.1 安装指令"></a>2.1 安装指令</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install php7.2</span><br><span class="line">sudo apt-get install php7.2-fpm </span><br><span class="line">sudo apt remove apache2*</span><br><span class="line">sudo apt autoremove</span><br><span class="line">sudo apt-get install nginx</span><br><span class="line"></span><br><span class="line">#必要依赖安装</span><br><span class="line">sudo apt-get install nginx</span><br><span class="line">sudo apt-get install php-json</span><br><span class="line">sudo apt-get install php-curl</span><br><span class="line">sudo apt-get install php7.2-mysql</span><br><span class="line">sudo apt-get install php7.2-cgi</span><br></pre></td></tr></table></figure>
-
-<p>安装完毕后，访问127.0.0.1，出现Apache主页。</p>
-<p>原因：由于nginx中Server根目录与php中一致，php自动安装时apache2在该目录下自动写index.html静态文件，故显示apache主页</p>
-<h5 id="2-2-php-frm配置"><a href="#2-2-php-frm配置" class="headerlink" title="2.2 php-frm配置"></a>2.2 php-frm配置</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gedit /etc/php/7.2/fpm/php.ini</span><br></pre></td></tr></table></figure>
-
-<p>修改参数如下：</p>
-<table>
-<thead>
-<tr>
-<th>行数</th>
-<th>原参数</th>
-<th>修改参数</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>778</td>
-<td>cgi.fix_fathinfo=1</td>
-<td>cgi.fix_fathinfo=1</td>
-</tr>
-</tbody></table>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gedit /etc/php/7.2/fpm/pool.d/www.conf</span><br></pre></td></tr></table></figure>
-
-<p>修改参数如下：</p>
-<table>
-<thead>
-<tr>
-<th>行数</th>
-<th>修改为</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>36</td>
-<td>listen = 127.0.0.1:9000</td>
-</tr>
-</tbody></table>
-<h5 id="2-3-创建测试程序"><a href="#2-3-创建测试程序" class="headerlink" title="2.3 创建测试程序"></a>2.3 创建测试程序</h5><p>创建index.php和info.php，用于后续测试，在terimal输入指令如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gedit /var/www/html/index.php</span><br></pre></td></tr></table></figure>
-
-<p>在index.php文件中添加：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;h1&gt;</span><br><span class="line">     &lt;span&gt; hack_tool test &lt;/span&gt;</span><br><span class="line">&lt;/h1&gt;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gedit /var/www/html/info.php</span><br></pre></td></tr></table></figure>
-
-<p>在info.php中添加：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> phpinfo(); <span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h5 id="2-4-nginx配置"><a href="#2-4-nginx配置" class="headerlink" title="2.4 nginx配置"></a>2.4 nginx配置</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gedit /etc/nginx/sites-available/default</span><br></pre></td></tr></table></figure>
-
-<p>按照博客指示进行相应的替换</p>
-<h5 id="2-5-重启服务"><a href="#2-5-重启服务" class="headerlink" title="2.5 重启服务"></a>2.5 重启服务</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo service php7.2-fpm restart</span><br><span class="line">sudo service nginx restart </span><br></pre></td></tr></table></figure>
-
-<p>访问<a target="_blank" rel="noopener" href="http://127.0.0.1和/">http://127.0.0.1和</a> <a target="_blank" rel="noopener" href="http://127.0.0.1/info.php%EF%BC%8C%E6%95%88%E6%9E%9C%E5%A6%82%E4%B8%8B%EF%BC%9A">http://127.0.0.1/info.php，效果如下：</a></p>
-<p><img src="C:\Users\Rita0914\Desktop\实训\截图\php成功1.PNG" alt="php成功1"></p>
-<p><img src="C:\Users\Rita0914\Desktop\实训\截图\php成功2.PNG" alt="php成功2"></p>
-<h5 id="2-6-问题的解决与思考"><a href="#2-6-问题的解决与思考" class="headerlink" title="2.6 问题的解决与思考"></a>2.6 问题的解决与思考</h5><ul>
-<li><p>Problem1：在2.3创建测试程序过程中，出现权限不足，无法创建该文件的情况</p>
-<p><strong>解决方法</strong></p>
-<p>参考博客：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44520769/article/details/100826360">(2条消息) # 如何解决“touch: cannot touch ‘info.php’: Permission denied”_weixin_44520769的博客-CSDN博客</a></p>
-<p>在命令行键入以下命令，为www文件夹进行授权：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chmod -R 777/var/www</span><br></pre></td></tr></table></figure>
-
-<p><strong>自我思考</strong></p>
-<p>当遇到权限限制时，可使用chmod修改权限，其中-R表示对该目录下所用文件及其子目录进行相同权限变更，777代表所用用户拥有最高权限</p>
-</li>
-<li><p>Problem2：重启服务过程中，nginx 启动报错：Job for nginx.service failed because the control process exited with error code</p>
-<p><strong>解决方法</strong></p>
-<p>参考博客：<a target="_blank" rel="noopener" href="https://blog.csdn.net/a1007720052/article/details/82255226">https://blog.csdn.net/a1007720052/article/details/82255226</a></p>
-<p>在使用该博客的第二个解决方法后，发现重装nginx可以使nginx正常重启，但是需要重新按照2.4配置nginx.在重新配置时，发现重启报错的主要原因在于nginx配置时少删了“#”符号，导致重启出现错误，其中重启时报错如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Job for nginx.service failed because the control process exited with error code.</span><br><span class="line">See &quot;systemctl status nginx.service&quot; and &quot;journalctl -xe&quot; for details.</span><br></pre></td></tr></table></figure>
-
-<p><strong>自我思考</strong></p>
-<p>在配置报错查找相关缘由时，需对症下药，牢牢抓住报错的反馈信息进行查阅，这样有利于问题的解决</p>
-</li>
-</ul>
-<h4 id="3-xshell连接linux系统"><a href="#3-xshell连接linux系统" class="headerlink" title="3 xshell连接linux系统"></a>3 xshell连接linux系统</h4><p>参考博客：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/kingsonfu/p/10573853.html">使用xshell连接ubuntu - 傻不拉几猫 - 博客园 (cnblogs.com)</a></p>
-<h4 id="4-蚁剑安装"><a href="#4-蚁剑安装" class="headerlink" title="4 蚁剑安装"></a>4 蚁剑安装</h4><p>参考博客：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_34965596/article/details/104076019?utm_medium=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-1.control&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-1.control">(2条消息) 【tool】中国蚁剑（AntSword）下载、安装、使用教程_JohelLiang的博客-CSDN博客</a></p>
-<h4 id="5-冰蝎安装"><a href="#5-冰蝎安装" class="headerlink" title="5 冰蝎安装"></a>5 冰蝎安装</h4><p>参考博客：<a target="_blank" rel="noopener" href="https://blog.csdn.net/Aaron_Miller/article/details/106221602?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_utm_term~default-0.control&spm=1001.2101.3001.4242">(2条消息) WebShell –冰蝎_Kevin’s Blog-CSDN博客</a></p>
-<h5 id="5-1-问题的解决与思考"><a href="#5-1-问题的解决与思考" class="headerlink" title="5.1 问题的解决与思考"></a>5.1 问题的解决与思考</h5><ul>
-<li>Problem1：在双击Behinder.jar运行冰蝎时，发现无法打开，即电脑无法打开jar文件</li>
-</ul>
-<p><strong>解决方法</strong></p>
-<p>参考博客：<a target="_blank" rel="noopener" href="https://blog.csdn.net/SoarFly0807/article/details/77847642?ops_request_misc=%7B%22request_id%22:%22162924805916780269851824%22,%22scm%22:%2220140713.130102334..%22%7D&request_id=162924805916780269851824&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-2-77847642.pc_search_result_control_group&utm_term=jar%E6%96%87%E4%BB%B6%E6%89%93%E4%B8%8D%E5%BC%80&spm=1018.2226.3001.4187">(2条消息) 电脑如果打不开jar文件的解决办法_SoarFly0807的博客-CSDN博客_打不开jar文件</a></p>
-<p>重新下载安装最新版Java虚拟机，解决相关问题。猜测原因可能是之前本机的java环境存在一定问题，java进行更新后解决</p>
-
+        
       
 
       

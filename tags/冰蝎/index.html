@@ -6,22 +6,15 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>HSmiling&#39;s Blog</title>
+  <title>Tag: 冰蝎 | HSmiling&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="基础环境搭建-笔记[TOC] 1 基本环境说明虚拟机环境：vmware15+ubuntus18 nginx1.14.0+php7.2.17-0+php7.2-fpm">
-<meta property="og:type" content="article">
+  <meta property="og:type" content="website">
 <meta property="og:title" content="HSmiling&#39;s Blog">
-<meta property="og:url" content="http://example.com/2021/08/18/01%20%E5%9F%BA%E7%A1%80%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:url" content="http://example.com/tags/%E5%86%B0%E8%9D%8E/index.html">
 <meta property="og:site_name" content="HSmiling&#39;s Blog">
-<meta property="og:description" content="基础环境搭建-笔记[TOC] 1 基本环境说明虚拟机环境：vmware15+ubuntus18 nginx1.14.0+php7.2.17-0+php7.2-fpm">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="c:/Users/Rita0914/Desktop/实训/截图/php成功1.PNG">
-<meta property="og:image" content="c:/Users/Rita0914/Desktop/实训/截图/php成功2.PNG">
-<meta property="article:published_time" content="2021-08-18T02:11:31.962Z">
-<meta property="article:modified_time" content="2021-11-09T07:20:26.817Z">
 <meta property="article:author" content="HSmiling">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="c:/Users/Rita0914/Desktop/实训/截图/php成功1.PNG">
   
     <link rel="alternative" href="/atom.xml" title="HSmiling&#39;s Blog" type="application/atom+xml">
   
@@ -63,6 +56,8 @@
 				<li><a href="/">主页</a></li>
 	        
 				<li><a href="/tags/%E9%9A%8F%E7%AC%94/">随笔</a></li>
+	        
+				<li><a href="/archives/index.html">归档</a></li>
 	        
 			</ul>
 		</nav>
@@ -120,6 +115,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -137,12 +134,14 @@
 			</nav>
 
 			<nav class="header-menu js-header-menu">
-				<ul style="width: 50%">
+				<ul style="width: 70%">
 				
 				
-					<li style="width: 50%"><a href="/">主页</a></li>
+					<li style="width: 33.333333333333336%"><a href="/">主页</a></li>
 		        
-					<li style="width: 50%"><a href="/tags/%E9%9A%8F%E7%AC%94/">随笔</a></li>
+					<li style="width: 33.333333333333336%"><a href="/tags/%E9%9A%8F%E7%AC%94/">随笔</a></li>
+		        
+					<li style="width: 33.333333333333336%"><a href="/archives/index.html">归档</a></li>
 		        
 				</ul>
 			</nav>
@@ -157,247 +156,60 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-01 基础环境搭建-笔记" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
+            
+  
+  
     
-    <div class="article-entry" itemprop="articleBody">
+    
       
-        <h3 id="基础环境搭建-笔记"><a href="#基础环境搭建-笔记" class="headerlink" title="基础环境搭建-笔记"></a>基础环境搭建-笔记</h3><p>[TOC]</p>
-<h4 id="1-基本环境说明"><a href="#1-基本环境说明" class="headerlink" title="1 基本环境说明"></a>1 基本环境说明</h4><p>虚拟机环境：vmware15+ubuntus18</p>
-<p>nginx1.14.0+php7.2.17-0+php7.2-fpm</p>
-<span id="more"></span>
-
-<h4 id="2-php-nginx环境搭建"><a href="#2-php-nginx环境搭建" class="headerlink" title="2 php+nginx环境搭建"></a>2 php+nginx环境搭建</h4><p>参考博客：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/silentdoer/p/12864292.html">Ubuntu 18.04上nginx+php环境搭建 - Silentdoer - 博客园 (cnblogs.com)</a></p>
-<h5 id="2-1-安装指令"><a href="#2-1-安装指令" class="headerlink" title="2.1 安装指令"></a>2.1 安装指令</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install php7.2</span><br><span class="line">sudo apt-get install php7.2-fpm </span><br><span class="line">sudo apt remove apache2*</span><br><span class="line">sudo apt autoremove</span><br><span class="line">sudo apt-get install nginx</span><br><span class="line"></span><br><span class="line">#必要依赖安装</span><br><span class="line">sudo apt-get install nginx</span><br><span class="line">sudo apt-get install php-json</span><br><span class="line">sudo apt-get install php-curl</span><br><span class="line">sudo apt-get install php7.2-mysql</span><br><span class="line">sudo apt-get install php7.2-cgi</span><br></pre></td></tr></table></figure>
-
-<p>安装完毕后，访问127.0.0.1，出现Apache主页。</p>
-<p>原因：由于nginx中Server根目录与php中一致，php自动安装时apache2在该目录下自动写index.html静态文件，故显示apache主页</p>
-<h5 id="2-2-php-frm配置"><a href="#2-2-php-frm配置" class="headerlink" title="2.2 php-frm配置"></a>2.2 php-frm配置</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gedit /etc/php/7.2/fpm/php.ini</span><br></pre></td></tr></table></figure>
-
-<p>修改参数如下：</p>
-<table>
-<thead>
-<tr>
-<th>行数</th>
-<th>原参数</th>
-<th>修改参数</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>778</td>
-<td>cgi.fix_fathinfo=1</td>
-<td>cgi.fix_fathinfo=1</td>
-</tr>
-</tbody></table>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gedit /etc/php/7.2/fpm/pool.d/www.conf</span><br></pre></td></tr></table></figure>
-
-<p>修改参数如下：</p>
-<table>
-<thead>
-<tr>
-<th>行数</th>
-<th>修改为</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>36</td>
-<td>listen = 127.0.0.1:9000</td>
-</tr>
-</tbody></table>
-<h5 id="2-3-创建测试程序"><a href="#2-3-创建测试程序" class="headerlink" title="2.3 创建测试程序"></a>2.3 创建测试程序</h5><p>创建index.php和info.php，用于后续测试，在terimal输入指令如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gedit /var/www/html/index.php</span><br></pre></td></tr></table></figure>
-
-<p>在index.php文件中添加：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;h1&gt;</span><br><span class="line">     &lt;span&gt; hack_tool test &lt;/span&gt;</span><br><span class="line">&lt;/h1&gt;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gedit /var/www/html/info.php</span><br></pre></td></tr></table></figure>
-
-<p>在info.php中添加：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> phpinfo(); <span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h5 id="2-4-nginx配置"><a href="#2-4-nginx配置" class="headerlink" title="2.4 nginx配置"></a>2.4 nginx配置</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gedit /etc/nginx/sites-available/default</span><br></pre></td></tr></table></figure>
-
-<p>按照博客指示进行相应的替换</p>
-<h5 id="2-5-重启服务"><a href="#2-5-重启服务" class="headerlink" title="2.5 重启服务"></a>2.5 重启服务</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo service php7.2-fpm restart</span><br><span class="line">sudo service nginx restart </span><br></pre></td></tr></table></figure>
-
-<p>访问<a target="_blank" rel="noopener" href="http://127.0.0.1和/">http://127.0.0.1和</a> <a target="_blank" rel="noopener" href="http://127.0.0.1/info.php%EF%BC%8C%E6%95%88%E6%9E%9C%E5%A6%82%E4%B8%8B%EF%BC%9A">http://127.0.0.1/info.php，效果如下：</a></p>
-<p><img src="C:\Users\Rita0914\Desktop\实训\截图\php成功1.PNG" alt="php成功1"></p>
-<p><img src="C:\Users\Rita0914\Desktop\实训\截图\php成功2.PNG" alt="php成功2"></p>
-<h5 id="2-6-问题的解决与思考"><a href="#2-6-问题的解决与思考" class="headerlink" title="2.6 问题的解决与思考"></a>2.6 问题的解决与思考</h5><ul>
-<li><p>Problem1：在2.3创建测试程序过程中，出现权限不足，无法创建该文件的情况</p>
-<p><strong>解决方法</strong></p>
-<p>参考博客：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44520769/article/details/100826360">(2条消息) # 如何解决“touch: cannot touch ‘info.php’: Permission denied”_weixin_44520769的博客-CSDN博客</a></p>
-<p>在命令行键入以下命令，为www文件夹进行授权：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chmod -R 777/var/www</span><br></pre></td></tr></table></figure>
-
-<p><strong>自我思考</strong></p>
-<p>当遇到权限限制时，可使用chmod修改权限，其中-R表示对该目录下所用文件及其子目录进行相同权限变更，777代表所用用户拥有最高权限</p>
-</li>
-<li><p>Problem2：重启服务过程中，nginx 启动报错：Job for nginx.service failed because the control process exited with error code</p>
-<p><strong>解决方法</strong></p>
-<p>参考博客：<a target="_blank" rel="noopener" href="https://blog.csdn.net/a1007720052/article/details/82255226">https://blog.csdn.net/a1007720052/article/details/82255226</a></p>
-<p>在使用该博客的第二个解决方法后，发现重装nginx可以使nginx正常重启，但是需要重新按照2.4配置nginx.在重新配置时，发现重启报错的主要原因在于nginx配置时少删了“#”符号，导致重启出现错误，其中重启时报错如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Job for nginx.service failed because the control process exited with error code.</span><br><span class="line">See &quot;systemctl status nginx.service&quot; and &quot;journalctl -xe&quot; for details.</span><br></pre></td></tr></table></figure>
-
-<p><strong>自我思考</strong></p>
-<p>在配置报错查找相关缘由时，需对症下药，牢牢抓住报错的反馈信息进行查阅，这样有利于问题的解决</p>
-</li>
-</ul>
-<h4 id="3-xshell连接linux系统"><a href="#3-xshell连接linux系统" class="headerlink" title="3 xshell连接linux系统"></a>3 xshell连接linux系统</h4><p>参考博客：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/kingsonfu/p/10573853.html">使用xshell连接ubuntu - 傻不拉几猫 - 博客园 (cnblogs.com)</a></p>
-<h4 id="4-蚁剑安装"><a href="#4-蚁剑安装" class="headerlink" title="4 蚁剑安装"></a>4 蚁剑安装</h4><p>参考博客：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_34965596/article/details/104076019?utm_medium=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-1.control&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-1.control">(2条消息) 【tool】中国蚁剑（AntSword）下载、安装、使用教程_JohelLiang的博客-CSDN博客</a></p>
-<h4 id="5-冰蝎安装"><a href="#5-冰蝎安装" class="headerlink" title="5 冰蝎安装"></a>5 冰蝎安装</h4><p>参考博客：<a target="_blank" rel="noopener" href="https://blog.csdn.net/Aaron_Miller/article/details/106221602?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_utm_term~default-0.control&spm=1001.2101.3001.4242">(2条消息) WebShell –冰蝎_Kevin’s Blog-CSDN博客</a></p>
-<h5 id="5-1-问题的解决与思考"><a href="#5-1-问题的解决与思考" class="headerlink" title="5.1 问题的解决与思考"></a>5.1 问题的解决与思考</h5><ul>
-<li>Problem1：在双击Behinder.jar运行冰蝎时，发现无法打开，即电脑无法打开jar文件</li>
-</ul>
-<p><strong>解决方法</strong></p>
-<p>参考博客：<a target="_blank" rel="noopener" href="https://blog.csdn.net/SoarFly0807/article/details/77847642?ops_request_misc=%7B%22request_id%22:%22162924805916780269851824%22,%22scm%22:%2220140713.130102334..%22%7D&request_id=162924805916780269851824&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-2-77847642.pc_search_result_control_group&utm_term=jar%E6%96%87%E4%BB%B6%E6%89%93%E4%B8%8D%E5%BC%80&spm=1018.2226.3001.4187">(2条消息) 电脑如果打不开jar文件的解决办法_SoarFly0807的博客-CSDN博客_打不开jar文件</a></p>
-<p>重新下载安装最新版Java虚拟机，解决相关问题。猜测原因可能是之前本机的java环境存在一定问题，java进行更新后解决</p>
-
       
-
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2021" class="archive-year">2021</a>
         </div>
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2021/08/23/01%20%E5%9F%BA%E7%A1%80%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-%E7%AC%94%E8%AE%B0/" class="archive-article-date">
+  	<time datetime="2021-08-22T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-23</time>
+</a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2021/08/23/01%20%E5%9F%BA%E7%A1%80%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-%E7%AC%94%E8%AE%B0/">冰蝎01-基础环境搭建</a>
+    </h1>
+  
 
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/08/18/01%20%E5%9F%BA%E7%A1%80%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-%E7%AC%94%E8%AE%B0/" alt="微信分享二维码">
-    </div>
-</div>
+        <div class="article-info info-on-right">
+          
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">冰蝎</a>
+        		</li>
+      		
+		</ul>
+	</div>
 
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+          
+
+        </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2021/11/09/hello-world/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Hello World
-        
-      </div>
-    </a>
   
   
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-        <div class="toc-container tooltip-left">
-            <i class="icon-font icon-category"></i>
-            <div class="tooltip tooltip-east">
-                <span class="tooltip-item">
-                </span>
-                <span class="tooltip-content">
-                    <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-%E7%AC%94%E8%AE%B0"><span class="toc-number">1.</span> <span class="toc-text">基础环境搭建-笔记</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%9F%BA%E6%9C%AC%E7%8E%AF%E5%A2%83%E8%AF%B4%E6%98%8E"><span class="toc-number">1.1.</span> <span class="toc-text">1 基本环境说明</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-php-nginx%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="toc-number">1.2.</span> <span class="toc-text">2 php+nginx环境搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#2-1-%E5%AE%89%E8%A3%85%E6%8C%87%E4%BB%A4"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 安装指令</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-2-php-frm%E9%85%8D%E7%BD%AE"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2 php-frm配置</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-3-%E5%88%9B%E5%BB%BA%E6%B5%8B%E8%AF%95%E7%A8%8B%E5%BA%8F"><span class="toc-number">1.2.3.</span> <span class="toc-text">2.3 创建测试程序</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-4-nginx%E9%85%8D%E7%BD%AE"><span class="toc-number">1.2.4.</span> <span class="toc-text">2.4 nginx配置</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-5-%E9%87%8D%E5%90%AF%E6%9C%8D%E5%8A%A1"><span class="toc-number">1.2.5.</span> <span class="toc-text">2.5 重启服务</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-6-%E9%97%AE%E9%A2%98%E7%9A%84%E8%A7%A3%E5%86%B3%E4%B8%8E%E6%80%9D%E8%80%83"><span class="toc-number">1.2.6.</span> <span class="toc-text">2.6 问题的解决与思考</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-xshell%E8%BF%9E%E6%8E%A5linux%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.3.</span> <span class="toc-text">3 xshell连接linux系统</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E8%9A%81%E5%89%91%E5%AE%89%E8%A3%85"><span class="toc-number">1.4.</span> <span class="toc-text">4 蚁剑安装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-%E5%86%B0%E8%9D%8E%E5%AE%89%E8%A3%85"><span class="toc-number">1.5.</span> <span class="toc-text">5 冰蝎安装</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#5-1-%E9%97%AE%E9%A2%98%E7%9A%84%E8%A7%A3%E5%86%B3%E4%B8%8E%E6%80%9D%E8%80%83"><span class="toc-number">1.5.1.</span> <span class="toc-text">5.1 问题的解决与思考</span></a></li></ol></li></ol></li></ol>
-                    </div>
-                </span>
-            </div>
-        </div>
-        
-    </div>
-</aside>
-
-
-
-  
-  
+    </div></section>
   
 
-  
-
-  
-
-  
+    
 
 
           </div>
@@ -420,9 +232,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
-		isTag: false,
+		isTag: true,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
@@ -488,6 +300,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">冰蝎</a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>

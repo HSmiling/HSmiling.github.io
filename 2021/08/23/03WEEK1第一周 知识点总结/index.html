@@ -6,15 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Archives | HSmiling&#39;s Blog</title>
+  <title>HSmiling&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
+  <meta name="description" content="WEEK1| 知识点总结本周进行环境搭建及记冰蝎：基本连接及Wireshark抓包》简单实验，现将本周涉及到的相关知识点记录如下： [TOC] 1 php相关知识1.1 openssl官网链接：PHP: OpenSSL - Manual openssl是PHP中的一个加密扩展包，封装了许多用于加密解密相关的PHP函数 通过对内容进行私钥加密和公钥解密的不同的加密方式实现对php数据安全的加密扩展">
+<meta property="og:type" content="article">
 <meta property="og:title" content="HSmiling&#39;s Blog">
-<meta property="og:url" content="http://example.com/archives/index.html">
+<meta property="og:url" content="http://example.com/2021/08/23/03WEEK1%E7%AC%AC%E4%B8%80%E5%91%A8%20%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/index.html">
 <meta property="og:site_name" content="HSmiling&#39;s Blog">
+<meta property="og:description" content="WEEK1| 知识点总结本周进行环境搭建及记冰蝎：基本连接及Wireshark抓包》简单实验，现将本周涉及到的相关知识点记录如下： [TOC] 1 php相关知识1.1 openssl官网链接：PHP: OpenSSL - Manual openssl是PHP中的一个加密扩展包，封装了许多用于加密解密相关的PHP函数 通过对内容进行私钥加密和公钥解密的不同的加密方式实现对php数据安全的加密扩展">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://111.30.35.172:9443/GR2021/hack_tool/src/branch/master/%e6%9d%8e%e6%b3%93%e4%b8%80/image/image-20210823113132376.png">
+<meta property="og:image" content="c:/Users/Rita0914/AppData/Roaming/Typora/typora-user-images/image-20210823113101219.png">
+<meta property="article:published_time" content="2021-08-23T11:21:16.806Z">
+<meta property="article:modified_time" content="2021-08-23T09:14:17.007Z">
 <meta property="article:author" content="HSmiling">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://111.30.35.172:9443/GR2021/hack_tool/src/branch/master/%e6%9d%8e%e6%b3%93%e4%b8%80/image/image-20210823113132376.png">
   
     <link rel="alternative" href="/atom.xml" title="HSmiling&#39;s Blog" type="application/atom+xml">
   
@@ -150,217 +157,207 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-03WEEK1第一周 知识点总结" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="WEEK1-知识点总结"><a href="#WEEK1-知识点总结" class="headerlink" title="WEEK1| 知识点总结"></a>WEEK1| 知识点总结</h3><p>本周进行环境搭建及记冰蝎：基本连接及Wireshark抓包》简单实验，现将本周涉及到的相关知识点记录如下：</p>
+<p>[TOC]</p>
+<h4 id="1-php相关知识"><a href="#1-php相关知识" class="headerlink" title="1 php相关知识"></a>1 php相关知识</h4><h5 id="1-1-openssl"><a href="#1-1-openssl" class="headerlink" title="1.1 openssl"></a>1.1 openssl</h5><p>官网链接：<a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/book.openssl.php">PHP: OpenSSL - Manual</a></p>
+<p>openssl是PHP中的一个加密扩展包，封装了许多用于加密解密相关的PHP函数</p>
+<p>通过对内容进行私钥加密和公钥解密的不同的加密方式实现对php数据安全的加密扩展</p>
+<h5 id="1-2-php语法知识"><a href="#1-2-php语法知识" class="headerlink" title="1.2 php语法知识"></a>1.2 php语法知识</h5><ul>
+<li><p><strong>error_reporting()</strong></p>
+<p>该函数可用于规定不同的错误级别报告</p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">error_reporting(0);  //关闭错误报告</span><br><span class="line">error_reporting(E_ERROR | E_WARNING | E_PARSE); //报告runtime错误</span><br><span class="line">error_reporting(E_ALL); //报告所有错误</span><br><span class="line">error_reporting(E_ALL &amp; ~E_NOTICE);  //报告 E_NOTICE</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><strong>extension_loaded()</strong></p>
+<p>该函数用于检查一个扩展是否成功加载</p>
+</li>
+<li><p><strong>openssl_decrypt()</strong></p>
+<p>官网具体解释：<a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/function.openssl-decrypt.php">PHP: openssl_decrypt - Manual</a></p>
+<p>该函数用于解密属于，采用原始或base64编码的字符串，并使用给定的方法和密钥对其进行解密。</p>
+<p>示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl_decrypt($post, &quot;AES128&quot;, $key);</span><br></pre></td></tr></table></figure>
+
+<p>该函数的作用为将post进行AES解密，其中密钥为key</p>
+<p>通过对内容进行私钥加密和公钥解密的通过同的加密方式实现对php数据安全的加密扩展</p>
+</li>
+<li><p><strong>stristr</strong></p>
+<p>官方解答：<a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/function.stristr.php">PHP: stristr - Manual</a></p>
+<p>该函数可用于测试字符串的存在与否</p>
+</li>
+</ul>
+<h4 id="2-其他知识"><a href="#2-其他知识" class="headerlink" title="2 其他知识"></a>2 其他知识</h4><h5 id="2-1-chunked编码"><a href="#2-1-chunked编码" class="headerlink" title="2.1 chunked编码"></a>2.1 chunked编码</h5><ul>
+<li><p>分块编码（Transfer-Encoding：chunked）来源</p>
+<p>不依赖头部长度信息能够得到实体边界</p>
+</li>
+<li><p>分块编码</p>
+<p>分块传输编码（Chunked transfer encoding）是超文本传输协议（HTTP）中的一种数据传输机制，允许HTTP由网页服务器发送给客户端的数据可以分成多个部分。数据分解成一系列数据块，服务器可以发送数据而不需预先得知其发送内容大小。</p>
+<ul>
+<li>采用分块编码时，报文中实体改用一系列分块传输</li>
+<li>每个分块中含有十六进制长度值和数据，第一部分是该Chunk的长度和长度单位（一般不写），第二部分就是指定长度的内容</li>
+<li>最后一个分块长度值为0，对应分块数据无内容，表示实体结束</li>
+<li>Content-Encoding 和 Transfer-Encoding 二者经常会结合来用，即针对 Transfer-Encoding 的分块再进行 Content-Encoding压缩</li>
+</ul>
+</li>
+<li><p>实验运用</p>
+<p>本周的实验中，在分析解密响应报文时，遇到chunked编码问题。主要采取提取原始编码+16进制转换+uzip进行第一步的解码，还原成具有鲜明base64加密数据的数据样式。示例如下：</p>
+<p><img src="https://111.30.35.172:9443/GR2021/hack_tool/src/branch/master/%e6%9d%8e%e6%b3%93%e4%b8%80/image/image-20210823113132376.png" alt="image-20210823113132376"></p>
+<ol>
+<li><p>现将TCP流中数据以原始数据进行展示，找到0d0a0d0a，从后面进行数据的截取</p>
+<p><img src="C:\Users\Rita0914\AppData\Roaming\Typora\typora-user-images\image-20210823113101219.png" alt="image-20210823113101219"></p>
+</li>
+<li><p>在数据中，需要对乱码前面的355和最后的0进行删减，得到的数据如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1f8b0800000000000003159247b6ab4a02c016e401c98019f4a08022e774c1b3c226670a4c58fd7fbd031d49038833eb1e9691f53db9bb74b6ff853359b68db853054f3ef9ac2d3ff791712daf7905c512a4fa4d3587fa18fdf26933ead6c5549069375957fbf266715b3466803513d07c403dcb1d09423e5c16e53fc3182f64f60c9d9577bd8e4791657bfd41764b86de50ef47ab1e016ca68c6c772364e43e68af9790e9cf8b26f2f40d89313cf365959c174d4a2638d5449c3e030938e4bb5bf9fc82a0347bec0765de1c5da70e0dfd220647a669d1806b331ab11def8ceb7b9bc37f2d1e77c39e12647963a48632c994f6fa826e6e7c117988a4d788ca8c4f33b148d38fc94537ba696912d450daef8bf401bda85878ca80693c972eda17dcaced07bf298b50d2af614e791621aadaf7e8e16d748abfe365ef39649438f220cea289524e169ebec4279b21b34b571da31c648ab84cc3f49dae03f3eaa3ba3cdab728882b6afdb2151e07f519dae10f5cc897748df61fe32d250ac56b4a68be3071407bcead186585fc2908229d7369dda62ab382862f0f429feda71f4d95ccedeb1cd7d50a14b3fc14ea73323d524bb73cbbb6336f2d01515c934ef2b2b70359b249bfdbf6419f6b1f80c0899cd8958e9c34fcec60044f84d0ba6bd3ff27c247e412ecac58526682acea6eed610ecb379c65c5051c3b62b384e30a132272f825781c3d7ed8b116de497873c8053ad1bdc13fe6e0a2d3d53bc15a87afc7ad68ea17889fe6128073f21a057f56d599d96374751a9fb5e04bb7cd116fcb0527f97736c46e160ae4fd72a0d554492a61cd1bd4f2aad00a1e7672a0686dfae690d47ea810dc84f60837559636c0458c0dd8936200dea64db2d2e8f4ec6a2a6ffa47a94a79d27b8e0bbea5239beff6ba98358132296751c636c9a5b7f0d00dcdfd786f1c9a1ebc03280ee5169f7b68bef9cf71b03436ade13b462956a11d9e47ec5634918187f376ba2926bc53af0f4e492d5334fe3e44ca1f3e227ef3c950ef1d57117d34ca751e281f0da5168d87cfad275a2a87fafbe3bfba2caf3d0f6c8e41f86fc6827fdd43174dd3e5ac729e2de2d841a310179faeee8d977e5522ff402a2638dbe7901ceaf08cea4a507e33c9dc245ff8ff8f7679a84ee75a02dabba8a3eadf5132b4f73a3295e97fff01bf7668422c040000</span><br></pre></td></tr></table></figure></li>
+<li><p>将上述得到的数据放到相应工具中解码，按照16进制转换+uzip可完成第一步解码</p>
+</li>
+</ol>
+</li>
+</ul>
+<h5 id="2-3-http编码"><a href="#2-3-http编码" class="headerlink" title="2.3 http编码"></a>2.3 http编码</h5><p>http header的结尾是“0d0a0d0a”</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2021" class="archive-year">2021</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/11/09/hello-world/" class="archive-article-date">
-  	<time datetime="2021-11-09T02:48:00.165Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-09</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/11/09/hello-world/">Hello World</a>
-    </h1>
-  
+      
 
-        <div class="article-info info-on-right">
-          
-          
+      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/08/23/03WEEK1%E7%AC%AC%E4%B8%80%E5%91%A8%20%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/09/26/10%20%E5%93%A5%E6%96%AF%E6%8B%89v2.96%EF%BC%9A%E6%80%BB%E7%BB%93-JSP%E3%80%81PHP/" class="archive-article-date">
-  	<time datetime="2021-09-26T03:18:55.777Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-26</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/09/16/07%20%E5%93%A5%E6%96%AF%E6%8B%89v2.96%EF%BC%9Aphp_XOR_RAW%E7%89%B9%E5%BE%81%E5%88%86%E6%9E%90%E5%8F%8A%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0/" class="archive-article-date">
-  	<time datetime="2021-09-16T08:35:00.043Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-16</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
+<nav id="article-nav">
+  
+    <a href="/2021/08/24/04WEEK2%E5%86%B0%E8%9D%8E%EF%BC%9Ajsp%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90%E4%B9%8B%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA1/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/08/23/02WEEK1%E5%86%B0%E8%9D%8E%EF%BC%9A%E5%9F%BA%E6%9C%AC%E8%BF%9E%E6%8E%A5%E5%8F%8AWireshark%E6%8A%93%E5%8C%85/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title"></div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/09/09/06%E5%93%A5%E6%96%AF%E6%8B%89v2.96%EF%BC%9Aphp_XOR_BASE64%E7%9A%84%E8%BF%9E%E6%8E%A5%E4%B8%8E%E5%88%86%E6%9E%90/" class="archive-article-date">
-  	<time datetime="2021-09-09T02:47:41.607Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-09</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/08/27/05%E5%86%B0%E8%9D%8E%EF%BC%9Ajsp%E7%9B%B8%E5%85%B3%E7%89%B9%E5%BE%81%E5%88%86%E6%9E%90%E5%8F%8A%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0/" class="archive-article-date">
-  	<time datetime="2021-08-27T12:40:51.204Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-27</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
+        
+        
+    </div>
+</aside>
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/08/24/04WEEK2%E5%86%B0%E8%9D%8E%EF%BC%9Ajsp%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90%E4%B9%8B%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA1/" class="archive-article-date">
-  	<time datetime="2021-08-24T13:27:56.606Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-24</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/08/23/03WEEK1%E7%AC%AC%E4%B8%80%E5%91%A8%20%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/" class="archive-article-date">
-  	<time datetime="2021-08-23T11:21:16.806Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-23</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/08/23/02WEEK1%E5%86%B0%E8%9D%8E%EF%BC%9A%E5%9F%BA%E6%9C%AC%E8%BF%9E%E6%8E%A5%E5%8F%8AWireshark%E6%8A%93%E5%8C%85/" class="archive-article-date">
-  	<time datetime="2021-08-23T11:21:16.801Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-23</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/08/18/01%20%E5%9F%BA%E7%A1%80%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-%E7%AC%94%E8%AE%B0/" class="archive-article-date">
-  	<time datetime="2021-08-18T02:11:31.962Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-18</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -383,8 +380,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

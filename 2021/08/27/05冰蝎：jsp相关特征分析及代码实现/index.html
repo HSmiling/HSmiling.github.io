@@ -6,13 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Archives | HSmiling&#39;s Blog</title>
+  <title>HSmiling&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
+  <meta name="description" content="冰蝎：jsp相关特征分析及代码实现1 shellService.class阅读shellSerive.class是针对新建窗口的文件， 通过阅读该段代码，我将相关笔记记录如下： 1.1 ShellService方法该方法主要是获取输入端的url，type，key，自定义请求头的值。其中引用initHeader和mergeHeader函数，会在后面进行具体说明。  HashMap  1this.cu">
+<meta property="og:type" content="article">
 <meta property="og:title" content="HSmiling&#39;s Blog">
-<meta property="og:url" content="http://example.com/archives/index.html">
+<meta property="og:url" content="http://example.com/2021/08/27/05%E5%86%B0%E8%9D%8E%EF%BC%9Ajsp%E7%9B%B8%E5%85%B3%E7%89%B9%E5%BE%81%E5%88%86%E6%9E%90%E5%8F%8A%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0/index.html">
 <meta property="og:site_name" content="HSmiling&#39;s Blog">
+<meta property="og:description" content="冰蝎：jsp相关特征分析及代码实现1 shellService.class阅读shellSerive.class是针对新建窗口的文件， 通过阅读该段代码，我将相关笔记记录如下： 1.1 ShellService方法该方法主要是获取输入端的url，type，key，自定义请求头的值。其中引用initHeader和mergeHeader函数，会在后面进行具体说明。  HashMap  1this.cu">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-08-27T12:40:51.204Z">
+<meta property="article:modified_time" content="2021-09-09T02:13:30.727Z">
 <meta property="article:author" content="HSmiling">
 <meta name="twitter:card" content="summary">
   
@@ -150,217 +154,372 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-05冰蝎：jsp相关特征分析及代码实现" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="冰蝎：jsp相关特征分析及代码实现"><a href="#冰蝎：jsp相关特征分析及代码实现" class="headerlink" title="冰蝎：jsp相关特征分析及代码实现"></a>冰蝎：jsp相关特征分析及代码实现</h3><h4 id="1-shellService-class阅读"><a href="#1-shellService-class阅读" class="headerlink" title="1 shellService.class阅读"></a>1 shellService.class阅读</h4><p>shellSerive.class是针对新建窗口的文件，</p>
+<p>通过阅读该段代码，我将相关笔记记录如下：</p>
+<h5 id="1-1-ShellService方法"><a href="#1-1-ShellService方法" class="headerlink" title="1.1 ShellService方法"></a>1.1 ShellService方法</h5><p>该方法主要是获取输入端的url，type，key，自定义请求头的值。其中引用<strong>initHeader和mergeHeader函数</strong>，会在后面进行具体说明。</p>
+<ul>
+<li>HashMap</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">this.currentHeaders = new HashMap();</span><br></pre></td></tr></table></figure>
+
+<p>该函数中，将现有的请求头声明为一个新的HashMap结构，下面是有关HashMap结构的相关知识点：</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/78079598">用漫画告诉你—什么是HashMap？ - 知乎 (zhihu.com)</a></p>
+<p>通过博客的原理，理解到HashMap<strong>不保证插入顺序</strong>，但是循环遍历时，其输出顺序不变。</p>
+<h6 id="initHeaders-函数"><a href="#initHeaders-函数" class="headerlink" title="initHeaders()函数"></a>initHeaders()函数</h6><p>该函数中将一些类型和相应的取值存入currentHeaders这个HashMap中，其中referer的取值需阅读<strong>getReferer()函数</strong>，可以作为一部分特征流量的标志：</p>
+<blockquote>
+<p>其中存入的变量主要有：”Accept”、”Accept-Encoding”、”Accept-Language”、”Content-type”、”Referer”</p>
+</blockquote>
+<ul>
+<li><p>报文公共部分</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Accept:text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9</span><br><span class="line">Accept-Encoding: gzip, deflate, br</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7</span><br></pre></td></tr></table></figure></li>
+<li><p>Content-Type部分不同类型报文的差异</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">php</span><br><span class="line">Content-type：application/x-www-form-urlencoded</span><br><span class="line"></span><br><span class="line">aspx和jsp</span><br><span class="line">Content-Type：application/octet-stream</span><br></pre></td></tr></table></figure></li>
+<li><p>firebox的影响</p>
+<p>若User-Agent中含有firebox，则Accept和Accept-Language发生改变</p>
+</li>
+</ul>
+<h6 id="getReferer-函数"><a href="#getReferer-函数" class="headerlink" title="getReferer()函数"></a>getReferer()函数</h6><p>通过报文可以观察到referer的值为<a target="_blank" rel="noopener" href="http://192.168.121.134:8080/shell.jsp%EF%BC%8C%E5%9C%A8%E8%AF%A5%E5%87%BD%E6%95%B0%E4%B8%AD%EF%BC%8C%E4%B8%BB%E8%A6%81%E6%98%AF%E5%AF%B9%E8%BE%93%E5%85%A5%E7%9A%84URL%E8%BF%9B%E8%A1%8C%E4%B8%80%E5%AE%9A%E7%9A%84%E5%A4%84%E7%90%86%E5%B9%B6%E8%BE%93%E5%87%BA%EF%BC%8C%E5%8F%AF%E4%BB%A5%E8%A7%82%E5%AF%9F%E5%88%B0%E5%85%B6%E4%B8%AD%E5%A4%A7%E5%B0%8F%E5%86%99%E4%B8%8D%E6%95%8F%E6%84%9F">http://192.168.121.134:8080/shell.jsp，在该函数中，主要是对输入的URL进行一定的处理并输出，可以观察到其中大小写不敏感</a></p>
+<h6 id="mergeHeader-函数"><a href="#mergeHeader-函数" class="headerlink" title="mergeHeader()函数"></a>mergeHeader()函数</h6><p>将输入的自定义请求头按行分类，按照相应的格式存入currentHeaders中</p>
+<h4 id="2-wireshark报文分析"><a href="#2-wireshark报文分析" class="headerlink" title="2 wireshark报文分析"></a>2 wireshark报文分析</h4><h5 id="2-1-第一次post请求"><a href="#2-1-第一次post请求" class="headerlink" title="2.1 第一次post请求"></a>2.1 第一次post请求</h5><p>使用base64解码+AES解密（密码为：e45e329feb5d925b，且为EBC模式）对报文进行解密，发现得到的jsp流量是base64编码后的class文件，无法直接看到代码，则进行反编译，解密后得到内容如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// Source code recreated from a .class file by IntelliJ IDEA</span></span><br><span class="line"><span class="comment">// (powered by FernFlower decompiler)</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> net.stxgeb;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.Iterator;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"><span class="keyword">import</span> javax.crypto.Cipher;</span><br><span class="line"><span class="keyword">import</span> javax.crypto.spec.SecretKeySpec;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Mphg</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> String content = <span class="string">&quot;F4EuCO2DRCLVyMqN7zOmeOv95zQAtpNcjDbUNUYizrzg9hTpYN44XJGrB2h08pLR34sA0e6CXk5aSQjEatSCawl317CJH3tRYx7ZqkzyUU0qwtuWKX8uFWr4BfQAkD8erMW9wrJB8fTV9uOneodHkh1aiZ1gTJd8jSKsp5x6dGUMTNnZkhUs8VWia2yL2PHFOlsIz7BwZdYhT4k9CLf7RmqKrppXo7x9TZeIMrjnXhNafhGOdBv8rkcdPZeFaRpnlZL3EbZn2sFyb4RV1MCYGph2AhvBVYQnelzfs9PiBjR3MAVIQRKBbtuFEGNNL9vqdWyo8jFPucWJi8Gnz3Hqh2AjDPU0vgQj71BRm5Y9ojE4XcnmVR2R82duZvTJq8kQu3iF5QxRsxE0gtRWdDfE8HgiMBh06HfNj1EZhg4dVKUJLXmGLpIy9Xn2KGfJDALTBai2yGXVlITECkEhk6nTdLkR9CC0X7slohbpvMDfoqxjbr0LdyyodR5SDIWYKtIwBj6E4C8nClR6HMyCo4sUJMORVXIu5wYSXpHcTtpFJOgdUib2c7xx1aEOMSmu1QGfas3LjRJMCkOdSX4XcVOvcav7unc0M7puVb2TqnIue7X9s5FHtHSqseicGdG3P728nn224MNUPAgVg4pNbF6pF0E3SqhaHKyLeRJRyIW1k1DceSDFuAjBGSNl9xzBrG27dLI1uVZL7dw0xbAORdtoj6G4Azgi1pS6FcN4eXlhDcBpdXhhC7t84WZfQNaDvrtsUwK0wmVRD3sa6XJ4RJrDcmKFzC7PNcUn5YHUQmZdeKJhBBREEiXYPyEOKJ4ZqYmELEo5I9OVxamtuGJlKrqifk0ggD2fKssQLZurKvhBc38ZNqM7qA3JqWuM3CZXrE0f6QmmZ6tpjYlNNzVMDywtz6nTqJOk83hlYIkJCbdOtIZjII4WNR8JNiGtisejlgfsHMTA4RmT5aKHOrettm581kCDuoRsW18GYR8HuGi5MVIqe79lSXc257gwKpQdeBMh2w5ZL76chkQyYjv08N9LSFlySY0khvBa4KzNK2HW62e9UFHCs8Ffxx7GT7xCvDgHl2x7Sa4YIsWHMF2mf5FB0cFMWh1IfNFN31hpuHeWYfIq8NMEGOfWF62goUgofB&quot;</span>;</span><br><span class="line">    <span class="keyword">private</span> Object Request;</span><br><span class="line">    <span class="keyword">private</span> Object Response;</span><br><span class="line">    <span class="keyword">private</span> Object Session;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Mphg</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object obj)</span> </span>&#123;</span><br><span class="line">        HashMap result = <span class="keyword">new</span> HashMap();</span><br><span class="line">        <span class="keyword">boolean</span> var13 = <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">        Object so;</span><br><span class="line">        Method write;</span><br><span class="line">        label77: &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                var13 = <span class="keyword">true</span>;</span><br><span class="line">                <span class="keyword">this</span>.fillContext(obj);</span><br><span class="line">                result.put(<span class="string">&quot;status&quot;</span>, <span class="string">&quot;success&quot;</span>);</span><br><span class="line">                result.put(<span class="string">&quot;msg&quot;</span>, content);</span><br><span class="line">                var13 = <span class="keyword">false</span>;</span><br><span class="line">                <span class="keyword">break</span> label77;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception var17) &#123;</span><br><span class="line">                result.put(<span class="string">&quot;msg&quot;</span>, var17.getMessage());</span><br><span class="line">                result.put(<span class="string">&quot;status&quot;</span>, <span class="string">&quot;success&quot;</span>);</span><br><span class="line">                var13 = <span class="keyword">false</span>;</span><br><span class="line">            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (var13) &#123;</span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        Object so = <span class="keyword">this</span>.Response.getClass().getMethod(<span class="string">&quot;getOutputStream&quot;</span>).invoke(<span class="keyword">this</span>.Response);</span><br><span class="line">                        Method write = so.getClass().getMethod(<span class="string">&quot;write&quot;</span>, <span class="keyword">byte</span>[].class);</span><br><span class="line">                        write.invoke(so, <span class="keyword">this</span>.Encrypt(<span class="keyword">this</span>.buildJson(result, <span class="keyword">true</span>).getBytes(<span class="string">&quot;UTF-8&quot;</span>)));</span><br><span class="line">                        so.getClass().getMethod(<span class="string">&quot;flush&quot;</span>).invoke(so);</span><br><span class="line">                        so.getClass().getMethod(<span class="string">&quot;close&quot;</span>).invoke(so);</span><br><span class="line">                    &#125; <span class="keyword">catch</span> (Exception var14) &#123;</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                so = <span class="keyword">this</span>.Response.getClass().getMethod(<span class="string">&quot;getOutputStream&quot;</span>).invoke(<span class="keyword">this</span>.Response);</span><br><span class="line">                write = so.getClass().getMethod(<span class="string">&quot;write&quot;</span>, <span class="keyword">byte</span>[].class);</span><br><span class="line">                write.invoke(so, <span class="keyword">this</span>.Encrypt(<span class="keyword">this</span>.buildJson(result, <span class="keyword">true</span>).getBytes(<span class="string">&quot;UTF-8&quot;</span>)));</span><br><span class="line">                so.getClass().getMethod(<span class="string">&quot;flush&quot;</span>).invoke(so);</span><br><span class="line">                so.getClass().getMethod(<span class="string">&quot;close&quot;</span>).invoke(so);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception var15) &#123;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            so = <span class="keyword">this</span>.Response.getClass().getMethod(<span class="string">&quot;getOutputStream&quot;</span>).invoke(<span class="keyword">this</span>.Response);</span><br><span class="line">            write = so.getClass().getMethod(<span class="string">&quot;write&quot;</span>, <span class="keyword">byte</span>[].class);</span><br><span class="line">            write.invoke(so, <span class="keyword">this</span>.Encrypt(<span class="keyword">this</span>.buildJson(result, <span class="keyword">true</span>).getBytes(<span class="string">&quot;UTF-8&quot;</span>)));</span><br><span class="line">            so.getClass().getMethod(<span class="string">&quot;flush&quot;</span>).invoke(so);</span><br><span class="line">            so.getClass().getMethod(<span class="string">&quot;close&quot;</span>).invoke(so);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception var16) &#123;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">byte</span>[] Encrypt(<span class="keyword">byte</span>[] bs) <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        String key = <span class="keyword">this</span>.Session.getClass().getMethod(<span class="string">&quot;getAttribute&quot;</span>, String.class).invoke(<span class="keyword">this</span>.Session, <span class="string">&quot;u&quot;</span>).toString();</span><br><span class="line">        <span class="keyword">byte</span>[] raw = key.getBytes(<span class="string">&quot;utf-8&quot;</span>);</span><br><span class="line">        SecretKeySpec skeySpec = <span class="keyword">new</span> SecretKeySpec(raw, <span class="string">&quot;AES&quot;</span>);</span><br><span class="line">        Cipher cipher = Cipher.getInstance(<span class="string">&quot;AES/ECB/PKCS5Padding&quot;</span>);</span><br><span class="line">        cipher.init(<span class="number">1</span>, skeySpec);</span><br><span class="line">        <span class="keyword">byte</span>[] encrypted = cipher.doFinal(bs);</span><br><span class="line">        <span class="keyword">return</span> encrypted;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> String <span class="title">buildJson</span><span class="params">(Map&lt;String, String&gt; entity, <span class="keyword">boolean</span> encode)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        StringBuilder sb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        String version = System.getProperty(<span class="string">&quot;java.version&quot;</span>);</span><br><span class="line">        sb.append(<span class="string">&quot;&#123;&quot;</span>);</span><br><span class="line">        Iterator var5 = entity.keySet().iterator();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span>(var5.hasNext()) &#123;</span><br><span class="line">            String key = (String)var5.next();</span><br><span class="line">            sb.append(<span class="string">&quot;\&quot;&quot;</span> + key + <span class="string">&quot;\&quot;:\&quot;&quot;</span>);</span><br><span class="line">            String value = ((String)entity.get(key)).toString();</span><br><span class="line">            <span class="keyword">if</span> (encode) &#123;</span><br><span class="line">                Class Base64;</span><br><span class="line">                Object Encoder;</span><br><span class="line">                <span class="keyword">if</span> (version.compareTo(<span class="string">&quot;1.9&quot;</span>) &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">                    <span class="keyword">this</span>.getClass();</span><br><span class="line">                    Base64 = Class.forName(<span class="string">&quot;java.util.Base64&quot;</span>);</span><br><span class="line">                    Encoder = Base64.getMethod(<span class="string">&quot;getEncoder&quot;</span>, (Class[])<span class="keyword">null</span>).invoke(Base64, (Object[])<span class="keyword">null</span>);</span><br><span class="line">                    value = (String)Encoder.getClass().getMethod(<span class="string">&quot;encodeToString&quot;</span>, <span class="keyword">byte</span>[].class).invoke(Encoder, value.getBytes(<span class="string">&quot;UTF-8&quot;</span>));</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="keyword">this</span>.getClass();</span><br><span class="line">                    Base64 = Class.forName(<span class="string">&quot;sun.misc.BASE64Encoder&quot;</span>);</span><br><span class="line">                    Encoder = Base64.newInstance();</span><br><span class="line">                    value = (String)Encoder.getClass().getMethod(<span class="string">&quot;encode&quot;</span>, <span class="keyword">byte</span>[].class).invoke(Encoder, value.getBytes(<span class="string">&quot;UTF-8&quot;</span>));</span><br><span class="line">                    value = value.replace(<span class="string">&quot;\n&quot;</span>, <span class="string">&quot;&quot;</span>).replace(<span class="string">&quot;\r&quot;</span>, <span class="string">&quot;&quot;</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            sb.append(value);</span><br><span class="line">            sb.append(<span class="string">&quot;\&quot;,&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (sb.toString().endsWith(<span class="string">&quot;,&quot;</span>)) &#123;</span><br><span class="line">            sb.setLength(sb.length() - <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        sb.append(<span class="string">&quot;&#125;&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> sb.toString();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">fillContext</span><span class="params">(Object obj)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (obj.getClass().getName().indexOf(<span class="string">&quot;PageContext&quot;</span>) &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">this</span>.Request = obj.getClass().getMethod(<span class="string">&quot;getRequest&quot;</span>).invoke(obj);</span><br><span class="line">            <span class="keyword">this</span>.Response = obj.getClass().getMethod(<span class="string">&quot;getResponse&quot;</span>).invoke(obj);</span><br><span class="line">            <span class="keyword">this</span>.Session = obj.getClass().getMethod(<span class="string">&quot;getSession&quot;</span>).invoke(obj);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            Map&lt;String, Object&gt; objMap = (Map)obj;</span><br><span class="line">            <span class="keyword">this</span>.Session = objMap.get(<span class="string">&quot;session&quot;</span>);</span><br><span class="line">            <span class="keyword">this</span>.Response = objMap.get(<span class="string">&quot;response&quot;</span>);</span><br><span class="line">            <span class="keyword">this</span>.Request = objMap.get(<span class="string">&quot;request&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">this</span>.Response.getClass().getMethod(<span class="string">&quot;setCharacterEncoding&quot;</span>, String.class).invoke(<span class="keyword">this</span>.Response, <span class="string">&quot;UTF-8&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>知识点：反编译的方法</p>
+<p>将得到的文件另存为class文件，然后运用Intellij打开，得到还原后的文件</p>
+</li>
+</ul>
+<h5 id="2-2-第一次响应"><a href="#2-2-第一次响应" class="headerlink" title="2.2 第一次响应"></a>2.2 第一次响应</h5><p>通过报文观察到以下主要变量：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Transfer-Encoding: chunked</span><br></pre></td></tr></table></figure>
+
+<p>即报文内容为chunked编码，在这里将其转换为原始编码，通过对http编码的解读，截取原始信息。使用16进制转换+AES解密（密钥为e45e329feb5d925b），得到解密信息如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;msg&quot;:&quot;RjRFdUNPMkRSQ0xWeU1xTjd6T21lT3Y5NXpRQXRwTmNqRGJVTlVZaXpyemc5aFRwWU40NFhKR3JCMmgwOHBMUjM0c0EwZTZDWGs1YVNRakVhdFNDYXdsMzE3Q0pIM3RSWXg3WnFrenlVVTBxd3R1V0tYOHVGV3I0QmZRQWtEOGVyTVc5d3JKQjhmVFY5dU9uZW9kSGtoMWFpWjFnVEpkOGpTS3NwNXg2ZEdVTVROblpraFVzOFZXaWEyeUwyUEhGT2xzSXo3QndaZFloVDRrOUNMZjdSbXFLcnBwWG83eDlUWmVJTXJqblhoTmFmaEdPZEJ2OHJrY2RQWmVGYVJwbmxaTDNFYlpuMnNGeWI0UlYxTUNZR3BoMkFodkJWWVFuZWx6ZnM5UGlCalIzTUFWSVFSS0JidHVGRUdOTkw5dnFkV3lvOGpGUHVjV0ppOEduejNIcWgyQWpEUFUwdmdRajcxQlJtNVk5b2pFNFhjbm1WUjJSODJkdVp2VEpxOGtRdTNpRjVReFJzeEUwZ3RSV2REZkU4SGdpTUJoMDZIZk5qMUVaaGc0ZFZLVUpMWG1HTHBJeTlYbjJLR2ZKREFMVEJhaTJ5R1hWbElURUNrRWhrNm5UZExrUjlDQzBYN3Nsb2hicHZNRGZvcXhqYnIwTGR5eW9kUjVTRElXWUt0SXdCajZFNEM4bkNsUjZITXlDbzRzVUpNT1JWWEl1NXdZU1hwSGNUdHBGSk9nZFVpYjJjN3h4MWFFT01TbXUxUUdmYXMzTGpSSk1Da09kU1g0WGNWT3ZjYXY3dW5jME03cHVWYjJUcW5JdWU3WDlzNUZIdEhTcXNlaWNHZEczUDcyOG5uMjI0TU5VUEFnVmc0cE5iRjZwRjBFM1NxaGFIS3lMZVJKUnlJVzFrMURjZVNERnVBakJHU05sOXh6QnJHMjdkTEkxdVZaTDdkdzB4YkFPUmR0b2o2RzRBemdpMXBTNkZjTjRlWGxoRGNCcGRYaGhDN3Q4NFdaZlFOYUR2cnRzVXdLMHdtVlJEM3NhNlhKNFJKckRjbUtGekM3UE5jVW41WUhVUW1aZGVLSmhCQlJFRWlYWVB5RU9LSjRacVltRUxFbzVJOU9WeGFtdHVHSmxLcnFpZmswZ2dEMmZLc3NRTFp1ckt2aEJjMzhaTnFNN3FBM0pxV3VNM0NaWHJFMGY2UW1tWjZ0cGpZbE5OelZNRHl3dHo2blRxSk9rODNobFlJa0pDYmRPdElaaklJNFdOUjhKTmlHdGlzZWpsZ2ZzSE1UQTRSbVQ1YUtIT3JldHRtNTgxa0NEdW9Sc1cxOEdZUjhIdUdpNU1WSXFlNzlsU1hjMjU3Z3dLcFFkZUJNaDJ3NVpMNzZjaGtReVlqdjA4TjlMU0ZseVNZMGtodkJhNEt6TksySFc2MmU5VUZIQ3M4RmZ4eDdHVDd4Q3ZEZ0hsMng3U2E0WUlzV0hNRjJtZjVGQjBjRk1XaDFJZk5GTjMxaHB1SGVXWWZJcThOTUVHT2ZXRjYyZ29VZ29mQg==&quot;,&quot;status&quot;:&quot;c3VjY2Vzcw==&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>解码后得到：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">msg：F4EuCO2DRCLVyMqN7zOmeOv95zQAtpNcjDbUNUYizrzg9hTpYN44XJGrB2h08pLR34sA0e6CXk5aSQjEatSCawl317CJH3tRYx7ZqkzyUU0qwtuWKX8uFWr4BfQAkD8erMW9wrJB8fTV9uOneodHkh1aiZ1gTJd8jSKsp5x6dGUMTNnZkhUs8VWia2yL2PHFOlsIz7BwZdYhT4k9CLf7RmqKrppXo7x9TZeIMrjnXhNafhGOdBv8rkcdPZeFaRpnlZL3EbZn2sFyb4RV1MCYGph2AhvBVYQnelzfs9PiBjR3MAVIQRKBbtuFEGNNL9vqdWyo8jFPucWJi8Gnz3Hqh2AjDPU0vgQj71BRm5Y9ojE4XcnmVR2R82duZvTJq8kQu3iF5QxRsxE0gtRWdDfE8HgiMBh06HfNj1EZhg4dVKUJLXmGLpIy9Xn2KGfJDALTBai2yGXVlITECkEhk6nTdLkR9CC0X7slohbpvMDfoqxjbr0LdyyodR5SDIWYKtIwBj6E4C8nClR6HMyCo4sUJMORVXIu5wYSXpHcTtpFJOgdUib2c7xx1aEOMSmu1QGfas3LjRJMCkOdSX4XcVOvcav7unc0M7puVb2TqnIue7X9s5FHtHSqseicGdG3P728nn224MNUPAgVg4pNbF6pF0E3SqhaHKyLeRJRyIW1k1DceSDFuAjBGSNl9xzBrG27dLI1uVZL7dw0xbAORdtoj6G4Azgi1pS6FcN4eXlhDcBpdXhhC7t84WZfQNaDvrtsUwK0wmVRD3sa6XJ4RJrDcmKFzC7PNcUn5YHUQmZdeKJhBBREEiXYPyEOKJ4ZqYmELEo5I9OVxamtuGJlKrqifk0ggD2fKssQLZurKvhBc38ZNqM7qA3JqWuM3CZXrE0f6QmmZ6tpjYlNNzVMDywtz6nTqJOk83hlYIkJCbdOtIZjII4WNR8JNiGtisejlgfsHMTA4RmT5aKHOrettm581kCDuoRsW18GYR8HuGi5MVIqe79lSXc257gwKpQdeBMh2w5ZL76chkQyYjv08N9LSFlySY0khvBa4KzNK2HW62e9UFHCs8Ffxx7GT7xCvDgHl2x7Sa4YIsWHMF2mf5FB0cFMWh1IfNFN31hpuHeWYfIq8NMEGOfWF62goUgofB</span><br><span class="line"></span><br><span class="line">status：</span><br><span class="line">success</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="2-3-第二次post请求"><a href="#2-3-第二次post请求" class="headerlink" title="2.3 第二次post请求"></a>2.3 第二次post请求</h5><p>第二次post请求与第一次请求的解密方法一致，其解密后得到的信息主要在变量中有所区别：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>变量</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>第一次post请求</td>
+<td>“status”、“msg”</td>
+</tr>
+<tr>
+<td>第二次post请求</td>
+<td>“osinfo”、“drivelist”、“currentPath”、“arch”、“basicInfo”</td>
+</tr>
+</tbody></table>
+<h5 id="2-4-第二次响应"><a href="#2-4-第二次响应" class="headerlink" title="2.4 第二次响应"></a>2.4 第二次响应</h5><p>经过解密和解码后得到的值为：</p>
+<table>
+<thead>
+<tr>
+<th align="center">变量</th>
+<th align="center">含义</th>
+<th align="left">值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">“drivelist”</td>
+<td align="center">-</td>
+<td align="left">“/”</td>
+</tr>
+<tr>
+<td align="center">“currentPath”</td>
+<td align="center">当前工作路径</td>
+<td align="left">“/usr/local/tomcat”</td>
+</tr>
+<tr>
+<td align="center">“osinfo”</td>
+<td align="center">服务器的操作系统</td>
+<td align="left">“Linux5.4.0-66-genericamd64”</td>
+</tr>
+<tr>
+<td align="center">“arch”</td>
+<td align="center">-</td>
+<td align="left">amd64</td>
+</tr>
+<tr>
+<td align="center">“basicInfo”</td>
+<td align="center">页面信息</td>
+<td align="left">注：另存为html时用浏览器点开可看到页面</td>
+</tr>
+</tbody></table>
+<h5 id="2-5-加密方式"><a href="#2-5-加密方式" class="headerlink" title="2.5 加密方式"></a>2.5 加密方式</h5><p>冰蝎中的jsp采用AES/ECB/PKCS5Padding的加密方式：</p>
+<ul>
+<li>PKCS5Padding，假设数据长度需要填充n(n&gt;0)个字节才对齐，那么填充n个字节，每个字节都是n;如果数据本身就已经对齐了，则填充一块长度为块大小的数据，每个字节都是块大小。PKCS7Padding的子集，块大小固定为8字节。</li>
+</ul>
+<h4 id="3-冰蝎中jsp流量特征总结"><a href="#3-冰蝎中jsp流量特征总结" class="headerlink" title="3 冰蝎中jsp流量特征总结"></a>3 冰蝎中jsp流量特征总结</h4><h5 id="3-1-User-Agent字段"><a href="#3-1-User-Agent字段" class="headerlink" title="3.1 User-Agent字段"></a>3.1 User-Agent字段</h5><p>冰蝎内置了一些User-Agent，每次连接shell时会随机选择一个进行使用，而User-Agent列表中大多来自于较早的浏览器（现浏览器是默认自动更新），故可作为特征使用，其列表如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"> &quot;Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/14.0.835.163 Safari/535.1&quot;,</span><br><span class="line">&quot;Mozilla/5.0 (Windows NT 6.1; WOW64; rv:6.0) Gecko/20100101 Firefox/6.0&quot;,</span><br><span class="line">&quot;Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/534.50 (KHTML, like Gecko) Version/5.1 Safari/534.50&quot;,</span><br><span class="line">&quot;Opera/9.80 (Windows NT 6.1; U; zh-cn) Presto/2.9.168 Version/11.50&quot;,</span><br><span class="line">&quot;Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Win64; x64; Trident/5.0; .NET CLR 2.0.50727; SLCC2; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; InfoPath.3; .NET4.0C; Tablet PC 2.0; .NET4.0E)&quot;,</span><br><span class="line">&quot;Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; WOW64; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; .NET4.0C; InfoPath.3)&quot;,</span><br><span class="line">&quot;Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; GTB7.0)&quot;,</span><br><span class="line">&quot;Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)&quot;,</span><br><span class="line">&quot;Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1)&quot;,</span><br><span class="line">&quot;Mozilla/5.0 (Windows; U; Windows NT 6.1; ) AppleWebKit/534.12 (KHTML, like Gecko) Maxthon/3.0 Safari/534.12&quot;,</span><br><span class="line">&quot;Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.1; WOW64; Trident/5.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; InfoPath.3; .NET4.0C; .NET4.0E)&quot;,</span><br><span class="line">&quot;Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.1; WOW64; Trident/5.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; InfoPath.3; .NET4.0C; .NET4.0E; SE 2.X MetaSr 1.0)&quot;,</span><br><span class="line">&quot;Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/534.3 (KHTML, like Gecko) Chrome/6.0.472.33 Safari/534.3 SE 2.X MetaSr 1.0&quot;,</span><br><span class="line">&quot;Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; InfoPath.3; .NET4.0C; .NET4.0E)&quot;,</span><br><span class="line">&quot;Mozilla/5.0 (Windows NT 6.1) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/13.0.782.41 Safari/535.1 QQBrowser/6.9.11079.201&quot;,</span><br><span class="line">&quot;Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.1; WOW64; Trident/5.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; InfoPath.3; .NET4.0C; .NET4.0E) QQBrowser/6.9.11079.201&quot;,</span><br><span class="line">&quot;Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)&quot;</span><br></pre></td></tr></table></figure>
+
+<h5 id="3-2-Accept字段"><a href="#3-2-Accept字段" class="headerlink" title="3.2 Accept字段"></a>3.2 Accept字段</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Accept: text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2</span><br></pre></td></tr></table></figure>
+
+<p>冰蝎的Accept字段值特殊，且已经在反编译的冰蝎代码中写死，可作为辅助特征进行判断</p>
+<h5 id="3-3-Content-Type字段"><a href="#3-3-Content-Type字段" class="headerlink" title="3.3 Content-Type字段"></a>3.3 Content-Type字段</h5><p>由前文的解析可以从代码中观察到jsp与php在该字段上的区别，jsp流量中该字段为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Content-Type: application/octet-stream</span><br></pre></td></tr></table></figure>
+
+<p>这是一个强特征，即有且仅能提交一个二进制；若为文件即只能提交一个文件，后台接收参数仅有一个，且只能是流或字节数组。在平常的流量中很少见，故可用于作为特征</p>
+<h5 id="3-4-Connection字段"><a href="#3-4-Connection字段" class="headerlink" title="3.4 Connection字段"></a>3.4 Connection字段</h5><p>冰蝎3.0采用的是长连接，故Connection如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Connection:keep-alive</span><br></pre></td></tr></table></figure>
+
+<h5 id="3-5-URL参数"><a href="#3-5-URL参数" class="headerlink" title="3.5 URL参数"></a>3.5 URL参数</h5><p>在正常访问过程中，发现大部分都采用加密通讯，无法看到URL参数，而冰蝎3.0中的流量可以清楚看到参数，故得到jsp特征：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\.jsp HTTP/1.1    </span><br></pre></td></tr></table></figure>
+
+<h5 id="3-6-加密数据"><a href="#3-6-加密数据" class="headerlink" title="3.6 加密数据"></a>3.6 加密数据</h5><p>通过阅读代码，发现jsp会提交base64编码后的数据，则可以尝试使用正则进行匹配：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\r\n\r\n[a-zA-Z\d\+\/]&#123;20,&#125;    </span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意这条正则最后的数字20，意思是指定的字符出现至少20个才会匹配。而要匹配这段数据长度至少有几K，在TCP层，如此长的数据不会一次性发送，而是拆分成若干“帧”，逐个发送。工作于4层的IDS只能检测“帧”，而“帧”的长度是不确定的（帧的长度是根据网络情况动态调整的），因此这里保守地只写了20。如果你的IDS工作于七层，可以拼接HTTP完整请求的话，这个值可适当增加，以减少误报。</p>
+<p>参考博客：<a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/web/216133.html">流量加密又怎样？ 多种姿势检测“冰蝎” - FreeBuf网络安全行业门户</a></p>
+</blockquote>
+<h4 id="4-流量截取代码实现"><a href="#4-流量截取代码实现" class="headerlink" title="4 流量截取代码实现"></a>4 流量截取代码实现</h4><p>通过对上述特征，使用python中的scapy库进行流量识别与截取：</p>
+<h5 id="4-1-准备工作"><a href="#4-1-准备工作" class="headerlink" title="4.1 准备工作"></a>4.1 准备工作</h5><ul>
+<li><p>scapy库的安装</p>
+<p>参考博客：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/qingkongwuyun/p/8508733.html">Windows上安装scapy - 晴空无云 - 博客园 (cnblogs.com)</a></p>
+</li>
+<li><p>scapy库的简单语法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#读入pacp文件，显示该文件中的流信息</span><br><span class="line">tcp0 = rdpcap(&quot;tcp_flood/tcp0.pcap&quot;)  </span><br><span class="line"></span><br><span class="line">#显示某一条数据的具体内容</span><br><span class="line">tcp0[3].mysummary</span><br><span class="line"></span><br><span class="line">#显示某一条数据的TCP流中的具体内容</span><br><span class="line">tcp0[3][&#x27;TCP&#x27;].payload.original</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h5 id="4-2-实验数据"><a href="#4-2-实验数据" class="headerlink" title="4.2 实验数据"></a>4.2 实验数据</h5><p>本实验的目的在于检验出正常访问流量中的jsp冰蝎流量的TCP流，首先对所得到的pcap文件进行预处理，得到不同类型的相应TCP流，实验对照组如下：</p>
+<table>
+<thead>
+<tr>
+<th align="center">文件名</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">tcp0.pcap</td>
+<td align="center">该文件为目标文件，其中是冰蝎截取的jsp流量</td>
+</tr>
+<tr>
+<td align="center">php.pcap</td>
+<td align="center">该文件中包含的是冰蝎截取的php流量</td>
+</tr>
+<tr>
+<td align="center">test.pcapng</td>
+<td align="center">该文件中包含的是在本机正常访问php流量</td>
+</tr>
+<tr>
+<td align="center">tcp2.pcap</td>
+<td align="center">该文件是访问google.com时的流量</td>
+</tr>
+<tr>
+<td align="center">tcp11.pcap</td>
+<td align="center">该文件是访问baidu.com时的流量</td>
+</tr>
+</tbody></table>
+<p>我们的目标是通过代码对上述的文件进行分别测试，能够从中识别出tcp0.pcap文件</p>
+<h5 id="4-3-代码实现"><a href="#4-3-代码实现" class="headerlink" title="4.3 代码实现"></a>4.3 代码实现</h5><h6 id="方法一：根据报头顺序判断"><a href="#方法一：根据报头顺序判断" class="headerlink" title="方法一：根据报头顺序判断"></a>方法一：根据报头顺序判断</h6><p>经过代码阅读和报头观察，发现冰蝎流量的报头有一定的顺序：Accept、Accept-Encoding、Accept-Language、Content-Type、Referer、User-Agent，故可使用正则表达式对得到的数据进行拆分，并判断其具体顺序，具体代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#根据报头顺序进行测试</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> test_php:</span><br><span class="line">    con2 = i[<span class="string">&#x27;TCP&#x27;</span>].payload.original</span><br><span class="line">    conlist = re.split(<span class="string">b&#x27;\r\n&#x27;</span>, con2)</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(conlist) &gt; <span class="number">6</span>:</span><br><span class="line">        judge1 = re.search( <span class="string">b&#x27;Accept:&#x27;</span>, conlist[<span class="number">1</span>], re.M|re.I) </span><br><span class="line">        <span class="built_in">print</span>(conlist[<span class="number">1</span>])</span><br><span class="line">        judge2 = re.search( <span class="string">b&#x27;Accept-Encoding:&#x27;</span>, conlist[<span class="number">2</span>], re.M|re.I) </span><br><span class="line">        <span class="built_in">print</span>(conlist[<span class="number">2</span>])</span><br><span class="line">        judge3 = re.search( <span class="string">b&#x27;Accept-Language: &#x27;</span>, conlist[<span class="number">3</span>], re.M|re.I)</span><br><span class="line">        <span class="built_in">print</span>(conlist[<span class="number">3</span>])</span><br><span class="line">        judge4 = re.search( <span class="string">b&#x27;Content-Type:&#x27;</span>, conlist[<span class="number">4</span>], re.M|re.I)</span><br><span class="line">        <span class="built_in">print</span>(conlist[<span class="number">4</span>])</span><br><span class="line">        judge5 = re.search( <span class="string">b&#x27;Referer&#x27;</span>, conlist[<span class="number">5</span>], re.M|re.I) </span><br><span class="line">        <span class="built_in">print</span>(conlist[<span class="number">5</span>])</span><br><span class="line">        judge6 = re.search( <span class="string">b&#x27;User-Agent:&#x27;</span>, conlist[<span class="number">6</span>], re.M|re.I)</span><br><span class="line">        <span class="built_in">print</span>(conlist[<span class="number">6</span>])</span><br><span class="line">        <span class="keyword">if</span> judge1 <span class="keyword">and</span> judge2 <span class="keyword">and</span> judge3 <span class="keyword">and</span> judge4 <span class="keyword">and</span> judge5 <span class="keyword">and</span> judge6:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;成功找到冰蝎&quot;</span>)</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;END&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h6 id="方法二：根据字段特征进行判断"><a href="#方法二：根据字段特征进行判断" class="headerlink" title="方法二：根据字段特征进行判断"></a>方法二：根据字段特征进行判断</h6><p>由第三部分可以得到冰蝎jsp流量在User-Agent字段、Accept字段、Content-Type字段上有一定特征，则可直接对数据运用正则表达式进行判断，示例如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#根据Content-Type进行循环测试</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> tcp0:</span><br><span class="line">    con = i[<span class="string">&#x27;TCP&#x27;</span>].payload.original</span><br><span class="line">    match_con = re.search( <span class="string">b&#x27;Content-Type: application/octet-stream&#x27;</span>, con, re.M|re.I)</span><br><span class="line">    <span class="keyword">if</span> match_con:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;success: i find Content-Type: application/octet-stream&quot;</span>)</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;END&quot;</span>)  </span><br></pre></td></tr></table></figure>
+
+<p>通过老师的分析，发现这种通过字段特征判断属于弱特征，能够轻易在备注中修改覆盖</p>
+<h6 id="方法三：根据数据包特征进行判断"><a href="#方法三：根据数据包特征进行判断" class="headerlink" title="方法三：根据数据包特征进行判断"></a>方法三：根据数据包特征进行判断</h6><p>由老师的提示及相关探索得到：冰蝎截取的流量中含有post的这部分是单独的，不会直接连接body部分，即可通过判断含有POST报头内容流的长度与后续长度的比较进行判断，示例如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#方法：根据报文长度顺序进行测试；成功</span></span><br><span class="line">next_length = <span class="number">0</span></span><br><span class="line">step = <span class="number">0</span></span><br><span class="line">len1 = <span class="number">0</span></span><br><span class="line">len2 = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> php2:</span><br><span class="line">    sentence = i[<span class="string">&#x27;TCP&#x27;</span>].payload.original</span><br><span class="line">    judge = re.match( <span class="string">b&#x27;POST&#x27;</span>, sentence, re.M|re.I)</span><br><span class="line">    <span class="keyword">if</span> judge:</span><br><span class="line">        len1 = <span class="built_in">len</span>(i)</span><br><span class="line">        step = step + <span class="number">1</span></span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">    <span class="keyword">if</span> step:</span><br><span class="line">        len2 = <span class="built_in">len</span>(i)</span><br><span class="line">        <span class="keyword">break</span>        </span><br><span class="line"><span class="keyword">if</span> len1 &lt; len2:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;成功找到冰蝎&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;END&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-思考"><a href="#5-思考" class="headerlink" title="5 思考"></a>5 思考</h4><h5 id="5-1-其他方式尝试"><a href="#5-1-其他方式尝试" class="headerlink" title="5.1 其他方式尝试"></a>5.1 其他方式尝试</h5><h6 id="冰蝎解析cookie过程"><a href="#冰蝎解析cookie过程" class="headerlink" title="冰蝎解析cookie过程"></a><strong>冰蝎解析cookie过程</strong></h6><p>在网络资料搜索时，发现冰蝎2.0中的主要方式能够进行冰蝎流量分析</p>
+<blockquote>
+<p><strong>方法一：冰蝎解析cookie过程</strong></p>
+<p>方法原理：冰蝎在合并处理Cookie的时候没有考虑到Cookie的一些属性 (如 Path、HttpOnly等) ，冰蝎直接把返回协议头中的Set-Cookie字段直接添加到下一个请求包的Cookie字段中</p>
+</blockquote>
+<p>但是在实际报文观察中，冰蝎3.0在除去密钥协商过程时，也修复了cookie头的特征问题，具体代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(var11.hasNext()) &#123;</span><br><span class="line">            errorMsg = (String)var11.next();</span><br><span class="line">            <span class="keyword">if</span> (errorMsg != <span class="keyword">null</span> &amp;&amp; errorMsg.equalsIgnoreCase(<span class="string">&quot;Set-Cookie&quot;</span>)) &#123;</span><br><span class="line">                String cookieValue;</span><br><span class="line">                <span class="keyword">for</span>(Iterator var13 = ((List)headers.get(errorMsg)).iterator(); var13.hasNext(); cookieValues = cookieValues + <span class="string">&quot;;&quot;</span> + cookieValue) &#123;</span><br><span class="line">                    cookieValue = (String)var13.next();</span><br><span class="line">                    cookieValue = cookieValue.replaceAll(<span class="string">&quot;;[\\s]*path=[\\s\\S]*;?&quot;</span>, <span class="string">&quot;&quot;</span>);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                cookieValues = cookieValues.startsWith(<span class="string">&quot;;&quot;</span>) ? cookieValues.replaceFirst(<span class="string">&quot;;&quot;</span>, <span class="string">&quot;&quot;</span>) : cookieValues;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<h6 id="冰蝎body内容解密"><a href="#冰蝎body内容解密" class="headerlink" title="冰蝎body内容解密"></a>冰蝎body内容解密</h6><ul>
+<li>尝试根据响应中的“msg”、“status：success”明文字段进行匹配解密；而结合冰蝎加密过程为AES+base64，即无法得知AES密钥，故无法做到准确解密</li>
+<li>试图寻找序列化后的结构体中的特征，发现content值为random生成，其大小随机；同时发现其函数名随机化，故难以判断</li>
+</ul>
+<h6 id="Transfer-Encoding：chunked编码"><a href="#Transfer-Encoding：chunked编码" class="headerlink" title="Transfer-Encoding：chunked编码"></a>Transfer-Encoding：chunked编码</h6><p>该特征主要由服务器决定，不同服务器端设置不同，故无法作为一个判断特征</p>
+<h5 id="5-2-实验反思"><a href="#5-2-实验反思" class="headerlink" title="5.2 实验反思"></a>5.2 实验反思</h5><ul>
+<li><p>在设置对比实验过程中发现，正常网页访问时TCP流与冰蝎流量的TCP流解析时差异较大，使得在运用代码验证特征时容易进行区分，这是导致特征查找不深入的原因之一</p>
+</li>
+<li><p>在寻找jsp特征时，结合网络资料发现冰蝎在随着不断的解密曝光也在不断的更新bug，导致可能有些特征和博客中的不符</p>
+<h5 id="“Basicinfo问题”"><a href="#“Basicinfo问题”" class="headerlink" title="==“Basicinfo问题”=="></a>==“Basicinfo问题”==</h5></li>
+<li><p>在网上查阅到由于basicinfo动态加载的问题，发现可能会出现数据包一致的情况，通过该情况可能可以加以判断，但运用两个jsp包抓取时发现数据包长度不一致：</p>
+<p>（冰蝎的BasicInfo功能并没有动态修改参数(一个获取服务器信息的能有啥参数),这会导致每次获取BasicInfo的数据包都是固定的大小）</p>
+<p>猜测结论：在同一次不间断连接中，访问jsp查阅基本信息的数据包可能相同；但是间断连接时有所改变</p>
+</li>
+</ul>
+<h4 id="6-参考文献"><a href="#6-参考文献" class="headerlink" title="6 参考文献"></a>6 参考文献</h4><ul>
+<li><p>资料网站</p>
+<p><a target="_blank" rel="noopener" href="http://wechat.doonsec.com/">洞见微信聚合-安全圈搜狗微信搜索_订阅号及文章内容独家收录,一搜即达 (doonsec.com)</a></p>
+</li>
+<li><p>参考博客</p>
+<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/web/285204.html">『红蓝对抗』冰蝎3 JSPShell 流量分析 - FreeBuf网络安全行业门户</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/web/216133.html">流量加密又怎样？ 多种姿势检测“冰蝎” - FreeBuf网络安全行业门户</a></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MjM5NjA0NjgyMA==&mid=2651107951&idx=4&sn=d6385d2e3e548350919b20d3d051dac9">冰蝎2和3及哥斯拉Godzilla特征分析 (qq.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzUyMTA0MjQ4NA==&mid=2247503074&idx=1&sn=3620ded6d8ecb369f2c692377b0df1dc">HW防守 | 基于冰蝎的特征检测 (qq.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzIwNDA2NDk5OQ==&mid=2651375618&idx=3&sn=066fc71bf6decc8a13d0afcb07325080">冰蝎的前世今生：3.0新版本下的一些防护思考 (qq.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://baijiahao.baidu.com/s?id=1676614629221057734&wfr=spider&for=pc">冰蝎3.0绕过HIDS原理分析｜美创安全实验室 (baidu.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/LyShark/p/9100005.html#_label3">使用 Python 分析网络流量 - lyshark - 博客园 (cnblogs.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36334464/article/details/99978193">基于流量侧检测冰蝎webshell交互通讯_12306小哥-CSDN博客_冰蝎流量特征</a></p>
+</li>
+<li><p>python中dpkt和pcap环境的安装</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/babykick/archive/2011/12/26/2302286.html">windows下安装pcap和dpkt - babykick - 博客园 (cnblogs.com)</a></p>
+</li>
+<li><p>python处理pcap文件</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43345082/article/details/105422286">(2条消息) python处理pcap文件——数据提取_掘地三尺有神明的博客-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/dog250/article/details/52005979">(2条消息) pcapng文件的python解析实例以及抓包补遗_Netfilter,iptables/OpenVPN/TCP guard:-(-CSDN博客</a></p>
+</li>
+<li><p>这个里面能够在报文这一块进行一定的解析</p>
+<p><a target="_blank" rel="noopener" href="https://jon.oberheide.org/blog/2008/10/15/dpkt-tutorial-2-parsing-a-pcap-file/">dpkt 教程#2： 解析 PCAP 文件|乔恩·奥伯海德 (oberheide.org)</a></p>
+</li>
+<li><p>源码阅读</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_39906878/article/details/111213959?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_title~default-0.no_search_link&spm=1001.2101.3001.4242">html源码加密ensure-china_冰蝎3.0 源码分析_weixin_39906878的博客-CSDN博客</a></p>
+</li>
+</ul>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2021" class="archive-year">2021</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/11/09/hello-world/" class="archive-article-date">
-  	<time datetime="2021-11-09T02:48:00.165Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-09</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/11/09/hello-world/">Hello World</a>
-    </h1>
-  
+      
 
-        <div class="article-info info-on-right">
-          
-          
+      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/08/27/05%E5%86%B0%E8%9D%8E%EF%BC%9Ajsp%E7%9B%B8%E5%85%B3%E7%89%B9%E5%BE%81%E5%88%86%E6%9E%90%E5%8F%8A%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/09/26/10%20%E5%93%A5%E6%96%AF%E6%8B%89v2.96%EF%BC%9A%E6%80%BB%E7%BB%93-JSP%E3%80%81PHP/" class="archive-article-date">
-  	<time datetime="2021-09-26T03:18:55.777Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-26</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/09/16/07%20%E5%93%A5%E6%96%AF%E6%8B%89v2.96%EF%BC%9Aphp_XOR_RAW%E7%89%B9%E5%BE%81%E5%88%86%E6%9E%90%E5%8F%8A%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0/" class="archive-article-date">
-  	<time datetime="2021-09-16T08:35:00.043Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-16</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
+<nav id="article-nav">
+  
+    <a href="/2021/09/09/06%E5%93%A5%E6%96%AF%E6%8B%89v2.96%EF%BC%9Aphp_XOR_BASE64%E7%9A%84%E8%BF%9E%E6%8E%A5%E4%B8%8E%E5%88%86%E6%9E%90/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/08/24/04WEEK2%E5%86%B0%E8%9D%8E%EF%BC%9Ajsp%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90%E4%B9%8B%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA1/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title"></div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/09/09/06%E5%93%A5%E6%96%AF%E6%8B%89v2.96%EF%BC%9Aphp_XOR_BASE64%E7%9A%84%E8%BF%9E%E6%8E%A5%E4%B8%8E%E5%88%86%E6%9E%90/" class="archive-article-date">
-  	<time datetime="2021-09-09T02:47:41.607Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-09</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/08/27/05%E5%86%B0%E8%9D%8E%EF%BC%9Ajsp%E7%9B%B8%E5%85%B3%E7%89%B9%E5%BE%81%E5%88%86%E6%9E%90%E5%8F%8A%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0/" class="archive-article-date">
-  	<time datetime="2021-08-27T12:40:51.204Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-27</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
+        
+        
+    </div>
+</aside>
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/08/24/04WEEK2%E5%86%B0%E8%9D%8E%EF%BC%9Ajsp%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90%E4%B9%8B%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA1/" class="archive-article-date">
-  	<time datetime="2021-08-24T13:27:56.606Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-24</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/08/23/03WEEK1%E7%AC%AC%E4%B8%80%E5%91%A8%20%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/" class="archive-article-date">
-  	<time datetime="2021-08-23T11:21:16.806Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-23</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/08/23/02WEEK1%E5%86%B0%E8%9D%8E%EF%BC%9A%E5%9F%BA%E6%9C%AC%E8%BF%9E%E6%8E%A5%E5%8F%8AWireshark%E6%8A%93%E5%8C%85/" class="archive-article-date">
-  	<time datetime="2021-08-23T11:21:16.801Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-23</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/08/18/01%20%E5%9F%BA%E7%A1%80%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-%E7%AC%94%E8%AE%B0/" class="archive-article-date">
-  	<time datetime="2021-08-18T02:11:31.962Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-18</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -383,8 +542,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

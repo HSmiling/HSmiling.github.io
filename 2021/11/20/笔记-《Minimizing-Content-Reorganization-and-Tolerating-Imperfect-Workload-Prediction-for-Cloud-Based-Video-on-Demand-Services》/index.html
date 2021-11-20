@@ -6,19 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>hexo博客初识 | HSmiling&#39;s Blog</title>
+  <title>笔记|《Minimizing Content Reorganization and Tolerating Imperfect Workload Prediction for Cloud-Based Video-on-Demand Services》 | HSmiling&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="2021-11-10开通了属于HSmiling的博客，该博客主要记录学习过程中的笔记及一些生活上的感受，期待能长久的更新下去。那就先立个flag，一周至少一篇吧~——HSmiling 写于2021.11.11">
+  <meta name="description" content="2021-11-16 初步阅读论文  2021-11-17 完成1、2、3节初步阅读，在基于云的Vod系统设计部分提出疑问  2021-11-18 完成第4、5节初步阅读  2021-11-20完成文档初步整理，发布初步文档，但算法、具体效果及后期扩展部分还有待进一步完善阅读，赶在ddl前的无奈~">
 <meta property="og:type" content="article">
-<meta property="og:title" content="hexo博客初识">
-<meta property="og:url" content="http://example.com/2021/11/10/Hexo%20%E5%B8%B8%E8%A7%81%E5%91%BD%E4%BB%A4/index.html">
+<meta property="og:title" content="笔记|《Minimizing Content Reorganization and Tolerating Imperfect Workload Prediction for Cloud-Based Video-on-Demand Services》">
+<meta property="og:url" content="http://example.com/2021/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/index.html">
 <meta property="og:site_name" content="HSmiling&#39;s Blog">
-<meta property="og:description" content="2021-11-10开通了属于HSmiling的博客，该博客主要记录学习过程中的笔记及一些生活上的感受，期待能长久的更新下去。那就先立个flag，一周至少一篇吧~——HSmiling 写于2021.11.11">
+<meta property="og:description" content="2021-11-16 初步阅读论文  2021-11-17 完成1、2、3节初步阅读，在基于云的Vod系统设计部分提出疑问  2021-11-18 完成第4、5节初步阅读  2021-11-20完成文档初步整理，发布初步文档，但算法、具体效果及后期扩展部分还有待进一步完善阅读，赶在ddl前的无奈~">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-11-09T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-11-10T01:12:54.392Z">
+<meta property="og:image" content="http://example.com/2021/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/figure_1_1.PNG">
+<meta property="og:image" content="http://example.com/2021/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/figure_1_5.PNG">
+<meta property="og:image" content="http://example.com/2021/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/figure_1_6.PNG">
+<meta property="article:published_time" content="2021-11-20T09:11:07.000Z">
+<meta property="article:modified_time" content="2021-11-20T09:24:07.709Z">
 <meta property="article:author" content="HSmiling">
+<meta property="article:tag" content="论文阅读">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2021/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/figure_1_1.PNG">
   
     <link rel="alternative" href="/atom.xml" title="HSmiling&#39;s Blog" type="application/atom+xml">
   
@@ -142,38 +147,139 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Hexo 常见命令" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-笔记-《Minimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services》" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      hexo博客初识
+      笔记|《Minimizing Content Reorganization and Tolerating Imperfect Workload Prediction for Cloud-Based Video-on-Demand Services》
     </h1>
   
 
         
-        <a href="/2021/11/10/Hexo%20%E5%B8%B8%E8%A7%81%E5%91%BD%E4%BB%A4/" class="archive-article-date">
-  	<time datetime="2021-11-09T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-10</time>
+        <a href="/2021/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/" class="archive-article-date">
+  	<time datetime="2021-11-20T09:11:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-20</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>2021-11-10开通了属于HSmiling的博客，该博客主要记录学习过程中的笔记及一些生活上的感受，期待能长久的更新下去。<br>那就先立个flag，一周至少一篇吧~<br>——HSmiling 写于2021.11.11</p>
+        <ul>
+<li><p>2021-11-16 初步阅读论文</p>
+</li>
+<li><p>2021-11-17 完成1、2、3节初步阅读，在基于云的Vod系统设计部分提出疑问</p>
+</li>
+<li><p>2021-11-18 完成第4、5节初步阅读</p>
+</li>
+<li><p>2021-11-20完成文档初步整理，发布初步文档，但算法、具体效果及后期扩展部分还有待进一步完善阅读，赶在ddl前的无奈~</p>
+</li>
+</ul>
 <span id="more"></span>
 
-
-<h2 id="Hexo常见指令"><a href="#Hexo常见指令" class="headerlink" title="Hexo常见指令"></a>Hexo常见指令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">hexo new <span class="string">&quot;postName&quot;</span> <span class="comment">#新建文章 </span></span><br><span class="line">hexo new page <span class="string">&quot;pageName&quot;</span> <span class="comment">#新建页面 </span></span><br><span class="line">hexo generate <span class="comment">#生成静态页面至public目录 </span></span><br><span class="line">hexo server <span class="comment">#开启预览访问端口（默认端口4000，&#x27;ctrl + c&#x27;关闭server） </span></span><br><span class="line">hexo deploy <span class="comment">#部署到GitHub </span></span><br><span class="line">hexo <span class="built_in">help</span>  <span class="comment">#查看帮助 </span></span><br><span class="line">hexo version  <span class="comment">#查看Hexo的版本</span></span><br></pre></td></tr></table></figure>
-
-<p>缩写：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hexo n == hexo new</span><br><span class="line">hexo g == hexo generate</span><br><span class="line">hexo s == hexo server</span><br><span class="line">hexo d == hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>组合命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo s -g #生成并本地预览</span><br><span class="line">hexo d -g #生成并上传</span><br></pre></td></tr></table></figure>
-
+<h1 id="文献信息概述"><a href="#文献信息概述" class="headerlink" title="文献信息概述"></a>文献信息概述</h1><h2 id="title"><a href="#title" class="headerlink" title="title"></a>title</h2><p>笔记|《Minimizing Content Reorganization and Tolerating Imperfect Workload Prediction for Cloud-Based Video-on-Demand Services》</p>
+<h2 id="KeyWords"><a href="#KeyWords" class="headerlink" title="KeyWords"></a>KeyWords</h2><p>动态服务器配置、视频点播、云计算</p>
+<h2 id="Abstract-amp-Introduction"><a href="#Abstract-amp-Introduction" class="headerlink" title="Abstract &amp; Introduction"></a>Abstract &amp; Introduction</h2><p>为降低Vod服务中的成本，该文献中提出基于现交现付模式的云平台虚拟系统以实现<strong>内容重组的最小化</strong>和<strong>不完善工作负载预测的可容忍性</strong>。</p>
+<h2 id="研究方法"><a href="#研究方法" class="headerlink" title="研究方法"></a>研究方法</h2><p>思想：基于MW算法增加一组信道作为吸收器，以消耗未使用的带宽，从而使实例重组最小化、增强工作负载预测的安全边界。基于该思想设计相应算法。</p>
+<h2 id="创新点"><a href="#创新点" class="headerlink" title="创新点"></a>创新点</h2><ul>
+<li><p>第一个从最小化内容重组和容纳不完善工作负载预测的角度提出解决方案；</p>
+</li>
+<li><p>当达到相同水平服务器租赁成本时：</p>
+<p>1）内容重组被最小化</p>
+<p>2）服务器配置的安全边际降低以进一步降低成本</p>
+<p>3）在单位时间内具有高质量配置</p>
+</li>
+</ul>
+<h1 id="实现方法"><a href="#实现方法" class="headerlink" title="实现方法"></a>实现方法</h1><h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>自主管理的内容基础设施更可取， eg:URL链接重定向</p>
+<p>基于现收现付的云平台构建专有虚拟基础设施</p>
+<p>最小服务化成本（支付给云服务商的资源成本）：降低成本方法——动态服务器配置或DSP</p>
+<p>论文脉络梳理：</p>
+<p>主要可以分为两块：（环境）虚拟系统设计（2），内容重组、满足工作负载预测的方法（3、4、5、6）</p>
+<h2 id="基于云的Vod系统设计"><a href="#基于云的Vod系统设计" class="headerlink" title="基于云的Vod系统设计"></a>基于云的Vod系统设计</h2><p><strong>服务器配置方式选择</strong></p>
+<p>流媒体请求服务主要受到磁盘存储、网络带宽的限制。磁盘存储与内容存储相关；网络带宽与存储内容分配请求相关。故该文献CDN服务器选择“邀请做客”的方式，采用实例存储（服务器将内容预加载到其本地实例存储中，并在请求出现时从实例存储中获取内容），关注于Instance Placement Controller。将动态服务器的配置问题抽象为二维装箱问题处理。</p>
+<p>Q：该方式中涉及到服务器容量有限、持久性差的缺陷如何修正？</p>
+<p><strong>动态服务器配置问题抽象化</strong></p>
+<p>将动态服务器的配置问题抽象为二维装箱问题处理。每个服务器都是一个具有二维的箱；每个内容都是一个具有二维的项目；目标是用最少的箱子数量打包所有的项目。</p>
+<ul>
+<li><p>图一 基于云的Vod系统工作图</p>
+<p><img src="/2021/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/figure_1_1.PNG"></p>
+<p>在非峰值时期，由于工作量的减少，通过动态服务器的配置可以使服务器的成本最小化</p>
+<p><strong>关注点</strong></p>
+<p>该文献主要关注实例放置控制器的使用对服务器成本的显著影响</p>
+</li>
+</ul>
+<h2 id="思想介绍"><a href="#思想介绍" class="headerlink" title="思想介绍"></a>思想介绍</h2><p>moving window（MV）在动态服务器配置时将其转化为CCBP问题，却未考虑实例存储重组带来的影响，同时在工作负载预测不完善条件下是次优解决方法。</p>
+<ul>
+<li>思路：添加空余信道作为工作负载吸收器</li>
+</ul>
+<p>![](figure_1_3.PNG  style=”zoom: 67%;” )![](figure_1_4.PNG  style=”zoom: 67%;” )</p>
+<p>通过添加一个信道可以明显看出，阶段变化后，在同样释放服务器C的情况下，实例重组的现象明显得到缓解</p>
+<h2 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a>算法实现</h2><ul>
+<li><p>分组通道算法</p>
+<p>在任何给定时间段内，确保每组的所有剩余容量被吸收</p>
+</li>
+</ul>
+<p><img src="/2021/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/figure_1_5.PNG"></p>
+<ul>
+<li>周期调度算法</li>
+</ul>
+<p><img src="/2021/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/figure_1_6.PNG"></p>
+<h1 id="知识补充"><a href="#知识补充" class="headerlink" title="知识补充"></a>知识补充</h1><ul>
+<li><p>CDNS(content distribution networks)内容分发网络</p>
+<blockquote>
+<p>基本原理是在现有Internet中新增一层网络架构，将网站的内容发布到最接近用户的网络”边缘”，使用户可以就近取得所需的内容，解决Internet网络拥塞状况，提高用户访问网站的响应速度。从技术上全面解决由于网络带宽小、用户访问量大、网点分布不均等原因，解决用户访问网站的响应速度慢的根本原因。</p>
+<p>参考博客：<a target="_blank" rel="noopener" href="https://blog.csdn.net/charlene0824/article/details/52127824">(5条消息) CDN（内容分发网络）技术概述_charlene0824的博客-CSDN博客_内容分发网络</a></p>
+</blockquote>
+<ul>
+<li><p>要件</p>
+<p>分布式存储、负载均衡、网络请求的重定向、内容管理</p>
+<p>注：内容管理和全局网络流量管理是核心</p>
+</li>
+<li><p>CDN节点组成部分：负载均衡设备、高速缓存服务器</p>
+</li>
+<li><p>CDN两种服务器安置原则</p>
+<ul>
+<li><p>深入</p>
+<p>由Akamai首创，通过在遍及全球的接入ISP中部署服务器集群来深入到ISP的接入网中，是一种高度分布式设计，维护和管理集群困难；靠近端用户，通过减少端用户和CDN集群之间链路和路由器的数量，从而改善用户感受的时延和吞吐量；</p>
+</li>
+<li><p>邀请做客</p>
+<p>由Limelight和其它CDN公司采用，通过在少量关键位置建造大集群来邀请ISP做客；不是将集群放在接入ISP中，这些CDN通常将它们的集群放置在因特网交换点（IXP）；</p>
+<p>（本文关注于服务器与用户之间的吞吐量，故选择“邀请做客”的方式）</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>视频点播服务（Video-on-demand）</p>
+<p>eg：典型在线Vod服务提供商：youku、netFlix</p>
+</li>
+<li><p>pay-as-you-go cloud</p>
+<p>现收现付（PAYG）是一种公用计算计费方法，在云计算中面向组织和最终用户实施</p>
+<blockquote>
+<p>PAYG 允许用户扩展，定制和配置计算资源，包括软件，存储和开发平台。资源费用基于已使用的服务，而不是整个基础架构。</p>
+<p>公共云资源以不同方式处理和应用 PAYG 模型。例如，供应专用云服务器的用户通常根据服务器功率和使用情况以及经常性地计费。软件即服务（SaaS）的工作方式类似，用户租用软件和自定义功能。存储即服务（SaaS）计费经常轮换，因为存储需求的增加通常会逐渐增加定价。</p>
+<p>现收现付制亦称“收付实现制”。是以货币实际收付的时间作为核算的标准，来确定本期收入和支出的一种会计核算方法。按照这种标准，任何收益，在未实际收到货币资金之前，不认为是收益;任何费用，在未实际付出货币资金之前，也不算是费用。即凡在本期实际收到款项的收益和付出款项的费用，不论其是否应属于本期，均作为本期收益和费用处理，凡在本期没有实际收到款项，即使有些收益和费用已经发生，也不作为本期的收益和费用处理。</p>
+<p>选自：<a target="_blank" rel="noopener" href="https://www.leixue.com/ask/pay-as-you-go">现收现付是什么 - 泪雪网 (leixue.com)</a></p>
+</blockquote>
+</li>
+<li><p>EBS</p>
+<p>参考文档：<a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AmazonEBS.html">Amazon Elastic Block Store (Amazon EBS) - Amazon Elastic Compute Cloud</a></p>
+</li>
+<li><p>装箱问题（packing problem）</p>
+<blockquote>
+<p>经典的装箱问题：要求把一定数量的物品放入容量相同的一些箱子中,使得每个箱子中的物品大小之和不超过箱子容量并使所用的箱子数目最少。</p>
+<p>二维装箱问题（two-dimensional bin packing problem）：考虑两个因素——给定一张矩形的纸（布料、皮革），要求从这张纸上剪出给定的大小不一的形状，求一种剪法使得剪出的废料的面积总和最小。</p>
+</blockquote>
+<p>在该文献中将动态服务器配置转换为二维装箱问题，每个服务器都是一个具有二维的箱；每个内容都是一个具有二维的项目；目标是用最少的箱子数量打包所有的项目。（two-dimensional bin packing problem）</p>
+<ul>
+<li><p>CCBP(the class constrained bin packing problem)</p>
+<p>有M个不同类的单位大小的项目，需要打包道N个背包中，目的是找到以恶使N 最小化的配置方案，使NP-Hard问题</p>
+</li>
+</ul>
+</li>
+</ul>
 
       
 
@@ -203,6 +309,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">论文阅读</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -253,7 +370,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/11/10/Hexo%20%E5%B8%B8%E8%A7%81%E5%91%BD%E4%BB%A4/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -267,15 +384,11 @@
   
 <nav id="article-nav">
   
-    <a href="/2021/11/11/Win10+Debian11%E5%8F%8C%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          win10+Debian11双系统的配置小记
-        
-      </div>
-    </a>
   
+    <a href="/2021/11/13/PA00/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">PA00随记</div>
+      <i class="icon-circle-right"></i>
+    </a>
   
 </nav>
 
@@ -300,7 +413,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Hexo%E5%B8%B8%E8%A7%81%E6%8C%87%E4%BB%A4"><span class="toc-number">1.</span> <span class="toc-text">Hexo常见指令</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%96%87%E7%8C%AE%E4%BF%A1%E6%81%AF%E6%A6%82%E8%BF%B0"><span class="toc-number">1.</span> <span class="toc-text">文献信息概述</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#title"><span class="toc-number">1.1.</span> <span class="toc-text">title</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#KeyWords"><span class="toc-number">1.2.</span> <span class="toc-text">KeyWords</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Abstract-amp-Introduction"><span class="toc-number">1.3.</span> <span class="toc-text">Abstract &amp; Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A0%94%E7%A9%B6%E6%96%B9%E6%B3%95"><span class="toc-number">1.4.</span> <span class="toc-text">研究方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E6%96%B0%E7%82%B9"><span class="toc-number">1.5.</span> <span class="toc-text">创新点</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text">实现方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.1.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E4%BA%91%E7%9A%84Vod%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1"><span class="toc-number">2.2.</span> <span class="toc-text">基于云的Vod系统设计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%9D%E6%83%B3%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.3.</span> <span class="toc-text">思想介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0"><span class="toc-number">2.4.</span> <span class="toc-text">算法实现</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86%E8%A1%A5%E5%85%85"><span class="toc-number">3.</span> <span class="toc-text">知识补充</span></a></li></ol>
                     </div>
                 </span>
             </div>

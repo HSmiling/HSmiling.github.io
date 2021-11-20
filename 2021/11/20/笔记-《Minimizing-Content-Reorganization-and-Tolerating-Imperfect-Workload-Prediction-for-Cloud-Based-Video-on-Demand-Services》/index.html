@@ -6,24 +6,26 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>笔记|《Minimizing Content Reorganization and Tolerating Imperfect Workload Prediction for Cloud-Based Video-on-Demand Services》 | HSmiling&#39;s Blog</title>
+  <title>笔记|基于最小化内容重组并容忍不完美的工作负载预测的云视频点播服务 | HSmiling&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="2021-11-16 初步阅读论文  2021-11-17 完成1、2、3节初步阅读，在基于云的Vod系统设计部分提出疑问  2021-11-18 完成第4、5节初步阅读  2021-11-20完成文档初步整理，发布初步文档，但算法、具体效果及后期扩展部分还有待进一步完善阅读，赶在ddl前的无奈~">
 <meta property="og:type" content="article">
-<meta property="og:title" content="笔记|《Minimizing Content Reorganization and Tolerating Imperfect Workload Prediction for Cloud-Based Video-on-Demand Services》">
+<meta property="og:title" content="笔记|基于最小化内容重组并容忍不完美的工作负载预测的云视频点播服务">
 <meta property="og:url" content="http://example.com/2021/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/index.html">
 <meta property="og:site_name" content="HSmiling&#39;s Blog">
 <meta property="og:description" content="2021-11-16 初步阅读论文  2021-11-17 完成1、2、3节初步阅读，在基于云的Vod系统设计部分提出疑问  2021-11-18 完成第4、5节初步阅读  2021-11-20完成文档初步整理，发布初步文档，但算法、具体效果及后期扩展部分还有待进一步完善阅读，赶在ddl前的无奈~">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/2021/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/figure_1_1.PNG">
-<meta property="og:image" content="http://example.com/2021/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/figure_1_5.PNG">
-<meta property="og:image" content="http://example.com/2021/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/figure_1_6.PNG">
+<meta property="og:image" content="http://example.com/2021/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/1.png">
+<meta property="og:image" content="http://example.com/2021/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/2.png">
+<meta property="og:image" content="http://example.com/2021/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/3.png">
+<meta property="og:image" content="http://example.com/2021/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/4.png">
+<meta property="og:image" content="http://example.com/2021/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/5.png">
 <meta property="article:published_time" content="2021-11-20T09:11:07.000Z">
-<meta property="article:modified_time" content="2021-11-20T09:24:07.709Z">
+<meta property="article:modified_time" content="2021-11-20T09:31:17.366Z">
 <meta property="article:author" content="HSmiling">
 <meta property="article:tag" content="论文阅读">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2021/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/figure_1_1.PNG">
+<meta name="twitter:image" content="http://example.com/2021/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/1.png">
   
     <link rel="alternative" href="/atom.xml" title="HSmiling&#39;s Blog" type="application/atom+xml">
   
@@ -154,7 +156,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      笔记|《Minimizing Content Reorganization and Tolerating Imperfect Workload Prediction for Cloud-Based Video-on-Demand Services》
+      笔记|基于最小化内容重组并容忍不完美的工作负载预测的云视频点播服务
     </h1>
   
 
@@ -204,7 +206,7 @@
 <p>将动态服务器的配置问题抽象为二维装箱问题处理。每个服务器都是一个具有二维的箱；每个内容都是一个具有二维的项目；目标是用最少的箱子数量打包所有的项目。</p>
 <ul>
 <li><p>图一 基于云的Vod系统工作图</p>
-<p><img src="/2021/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/figure_1_1.PNG"></p>
+<p><img src="/2021/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/1.png"></p>
 <p>在非峰值时期，由于工作量的减少，通过动态服务器的配置可以使服务器的成本最小化</p>
 <p><strong>关注点</strong></p>
 <p>该文献主要关注实例放置控制器的使用对服务器成本的显著影响</p>
@@ -214,18 +216,18 @@
 <ul>
 <li>思路：添加空余信道作为工作负载吸收器</li>
 </ul>
-<p>![](figure_1_3.PNG  style=”zoom: 67%;” )![](figure_1_4.PNG  style=”zoom: 67%;” )</p>
+<p><img src="/2021/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/2.png"><img src="/2021/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/3.png"></p>
 <p>通过添加一个信道可以明显看出，阶段变化后，在同样释放服务器C的情况下，实例重组的现象明显得到缓解</p>
 <h2 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a>算法实现</h2><ul>
 <li><p>分组通道算法</p>
 <p>在任何给定时间段内，确保每组的所有剩余容量被吸收</p>
 </li>
 </ul>
-<p><img src="/2021/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/figure_1_5.PNG"></p>
+<p><img src="/2021/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/4.png"></p>
 <ul>
 <li>周期调度算法</li>
 </ul>
-<p><img src="/2021/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/figure_1_6.PNG"></p>
+<p><img src="/2021/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/5.png"></p>
 <h1 id="知识补充"><a href="#知识补充" class="headerlink" title="知识补充"></a>知识补充</h1><ul>
 <li><p>CDNS(content distribution networks)内容分发网络</p>
 <blockquote>

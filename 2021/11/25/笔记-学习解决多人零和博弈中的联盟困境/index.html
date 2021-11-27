@@ -6,31 +6,31 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>笔记|学习解决多人零和博弈中的联盟困境 | HSmiling&#39;s Blog</title>
+  <title>学习解决多人零和博弈中的联盟困境 | HSmiling&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="2021-11-20 选定阅读论文 2021-11-21 初步阅读论文，提取研究问题及相关贡献 2021-11-22 精细阅读第1、2节相关内容，其中马尔可夫策略下的多智能体学习方法有待进一步深化，第3节已大致浏览，下一步将针对两个实例进行具体阅读和学习 2021-11-23 阅读完第3节相关内容，看到4.1节。其中智能体的神经网络构造、图8中的相关系数、补充概念中的几个知识点记得探究 2021">
 <meta property="og:type" content="article">
-<meta property="og:title" content="笔记|学习解决多人零和博弈中的联盟困境">
+<meta property="og:title" content="学习解决多人零和博弈中的联盟困境">
 <meta property="og:url" content="http://example.com/2021/11/25/%E7%AC%94%E8%AE%B0-%E5%AD%A6%E4%B9%A0%E8%A7%A3%E5%86%B3%E5%A4%9A%E4%BA%BA%E9%9B%B6%E5%92%8C%E5%8D%9A%E5%BC%88%E4%B8%AD%E7%9A%84%E8%81%94%E7%9B%9F%E5%9B%B0%E5%A2%83/index.html">
 <meta property="og:site_name" content="HSmiling&#39;s Blog">
 <meta property="og:description" content="2021-11-20 选定阅读论文 2021-11-21 初步阅读论文，提取研究问题及相关贡献 2021-11-22 精细阅读第1、2节相关内容，其中马尔可夫策略下的多智能体学习方法有待进一步深化，第3节已大致浏览，下一步将针对两个实例进行具体阅读和学习 2021-11-23 阅读完第3节相关内容，看到4.1节。其中智能体的神经网络构造、图8中的相关系数、补充概念中的几个知识点记得探究 2021">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/2021/11/25/%E7%AC%94%E8%AE%B0-%E5%AD%A6%E4%B9%A0%E8%A7%A3%E5%86%B3%E5%A4%9A%E4%BA%BA%E9%9B%B6%E5%92%8C%E5%8D%9A%E5%BC%88%E4%B8%AD%E7%9A%84%E8%81%94%E7%9B%9F%E5%9B%B0%E5%A2%83/20211125_1.png">
-<meta property="og:image" content="http://example.com/2021/11/25/%E7%AC%94%E8%AE%B0-%E5%AD%A6%E4%B9%A0%E8%A7%A3%E5%86%B3%E5%A4%9A%E4%BA%BA%E9%9B%B6%E5%92%8C%E5%8D%9A%E5%BC%88%E4%B8%AD%E7%9A%84%E8%81%94%E7%9B%9F%E5%9B%B0%E5%A2%83/20211125_2.png">
-<meta property="og:image" content="http://example.com/2021/11/25/%E7%AC%94%E8%AE%B0-%E5%AD%A6%E4%B9%A0%E8%A7%A3%E5%86%B3%E5%A4%9A%E4%BA%BA%E9%9B%B6%E5%92%8C%E5%8D%9A%E5%BC%88%E4%B8%AD%E7%9A%84%E8%81%94%E7%9B%9F%E5%9B%B0%E5%A2%83/20211125_3.png">
-<meta property="og:image" content="http://example.com/2021/11/25/%E7%AC%94%E8%AE%B0-%E5%AD%A6%E4%B9%A0%E8%A7%A3%E5%86%B3%E5%A4%9A%E4%BA%BA%E9%9B%B6%E5%92%8C%E5%8D%9A%E5%BC%88%E4%B8%AD%E7%9A%84%E8%81%94%E7%9B%9F%E5%9B%B0%E5%A2%83/20211125_4-1.png">
-<meta property="og:image" content="http://example.com/2021/11/25/%E7%AC%94%E8%AE%B0-%E5%AD%A6%E4%B9%A0%E8%A7%A3%E5%86%B3%E5%A4%9A%E4%BA%BA%E9%9B%B6%E5%92%8C%E5%8D%9A%E5%BC%88%E4%B8%AD%E7%9A%84%E8%81%94%E7%9B%9F%E5%9B%B0%E5%A2%83/20211125_4-2.png">
-<meta property="og:image" content="http://example.com/2021/11/25/%E7%AC%94%E8%AE%B0-%E5%AD%A6%E4%B9%A0%E8%A7%A3%E5%86%B3%E5%A4%9A%E4%BA%BA%E9%9B%B6%E5%92%8C%E5%8D%9A%E5%BC%88%E4%B8%AD%E7%9A%84%E8%81%94%E7%9B%9F%E5%9B%B0%E5%A2%83/figure%5C20211125_5.png">
-<meta property="og:image" content="http://example.com/2021/11/25/%E7%AC%94%E8%AE%B0-%E5%AD%A6%E4%B9%A0%E8%A7%A3%E5%86%B3%E5%A4%9A%E4%BA%BA%E9%9B%B6%E5%92%8C%E5%8D%9A%E5%BC%88%E4%B8%AD%E7%9A%84%E8%81%94%E7%9B%9F%E5%9B%B0%E5%A2%83/20211125_6.png">
-<meta property="og:image" content="http://example.com/2021/11/25/%E7%AC%94%E8%AE%B0-%E5%AD%A6%E4%B9%A0%E8%A7%A3%E5%86%B3%E5%A4%9A%E4%BA%BA%E9%9B%B6%E5%92%8C%E5%8D%9A%E5%BC%88%E4%B8%AD%E7%9A%84%E8%81%94%E7%9B%9F%E5%9B%B0%E5%A2%83/20211125_7.png">
-<meta property="og:image" content="http://example.com/2021/11/25/%E7%AC%94%E8%AE%B0-%E5%AD%A6%E4%B9%A0%E8%A7%A3%E5%86%B3%E5%A4%9A%E4%BA%BA%E9%9B%B6%E5%92%8C%E5%8D%9A%E5%BC%88%E4%B8%AD%E7%9A%84%E8%81%94%E7%9B%9F%E5%9B%B0%E5%A2%83/20211125_8.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/HSmiling/Images/20211125_1.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/HSmiling/Images/20211125_2.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/HSmiling/Images/20211125_3.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/HSmiling/Images/20211125_4-1.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/HSmiling/Images/20211125_4-2.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/HSmiling/Images/20211125_5.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/HSmiling/Images/20211125_6.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/HSmiling/Images/20211125_7.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/HSmiling/Images/20211125_8.png">
 <meta property="og:image" content="http://example.com/2021/11/25/%E7%AC%94%E8%AE%B0-%E5%AD%A6%E4%B9%A0%E8%A7%A3%E5%86%B3%E5%A4%9A%E4%BA%BA%E9%9B%B6%E5%92%8C%E5%8D%9A%E5%BC%88%E4%B8%AD%E7%9A%84%E8%81%94%E7%9B%9F%E5%9B%B0%E5%A2%83/20211125_9.png">
 <meta property="article:published_time" content="2021-11-24T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-11-25T07:27:49.159Z">
+<meta property="article:modified_time" content="2021-11-27T02:48:49.044Z">
 <meta property="article:author" content="HSmiling">
 <meta property="article:tag" content="论文阅读">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2021/11/25/%E7%AC%94%E8%AE%B0-%E5%AD%A6%E4%B9%A0%E8%A7%A3%E5%86%B3%E5%A4%9A%E4%BA%BA%E9%9B%B6%E5%92%8C%E5%8D%9A%E5%BC%88%E4%B8%AD%E7%9A%84%E8%81%94%E7%9B%9F%E5%9B%B0%E5%A2%83/20211125_1.png">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/HSmiling/Images/20211125_1.png">
   
     <link rel="alternative" href="/atom.xml" title="HSmiling&#39;s Blog" type="application/atom+xml">
   
@@ -161,7 +161,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      笔记|学习解决多人零和博弈中的联盟困境
+      学习解决多人零和博弈中的联盟困境
     </h1>
   
 
@@ -311,12 +311,12 @@
 <p>联盟困境是当其他玩家处于某一状态时，玩家i和j面临的社会困境</p>
 <p>文献通过两个实例证明基于梯度的学习在联盟困境存在下无法达到合理结果</p>
 <h3 id="实例1-Counting-alliance-dilemmas"><a href="#实例1-Counting-alliance-dilemmas" class="headerlink" title="实例1 Counting alliance dilemmas"></a>实例1 Counting alliance dilemmas</h3><p>对于3个玩家2个动作的零和游戏，进行预测：</p>
-<img src="/2021/11/25/%E7%AC%94%E8%AE%B0-%E5%AD%A6%E4%B9%A0%E8%A7%A3%E5%86%B3%E5%A4%9A%E4%BA%BA%E9%9B%B6%E5%92%8C%E5%8D%9A%E5%BC%88%E4%B8%AD%E7%9A%84%E8%81%94%E7%9B%9F%E5%9B%B0%E5%A2%83/20211125_1.png" alt="1" style="zoom:80%;">
+<img src="https://cdn.jsdelivr.net/gh/HSmiling/Images/20211125_1.png" alt="1" style="zoom:80%;">
 
 <p>共进行1000次实验，发现54%包含联盟困境，12%为严格联盟困境。</p>
 <ul>
 <li><p>图二：联盟困境在p-q空间上的分布  图三</p>
-<p><img src="/2021/11/25/%E7%AC%94%E8%AE%B0-%E5%AD%A6%E4%B9%A0%E8%A7%A3%E5%86%B3%E5%A4%9A%E4%BA%BA%E9%9B%B6%E5%92%8C%E5%8D%9A%E5%BC%88%E4%B8%AD%E7%9A%84%E8%81%94%E7%9B%9F%E5%9B%B0%E5%A2%83/20211125_2.png" alt="2" style="zoom: 67%;"><img src="/2021/11/25/%E7%AC%94%E8%AE%B0-%E5%AD%A6%E4%B9%A0%E8%A7%A3%E5%86%B3%E5%A4%9A%E4%BA%BA%E9%9B%B6%E5%92%8C%E5%8D%9A%E5%BC%88%E4%B8%AD%E7%9A%84%E8%81%94%E7%9B%9F%E5%9B%B0%E5%A2%83/20211125_3.png" alt="3" style="zoom: 80%;"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/HSmiling/Images/20211125_2.png" alt="2" style="zoom: 67%;"><img src="https://cdn.jsdelivr.net/gh/HSmiling/Images/20211125_3.png" alt="3" style="zoom: 80%;"></p>
 <p>横坐标代表的是顽固智能体的政策，纵坐标是社会困境的产生数量，发现随着“顽固”智能体的政策趋于确定性时（趋于0或趋于1时），联盟困境变得更加普遍</p>
 </li>
 </ul>
@@ -328,7 +328,7 @@
 </blockquote>
 <ul>
 <li><p>图四：上述两种情况基于梯度学习的学习动态</p>
-<p><img src="/2021/11/25/%E7%AC%94%E8%AE%B0-%E5%AD%A6%E4%B9%A0%E8%A7%A3%E5%86%B3%E5%A4%9A%E4%BA%BA%E9%9B%B6%E5%92%8C%E5%8D%9A%E5%BC%88%E4%B8%AD%E7%9A%84%E8%81%94%E7%9B%9F%E5%9B%B0%E5%A2%83/20211125_4-1.png" alt="4-1" style="zoom: 67%;"><img src="/2021/11/25/%E7%AC%94%E8%AE%B0-%E5%AD%A6%E4%B9%A0%E8%A7%A3%E5%86%B3%E5%A4%9A%E4%BA%BA%E9%9B%B6%E5%92%8C%E5%8D%9A%E5%BC%88%E4%B8%AD%E7%9A%84%E8%81%94%E7%9B%9F%E5%9B%B0%E5%A2%83/20211125_4-2.png" alt="4-2" style="zoom: 67%;"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/HSmiling/Images/20211125_4-1.png" alt="4-1" style="zoom: 67%;"><img src="https://cdn.jsdelivr.net/gh/HSmiling/Images/20211125_4-2.png" alt="4-2" style="zoom: 67%;"></p>
 <p>图中的直线是智能体在具有相同学习速率的softmax策略梯度下的轨迹，情况B中多智能体均学会匹配顽固智能体；而情况A中两个智能体都没学会如何匹配。</p>
 <ul>
 <li><p>说明</p>
@@ -357,7 +357,7 @@
 <p>每个玩家轮流玩1次游戏。玩家0送给玩家2一个筹码；玩家1丢弃了一个黄色筹码；玩家2送给玩家0一个红色筹码</p>
 </li>
 </ul>
-<p><img src="/2021/11/25/%E7%AC%94%E8%AE%B0-%E5%AD%A6%E4%B9%A0%E8%A7%A3%E5%86%B3%E5%A4%9A%E4%BA%BA%E9%9B%B6%E5%92%8C%E5%8D%9A%E5%BC%88%E4%B8%AD%E7%9A%84%E8%81%94%E7%9B%9F%E5%9B%B0%E5%A2%83/figure%5C20211125_5.png" alt="5"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/HSmiling/Images/20211125_5.png" alt="5"></p>
 <p>博弈情况分析：</p>
 <p>“每个玩家选择丢弃”能够达到子问题完美纳什均衡，否则就是以牺牲自己为代价满足他人；</p>
 <p>两个玩家交换芯片，实现双向平局，而非三方平局；</p>
@@ -373,7 +373,7 @@
 <p>D-F图中是一个玩家被复制机器人所取代（该机器人总模仿learner0的行为），此时learner0知道要赠送礼物，因为必会得到回报，最终达到两人平局。而learner1最初学会丢弃，但是发现不会提供额外奖励后，熵正则化器会导致所选择动作的随机波动</p>
 </li>
 </ul>
-<img src="/2021/11/25/%E7%AC%94%E8%AE%B0-%E5%AD%A6%E4%B9%A0%E8%A7%A3%E5%86%B3%E5%A4%9A%E4%BA%BA%E9%9B%B6%E5%92%8C%E5%8D%9A%E5%BC%88%E4%B8%AD%E7%9A%84%E8%81%94%E7%9B%9F%E5%9B%B0%E5%A2%83/20211125_6.png" alt="6" style="zoom:67%;">
+<img src="https://cdn.jsdelivr.net/gh/HSmiling/Images/20211125_6.png" alt="6" style="zoom:67%;">
 
 <p><strong>得到结论</strong></p>
 <p>强化学习在已有支持合作行为下是可适应的，但是MARL无法做出出不信任联盟中所必须的互惠行为</p>
@@ -402,7 +402,7 @@
 <blockquote>
 <p>随着代理商竞争签订合同以保证他们更多的礼物，丢弃的数量减少，签订的合同数量增加</p>
 </blockquote>
-<img src="/2021/11/25/%E7%AC%94%E8%AE%B0-%E5%AD%A6%E4%B9%A0%E8%A7%A3%E5%86%B3%E5%A4%9A%E4%BA%BA%E9%9B%B6%E5%92%8C%E5%8D%9A%E5%BC%88%E4%B8%AD%E7%9A%84%E8%81%94%E7%9B%9F%E5%9B%B0%E5%A2%83/20211125_7.png" alt="7" style="zoom:67%;"></li>
+<img src="https://cdn.jsdelivr.net/gh/HSmiling/Images/20211125_7.png" alt="7" style="zoom:67%;"></li>
 <li><p>图8：证明签定合同与在游戏中积累更多筹码具有显著相关性，签约是有利的</p>
 <p>培训后进行50场比赛，记录每个玩家的筹码总书和签订合同数，线性回归显示呈正相关</p>
 <p>Q：参数R和P是什么？</p>
@@ -411,7 +411,7 @@
 </ul>
 </li>
 </ul>
-<img src="/2021/11/25/%E7%AC%94%E8%AE%B0-%E5%AD%A6%E4%B9%A0%E8%A7%A3%E5%86%B3%E5%A4%9A%E4%BA%BA%E9%9B%B6%E5%92%8C%E5%8D%9A%E5%BC%88%E4%B8%AD%E7%9A%84%E8%81%94%E7%9B%9F%E5%9B%B0%E5%A2%83/20211125_8.png" alt="8" style="zoom:50%;">
+<img src="https://cdn.jsdelivr.net/gh/HSmiling/Images/20211125_8.png" alt="8" style="zoom:50%;">
 
 <p><strong>具有时限的合同</strong></p>
 <p>扩展：签署合同后，智能体需要在b时间范围内采取已承诺行为；否则违反合同并获得相关负面奖励r<sub>c</sub>；合同破裂后，智能体可签署新合同；</p>
@@ -628,7 +628,7 @@
   
   
     <a href="/2021/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">笔记|基于最小化内容重组并容忍不完美的工作负载预测的云视频点播服务</div>
+      <div class="article-nav-title">基于最小化内容重组并容忍不完美的工作负载预测的云视频点播服务</div>
       <i class="icon-circle-right"></i>
     </a>
   

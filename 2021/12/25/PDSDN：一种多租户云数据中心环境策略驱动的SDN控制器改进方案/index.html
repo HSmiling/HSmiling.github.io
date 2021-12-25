@@ -1,0 +1,396 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PDSDN：一种多租户云数据中心环境策略驱动的SDN控制器改进方案 | HSmiling's Blog</title><meta name="keywords" content="云计算,SDN"><meta name="author" content="HSmiling"><meta name="copyright" content="HSmiling"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="该文献提出一种云数据中心环境下基于多租户策略驱动的SDN控制器方案，以满足管理和性能需求。其核心是PDSDN系统，该系统通过自定义租户策略批量处理租户的需求。  2021-12-20：初次阅读论文，接触SDN，梳理架构 2021-12-21：阅读第一节部分 2021-12-22：阅读第二节1、2部分，学习租户操作优先级分配算法，对于基础策略的相关专业概念还需要进一步深入了解一下 2021-12-2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PDSDN：一种多租户云数据中心环境策略驱动的SDN控制器改进方案">
+<meta property="og:url" content="http://example.com/2021/12/25/PDSDN%EF%BC%9A%E4%B8%80%E7%A7%8D%E5%A4%9A%E7%A7%9F%E6%88%B7%E4%BA%91%E6%95%B0%E6%8D%AE%E4%B8%AD%E5%BF%83%E7%8E%AF%E5%A2%83%E7%AD%96%E7%95%A5%E9%A9%B1%E5%8A%A8%E7%9A%84SDN%E6%8E%A7%E5%88%B6%E5%99%A8%E6%94%B9%E8%BF%9B%E6%96%B9%E6%A1%88/index.html">
+<meta property="og:site_name" content="HSmiling&#39;s Blog">
+<meta property="og:description" content="该文献提出一种云数据中心环境下基于多租户策略驱动的SDN控制器方案，以满足管理和性能需求。其核心是PDSDN系统，该系统通过自定义租户策略批量处理租户的需求。  2021-12-20：初次阅读论文，接触SDN，梳理架构 2021-12-21：阅读第一节部分 2021-12-22：阅读第二节1、2部分，学习租户操作优先级分配算法，对于基础策略的相关专业概念还需要进一步深入了解一下 2021-12-2">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/HSmiling/Images/image-20211224160016028.png">
+<meta property="article:published_time" content="2021-12-24T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-12-25T03:23:28.988Z">
+<meta property="article:author" content="HSmiling">
+<meta property="article:tag" content="云计算">
+<meta property="article:tag" content="SDN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/HSmiling/Images/image-20211224160016028.png"><link rel="shortcut icon" href="/img/head.png"><link rel="canonical" href="http://example.com/2021/12/25/PDSDN%EF%BC%9A%E4%B8%80%E7%A7%8D%E5%A4%9A%E7%A7%9F%E6%88%B7%E4%BA%91%E6%95%B0%E6%8D%AE%E4%B8%AD%E5%BF%83%E7%8E%AF%E5%A2%83%E7%AD%96%E7%95%A5%E9%A9%B1%E5%8A%A8%E7%9A%84SDN%E6%8E%A7%E5%88%B6%E5%99%A8%E6%94%B9%E8%BF%9B%E6%96%B9%E6%A1%88/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'PDSDN：一种多租户云数据中心环境策略驱动的SDN控制器改进方案',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-12-25 11:23:28'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/mycss.css"><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/loading.gif" data-original="/img/head.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">11</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 生活</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> Myself</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/gh/HSmiling/Images/image-20211224160016028.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">HSmiling's Blog</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 生活</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> Myself</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">PDSDN：一种多租户云数据中心环境策略驱动的SDN控制器改进方案</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-12-24T16:00:00.000Z" title="发表于 2021-12-25 00:00:00">2021-12-25</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-12-25T03:23:28.988Z" title="更新于 2021-12-25 11:23:28">2021-12-25</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%BA%E6%96%87/">论文</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="PDSDN：一种多租户云数据中心环境策略驱动的SDN控制器改进方案"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>该文献提出一种云数据中心环境下基于多租户策略驱动的SDN控制器方案，以满足管理和性能需求。其核心是PDSDN系统，该系统通过自定义租户策略批量处理租户的需求。</p>
+<ul>
+<li>2021-12-20：初次阅读论文，接触SDN，梳理架构</li>
+<li>2021-12-21：阅读第一节部分</li>
+<li>2021-12-22：阅读第二节1、2部分，学习租户操作优先级分配算法，对于基础策略的相关专业概念还需要进一步深入了解一下</li>
+<li>2021-12-24：初步阅读第2、3节部分，对测试实验的验证原理以及策略模块的实现具体原理可以继续深入深入</li>
+<li>2021-12-25：将初步内容阅读完毕，但是有关SDN相关技术架构和网络架构等知识，需要进一步学习探究</li>
+</ul>
+<p>整理OpenFlow、SDN、网络的学习笔记，留个坑~</p>
+<p>后期想做一个网络学习的系列，留个坑~</p>
+<h1 id="基本概述"><a href="#基本概述" class="headerlink" title="基本概述"></a>基本概述</h1><h2 id="论文标题"><a href="#论文标题" class="headerlink" title="论文标题"></a>论文标题</h2><p>《PDSDN: A policy-driven SDN controller improving scheme for multi-tenant cloud datacenter environments》</p>
+<h2 id="关键词"><a href="#关键词" class="headerlink" title="关键词"></a>关键词</h2><p>云计算、软件定义网络(SDN)、策略驱动、云数据中心、虚拟网络</p>
+<h2 id="研究问题"><a href="#研究问题" class="headerlink" title="研究问题"></a>研究问题</h2><p>SDN技术可运用于管理云平台的网络，收到企业的广泛关注。云计算数据中心使用SDN控制器定义自身虚拟网络、虚拟防火墙。租户通过云平台的网络组件调用SDN控制器北向接口管理云平台的网络。而当租户数量较大时，SDN与云平台交互频繁，容易出现冗余等问题。为简化SDN与云平台交互过程，该文献提出一种基于策略驱动的批处理网络操作SDN控制器方案，其中云数据中心管理器将与SDN相关的策略发送到SDN控制器，SDN控制器根据用户的权限和操作优先级对接收到的策略进行处理。网络资源管理可以与云数据中心环境中的其他资源管理有效集成。</p>
+<h2 id="贡献"><a href="#贡献" class="headerlink" title="贡献"></a>贡献</h2><p>该文献提出一种云数据中心环境下基于多租户策略驱动的SDN控制器方案，以满足管理和性能需求。其核心是PDSDN系统，该系统通过自定义租户策略批量处理租户的需求。主要贡献如下：</p>
+<ul>
+<li><p>减少平台负担。SDN控制器能够与云数据中心平台工作有效集成，并为其分担部分工作</p>
+</li>
+<li><p>便于使用。租户能够以直观方式定义虚拟网络、虚拟防火墙及流规则，无需编写程序或使用软件调用由SDN控制器提供的接口</p>
+</li>
+<li><p>PDSDN策略与租户访问策略、对象存储策略等云平台策略有效结合。租户、管理员共同管理云平台和SDN控制器</p>
+</li>
+<li><p>计算资源、租户请求时间的节省。云平台通过解析租户定义的策略，具有更好的管理网络资源的性能</p>
+</li>
+</ul>
+<h1 id="阅读笔记"><a href="#阅读笔记" class="headerlink" title="阅读笔记"></a>阅读笔记</h1><h2 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h2><ul>
+<li><p>SDN基本思想</p>
+<p>将网络设备控制功能从网络设备数据转发功能中分离。将交换器、路由器等控制功能转移到中央SDN控制器中，实现控制平面与数据平面的完全分离。</p>
+</li>
+<li><p>SDN控制器集成云平台模型</p>
+<ul>
+<li><p>云平台网络组件作为访问SDN控制器的应用程序</p>
+<p>应用程序通过网络组件操作SDN控制器并管理其网络资源，但应用程序操作受到该模式下网络组件限制，应直接调用SDN北向接口</p>
+</li>
+<li><p>云平台网络组件和SDN控制器构成点对点关系</p>
+<p>租户应用程序通过SDN控制器直接管理租户网络资源</p>
+</li>
+<li><p>云平台网络组件为SDN控制器提供南向接口</p>
+<p>应用程序通过使用SDN控制器的网络组件管理底层网络资源</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>目前的模型致力于网络组件，未能达到资源管理的完全交付；在真实情况中若能将租户的请求批量发送至SDN控制器，并交由其统一处理，可以减少租户工作量，提高SDN控制器的执行效率。</p>
+<p>该文献提出一种云数据中心环境下基于多租户策略驱动的SDN控制器方案，以满足管理和性能需求。其核心是PDSDN系统，该系统通过自定义租户策略批量处理租户的需求。</p>
+<h2 id="PDSDN设计方案"><a href="#PDSDN设计方案" class="headerlink" title="PDSDN设计方案"></a>PDSDN设计方案</h2><p><strong>基础策略定义</strong></p>
+<p>策略定义基本目标与AWS策略定义完全兼容，以实现统一策略分析。PDSDN使用SDN集成语言SIStatement，其中SIStatement使用SIPrincipal、SIAction、SIResource扩展AWS函数</p>
+<ul>
+<li><p>SIPrincipal</p>
+<p>扩展AWS语句主元素，基本形式如下：<br>$$<br>SIPricipal: {SDN:TenantUserID}<br>$$<br>keyword SDN表示该元素是一个与SDN相关的操作。</p>
+</li>
+<li><p>SIAction</p>
+<p>AWS动作元素，代表与网络管理相关操作,，可依据其定义进行任意扩展。如：创建虚拟子网定义为：<br>$$<br>SIAction: CreateVirtualNetwork<br>$$</p>
+</li>
+<li><p>SIResource</p>
+<p>从AWS语句资源元素扩展，SIResource的值与SIAction的值相关，并依照其值进行修改。SIResource包含同一租户多个虚拟子网定义，使得租户可在一个策略文件中创建多个虚拟子网，方便租户管理网络资源</p>
+</li>
+</ul>
+<p>（该部分最后一段没咋看懂，留个坑）</p>
+<p><strong>权限管理</strong></p>
+<p>其关键在于如何限制租户自定义策略的权限，以确保云数据中心管理员对租户拥有最终权限。</p>
+<ul>
+<li><p>策略优先级值</p>
+<p>参照OpenFlow协议，采用对策略划分优先级值的方法：</p>
+<p>所有优先级值范围0-255，管理员策略优先级值范围为128-255，租户策略优先级值范围为0-127。</p>
+</li>
+<li><p>管理员策略</p>
+<p>强调原子操作的定义和默认策略的描述</p>
+</li>
+<li><p>租户策略</p>
+<p>划分为基本优先级值和优先级偏移值，基本优先级值时基于应用程序场景的固定值</p>
+</li>
+</ul>
+<p>策略分解为解析租户策略文件后执行的原子动作，则有：<br>$$<br>租户动作的实际优先级值=动作固定优先级值+优先级偏移值（租户策略优先级值等于其操作的优先级值）<br>$$<br>其中，优先级偏移值是管理员动作的固定优先级值与基本优先级值之间的差值</p>
+<p>为防止租户行动实际优先值大于管理员的基本优先值，需要将租户行动固定的优先级值和管理员策略的优先级值限制在更小的范围内。</p>
+<ul>
+<li><p>==租户操作优先级分配算法==</p>
+<img src="/img/loading.gif" data-original="https://cdn.jsdelivr.net/gh/HSmiling/Images/image-20211222144504828.png" style="zoom:50%;" />
+
+<p>其中A代表一个原子操作，P[A]代表优先级值，a表示固定优先级类型，a的优先级值为p[a]。</p>
+<p>该算法首先计算原子动作的优先级偏移值，在解析租户策略文件时得到固定优先级值，然后得到原子动作的实际优先级值。其中租户原子操作的优先级值的范围为[0,127]，会低于所有管理员的原子操作优先级值</p>
+</li>
+</ul>
+<p><strong>策略冲突处理</strong></p>
+<p>管理员定义具有最高优先级值得默认策略，以解决租户之间所有可能的冲突。</p>
+<ul>
+<li><p>策略冲突解决算法</p>
+<img src="/img/loading.gif" data-original="https://cdn.jsdelivr.net/gh/HSmiling/Images/image-20211224150455433.png" style="zoom:50%;" />
+
+<p>首先确定冲突是否由管理员使用预定义策略解决，若无法解决，则由管理员全局默认策略解决。</p>
+</li>
+</ul>
+<h2 id="PDSDN实现"><a href="#PDSDN实现" class="headerlink" title="PDSDN实现"></a>PDSDN实现</h2><p><strong>PDSDN体系结构</strong></p>
+<img src="/img/loading.gif" data-original="https://cdn.jsdelivr.net/gh/HSmiling/Images/image-20211224160016028.png" alt="image-20211224160016028" style="zoom:50%;" />
+
+<p>策略模块中包含策略文件读取模块、策略文件解析模块和策略执行模块。PDSDN系统调用本地API在物理网络上执行相应操作。</p>
+<blockquote>
+<p>PDSDN系统维护一个策略文件系统，策略文件系统直接从云数据中心平台读取策略文件，它还接受租户将策略直接写入策略文件系统。在策略模块中，策略文件系统会维护所有的策略文件，而策略文件监控模块则会监控策略文件的变化。如果策略文件没有改变，则策略文件监控模块将继续定期监控这些文件。如果策略文件已被更改，则策略文件监控模块将通知策略文件解析模块和策略执行模块。策略执行模块根据操作类型执行相应的操作，然后返回到监控过程中。</p>
+</blockquote>
+<p><strong>策略模块</strong></p>
+<p>其工作流程如下（具体流程认真看图）：</p>
+<img src="/img/loading.gif" data-original="https://cdn.jsdelivr.net/gh/HSmiling/Images/image-20211224160553370.png" alt="image-20211224160553370" style="zoom:50%;" />
+
+<ul>
+<li><p>策略文件监控模块</p>
+<p>定期监视策略文件的更改</p>
+</li>
+<li><p>策略文件解析模块</p>
+<p>通过解析文件提取SDN相关操作，发送到云数据中心平台执行，实现对SDN控制器和云数据中心平台策略的同一管理和分析</p>
+</li>
+<li><p>线程池</p>
+<p>每个操作会创建一个新线程，并在线程池中执行；线程池中有统一管理线程执行器定义一个统一的操作接口来调用。各操作执行器通过调用接口具有较高的可扩展性，统一执行器通过调用接口实现对操作执行器的统一管理。</p>
+</li>
+</ul>
+<p>最后，操作执行器通过调用SDN控制器的本地api来完成其任务，并实现整个PDSDN系统的功能。这样，PDSDN系统就实现了通过SDN控制器来管理整个网络的目标。</p>
+<h2 id="实验评估"><a href="#实验评估" class="headerlink" title="实验评估"></a>实验评估</h2><p><strong>功能验证</strong></p>
+<p>通过典型应用程序场景验证PDSDN系统有效性</p>
+<ul>
+<li><p>实验环境</p>
+<p>Openstack，版本Havana，部署3台服务器。</p>
+<p>硬件配置版本：</p>
+<table>
+<thead>
+<tr>
+<th align="center">版本</th>
+<th align="center">DELL PowerEdgeR720</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">CPU</td>
+<td align="center">Intel-XeonE5-2650</td>
+</tr>
+<tr>
+<td align="center">内存</td>
+<td align="center">32GB</td>
+</tr>
+<tr>
+<td align="center">操作系统</td>
+<td align="center">Ubuntu12.04 LTS64bit</td>
+</tr>
+</tbody></table>
+<p>其中一个服务器用于云控制器和Openstack核心服务，一个服务器用于网络节点和计算节点，一个仅用于计算节点。通过创建虚拟子网、创建虚拟防火墙ACL验证PDSDN系统有效性</p>
+</li>
+<li><p>创建虚拟子网</p>
+<p><img src="/img/loading.gif" data-original="https://cdn.jsdelivr.net/gh/HSmiling/Images/image-20211224162700650.png" alt="image-20211224162700650" style="zoom: 80%;" /><img src="/img/loading.gif" data-original="https://cdn.jsdelivr.net/gh/HSmiling/Images/image-20211224162740480.png" alt="image-20211224162740480" style="zoom: 80%;" /></p>
+<blockquote>
+<p>在实验开始时，虚拟机可以相互通信。20秒后，租户制作他们的策略文件来创建虚拟子网。租户1将他的虚拟机资源放入他的虚拟子网，租户2还将他的虚拟机资源投入他的虚拟子网。图3显示了vm1和vm3由于属于不同的虚拟子网而无法相互通信。vm1与vm3之间的数据传输速率为0，而vm1与vm2之间的数据传输速率等于vm3与vm4之间的数据传输速率。45秒后，租户删除他们的策略文件，或删除他们的虚拟子网资源，然后虚拟机可以再次相互通信。</p>
+</blockquote>
+</li>
+<li><p>创建虚拟防火墙ACL</p>
+<p>在ACL中定义禁止端口之间通信的策略：</p>
+<img src="/img/loading.gif" data-original="https://cdn.jsdelivr.net/gh/HSmiling/Images/image-20211224162921878.png" alt="image-20211224162921878" style="zoom: 50%;" />
+
+<blockquote>
+<p>实验测量了租户1虚拟子网中vm1和vm2之间的通信。在实验中，我们通过Iperf测量UDP协议的传输带宽，其中两个虚拟机分别通过其端口5001和端口5002建立了两个UDP数据流。在实验开始时，两个数据流共享vm1和vm2之间的带宽。然后租户1启用创建虚拟防火墙的策略，该策略禁止端口5002的通信。基于端口5002的UDP通信带宽降至0，基于端口5001的通信垄断带宽。最后，删除了租户1的策略，两个数据流再次共享带宽。实验验证了端口通信禁止的有效性。</p>
+</blockquote>
+</li>
+</ul>
+<p><strong>性能验证</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">测试场景</th>
+<th align="center">创建虚拟子网</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">测试对象</td>
+<td align="center">调用本地API、使用PDSDN系统、调用RESTapi</td>
+</tr>
+<tr>
+<td align="center">变量</td>
+<td align="center">租户总数、每个租户的虚拟子网号、每个子网中的虚拟机数量</td>
+</tr>
+<tr>
+<td align="center">需测量参数</td>
+<td align="center">系统处理时间、系统负载增量</td>
+</tr>
+</tbody></table>
+<p>通过创建虚拟子网操作测试性能，在PDSDN运行过程中，一些变量的变化导致PDSDN系统性能和负载的变化，针对上述三个变量采用控制变量法探究其性能，性能衡量指标如下：</p>
+<p>系统处理时间：操作开始到操作结束的时间。PDSDN系统的处理时间是指PDSDN接收和处理由HTTP请求发送的策略文件的时间。</p>
+<p>系统负载增量：通过测量CPU处理时间增长率表示，计算CPU处理时间增长率公式如下：<br>$$<br>CPUinrate = (CPUend - CPUbegin) / CPUbegin<br>$$</p>
+<ul>
+<li><p>增加虚拟子网上主机数量</p>
+<p><img src="/img/loading.gif" data-original="https://cdn.jsdelivr.net/gh/HSmiling/Images/image-20211225103918450.png" alt="image-20211225103918450" style="zoom: 67%;" /><img src="/img/loading.gif" data-original="https://cdn.jsdelivr.net/gh/HSmiling/Images/image-20211225103948100.png" alt="image-20211225103948100" style="zoom: 67%;" /></p>
+<p>测量系统负载增量：当主机数量增加时，PDSDN时间延迟略高于调用本地API，且小于调用RESTapi的处理时间。图6表示PDSDN系统的负载增量仅为40%-60%左右，调用RESTapi的负载增量约为120%-180%左右。结果说明，PDSDN的处理性能优于调用RESTapi。</p>
+</li>
+<li><p>增加租户的虚拟子网数量</p>
+<p><img src="/img/loading.gif" data-original="https://cdn.jsdelivr.net/gh/HSmiling/Images/image-20211225104412595.png" alt="image-20211225104412595" style="zoom: 67%;" /><img src="/img/loading.gif" data-original="https://cdn.jsdelivr.net/gh/HSmiling/Images/image-20211225104435468.png" alt="image-20211225104435468" style="zoom: 33%;" /></p>
+<p>增加虚拟子网主机个数时，调用本地API的处理时间接近常量，但当每个租户虚拟子网数量增加时，本地API调用处理时间随其线性增长。</p>
+<p>虚拟子网数量时限制系统处理时间的瓶颈。虚拟子网增加时，PDSDN的系统负载增量小于调用RESTapi的负载增量。</p>
+</li>
+<li><p>增加租户数量</p>
+<p><img src="/img/loading.gif" data-original="https://cdn.jsdelivr.net/gh/HSmiling/Images/image-20211225104608572.png" style="zoom:50%;" /><img src="/img/loading.gif" data-original="https://cdn.jsdelivr.net/gh/HSmiling/Images/image-20211225104633940.png" style="zoom:50%;" /></p>
+<p>租户数量时限制系统处理时间的瓶颈。</p>
+<p>如果租户数量增加，策略文件就会增加，这将导致PDSDN系统的策略模块需要处理的策略文件数量增加。所以在初期阶段PDSDN较调用RESTapi的优势并不明显，但当租户数量达到70后，PDSDN的优势较为明显。</p>
+</li>
+</ul>
+<p>PDSDN系统能够减少系统的处理时间。</p>
+<h2 id="相关工作及结论"><a href="#相关工作及结论" class="headerlink" title="相关工作及结论"></a>相关工作及结论</h2><p><strong>结论</strong></p>
+<p>该文献中的工作集中于租户在云环境中的网络策略配置和管理员策略的权限管理，并提出并实现一种基于多租户策略驱动的SDN控制器方案：PDSDN，将租户虚拟子网云与其他虚拟子网隔离。</p>
+<p><strong>未来工作</strong></p>
+<p>同时支持租户在不同场景、不同类型的SDN控制器总定义自身策略。</p>
+<h1 id="知识扩展"><a href="#知识扩展" class="headerlink" title="知识扩展"></a>知识扩展</h1><h2 id="软件定义网络-Software-Defined-Network-SDN"><a href="#软件定义网络-Software-Defined-Network-SDN" class="headerlink" title="软件定义网络(Software Defined Network, SDN)"></a><strong>软件定义网络(Software Defined Network, SDN)</strong></h2><p><strong>定义</strong></p>
+<p>一种新兴的控制与转发分离并直接可编程的网络架构。希望应用软件可以参与对网络的控制管理，满足上层业务需求，通过自动化业务部署简化网络运维。</p>
+<blockquote>
+<p>将复杂的传统网络设备全部对上层应用不可见。上层管理层能够像配置软件程序一样对网络进行简单部署，让网络实现所需要的功能，而不需要一个个配置网络上所有节点的网络设备</p>
+</blockquote>
+<img src="/img/loading.gif" data-original="https://pic3.zhimg.com/80/v2-6f6d0d54f2f5fd9748bff99aa2e22a64_720w.jpg?source=1940ef5c" alt="img" style="zoom:50%;" />
+
+<p><strong>优势</strong></p>
+<p>控制和转发分离，使得硬件通用化，打破垄断，降低设备成本</p>
+<p>同一管理，集中控制。降低网络维护难度，缩短网络部署周期。</p>
+<p><strong>北向接口与南向接口</strong></p>
+<ul>
+<li><p>北向接口</p>
+<p>提供给其他厂家或运营商进行接入和管理的接口，即向上提供的接口。</p>
+<blockquote>
+<p>其目标是使得业务应用能够便利地调用底层的网络资源和能力。通过北向接口，网络业务的开发者 能以软件编程的形式调用各种网络资源；同时上层的网络资源管理系统可以通过控制器的北向接口全局把控整个网网络的资源状态，并对资源进行统一调度。因为北向接口是直接为业务应用服务的，因此其设计需要密切联系业务应用需求，具有多样化的特征。同时，北向接口的设计是否合理、便捷，以便能被业务应用广泛调 用，会直接影响到SDN控制器厂商的市场前景。</p>
+<p>示例：ORBA（Common Object Request Broker Architecture）、SNMP、Syslog等。Syslog接口主要负责将SNMPAgent产生的告警转换为Syslog协议的格式转发给上级网管系统，功能比较单一。而CORBA和SNMP接口则能提供故障、拓扑、资源等多类接口，完成故障查询，资源查询等多类网管功能。</p>
+</blockquote>
+</li>
+<li><p>南向接口</p>
+<p>管理其他厂家网管或设备的接口，即向下提供的接口。</p>
+<blockquote>
+<p>SDN控制器对网络的控制主要是通过南向接口协议实现,包括链路发现、拓扑管理、策略制定、表项下发等，其中链路发现和拓扑管理主要是控制其利用南向接口的上行通道对底层交换设备上报信息进行统一监控和统计；而策略制定和表项下发则是控制器利用南向接口的下行通道对网络设备进行统一控制。</p>
+<p>示例：SNMP、TR069、SYSLOG、SOAP、SSH等，其中主要的是SNMPv3 和TR069（即CWMP,客户端广域网管理协议）。</p>
+</blockquote>
+</li>
+</ul>
+<p>参考博客：</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/74465580">什么是南向接口和北向接口？ - 知乎 (zhihu.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/hengwu/p/9597428.html">北向接口、南向接口 - qingshan - 博客园 (cnblogs.com)</a></p>
+<h2 id="网络组件"><a href="#网络组件" class="headerlink" title="网络组件"></a>网络组件</h2><p>可以参考这个博客的内容：</p>
+<p><a target="_blank" rel="noopener" href="https://pea328.blog.csdn.net/article/details/104468275?spm=1001.2101.3001.6650.3&utm_medium=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-3.nonecase&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-3.nonecase">(17条消息) 网络基础（一）什么是网络？ 网络组件基本图标，网络7层，数据传输的过程_H_sen’s Blog-CSDN博客</a></p>
+<h2 id="SIStatement"><a href="#SIStatement" class="headerlink" title="SIStatement"></a>SIStatement</h2><p>该文献中自定义的继承、开发Amazon语句</p>
+<h2 id="OpenFlow协议"><a href="#OpenFlow协议" class="headerlink" title="OpenFlow协议"></a>OpenFlow协议</h2><p>建议流表中的每个流条目均包含一个优先级值，数字越大，优先级值越高</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/wn1m/p/11281781.html">OpenFlow和SDN的历史和原理介绍 - 张朝锋 - 博客园 (cnblogs.com)</a></p>
+<h2 id="Floodlight"><a href="#Floodlight" class="headerlink" title="Floodlight"></a>Floodlight</h2><p>SDN控制器</p>
+<p>可参考学习文档(译址)：<a target="_blank" rel="noopener" href="http://sherkyoung.github.io/pages/tags.html#floodlight">标签 | Phoenix (sherkyoung.github.io)</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">HSmiling</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2021/12/25/PDSDN%EF%BC%9A%E4%B8%80%E7%A7%8D%E5%A4%9A%E7%A7%9F%E6%88%B7%E4%BA%91%E6%95%B0%E6%8D%AE%E4%B8%AD%E5%BF%83%E7%8E%AF%E5%A2%83%E7%AD%96%E7%95%A5%E9%A9%B1%E5%8A%A8%E7%9A%84SDN%E6%8E%A7%E5%88%B6%E5%99%A8%E6%94%B9%E8%BF%9B%E6%96%B9%E6%A1%88/">http://example.com/2021/12/25/PDSDN：一种多租户云数据中心环境策略驱动的SDN控制器改进方案/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">HSmiling's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E4%BA%91%E8%AE%A1%E7%AE%97/">云计算</a><a class="post-meta__tags" href="/tags/SDN/">SDN</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/gh/HSmiling/Images/image-20211224160016028.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2021/12/15/%E5%9F%BA%E4%BA%8E%20ACP%20%E6%96%B9%E6%B3%95%E7%9A%84%E5%8C%BA%E5%9D%97%E9%93%BE%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%B9%B3%E8%A1%8C%E9%87%91%E8%9E%8D%E7%A7%91%E6%8A%80%E7%9B%91%E7%AE%A1%E6%B2%99%E7%AE%B1/"><img class="next-cover" src="/img/loading.gif" data-original="https://cdn.jsdelivr.net/gh/HSmiling/Images/image-20211215105548403.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">基于 ACP 方法的区块链驱动的平行金融科技监管沙箱</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/11/20/%E7%AC%94%E8%AE%B0-%E3%80%8AMinimizing-Content-Reorganization-and-Tolerating-Imperfect-Workload-Prediction-for-Cloud-Based-Video-on-Demand-Services%E3%80%8B/" title="基于最小化内容重组并容忍不完美的工作负载预测的云视频点播服务"><img class="cover" src="/img/loading.gif" data-original="https://cdn.jsdelivr.net/gh/HSmiling/Images/20211121_1.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-11-20</div><div class="title">基于最小化内容重组并容忍不完美的工作负载预测的云视频点播服务</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/loading.gif" data-original="/img/head.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">HSmiling</div><div class="author-info__description">From TJU 努力做一个不拖更的更新者</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">11</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/HSmiling"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">勤勤恳恳打工人，抽空完善中</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E8%BF%B0"><span class="toc-number">1.</span> <span class="toc-text">基本概述</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BA%E6%96%87%E6%A0%87%E9%A2%98"><span class="toc-number">1.1.</span> <span class="toc-text">论文标题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E8%AF%8D"><span class="toc-number">1.2.</span> <span class="toc-text">关键词</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A0%94%E7%A9%B6%E9%97%AE%E9%A2%98"><span class="toc-number">1.3.</span> <span class="toc-text">研究问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B4%A1%E7%8C%AE"><span class="toc-number">1.4.</span> <span class="toc-text">贡献</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0"><span class="toc-number">2.</span> <span class="toc-text">阅读笔记</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.1.</span> <span class="toc-text">基本介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PDSDN%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%A1%88"><span class="toc-number">2.2.</span> <span class="toc-text">PDSDN设计方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PDSDN%E5%AE%9E%E7%8E%B0"><span class="toc-number">2.3.</span> <span class="toc-text">PDSDN实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E8%AF%84%E4%BC%B0"><span class="toc-number">2.4.</span> <span class="toc-text">实验评估</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C%E5%8F%8A%E7%BB%93%E8%AE%BA"><span class="toc-number">2.5.</span> <span class="toc-text">相关工作及结论</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86%E6%89%A9%E5%B1%95"><span class="toc-number">3.</span> <span class="toc-text">知识扩展</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BD%AF%E4%BB%B6%E5%AE%9A%E4%B9%89%E7%BD%91%E7%BB%9C-Software-Defined-Network-SDN"><span class="toc-number">3.1.</span> <span class="toc-text">软件定义网络(Software Defined Network, SDN)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E7%BB%84%E4%BB%B6"><span class="toc-number">3.2.</span> <span class="toc-text">网络组件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SIStatement"><span class="toc-number">3.3.</span> <span class="toc-text">SIStatement</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#OpenFlow%E5%8D%8F%E8%AE%AE"><span class="toc-number">3.4.</span> <span class="toc-text">OpenFlow协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Floodlight"><span class="toc-number">3.5.</span> <span class="toc-text">Floodlight</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/12/25/PDSDN%EF%BC%9A%E4%B8%80%E7%A7%8D%E5%A4%9A%E7%A7%9F%E6%88%B7%E4%BA%91%E6%95%B0%E6%8D%AE%E4%B8%AD%E5%BF%83%E7%8E%AF%E5%A2%83%E7%AD%96%E7%95%A5%E9%A9%B1%E5%8A%A8%E7%9A%84SDN%E6%8E%A7%E5%88%B6%E5%99%A8%E6%94%B9%E8%BF%9B%E6%96%B9%E6%A1%88/" title="PDSDN：一种多租户云数据中心环境策略驱动的SDN控制器改进方案"><img src="/img/loading.gif" data-original="https://cdn.jsdelivr.net/gh/HSmiling/Images/image-20211224160016028.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PDSDN：一种多租户云数据中心环境策略驱动的SDN控制器改进方案"/></a><div class="content"><a class="title" href="/2021/12/25/PDSDN%EF%BC%9A%E4%B8%80%E7%A7%8D%E5%A4%9A%E7%A7%9F%E6%88%B7%E4%BA%91%E6%95%B0%E6%8D%AE%E4%B8%AD%E5%BF%83%E7%8E%AF%E5%A2%83%E7%AD%96%E7%95%A5%E9%A9%B1%E5%8A%A8%E7%9A%84SDN%E6%8E%A7%E5%88%B6%E5%99%A8%E6%94%B9%E8%BF%9B%E6%96%B9%E6%A1%88/" title="PDSDN：一种多租户云数据中心环境策略驱动的SDN控制器改进方案">PDSDN：一种多租户云数据中心环境策略驱动的SDN控制器改进方案</a><time datetime="2021-12-24T16:00:00.000Z" title="发表于 2021-12-25 00:00:00">2021-12-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/12/15/%E5%9F%BA%E4%BA%8E%20ACP%20%E6%96%B9%E6%B3%95%E7%9A%84%E5%8C%BA%E5%9D%97%E9%93%BE%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%B9%B3%E8%A1%8C%E9%87%91%E8%9E%8D%E7%A7%91%E6%8A%80%E7%9B%91%E7%AE%A1%E6%B2%99%E7%AE%B1/" title="基于 ACP 方法的区块链驱动的平行金融科技监管沙箱"><img src="/img/loading.gif" data-original="https://cdn.jsdelivr.net/gh/HSmiling/Images/image-20211215105548403.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="基于 ACP 方法的区块链驱动的平行金融科技监管沙箱"/></a><div class="content"><a class="title" href="/2021/12/15/%E5%9F%BA%E4%BA%8E%20ACP%20%E6%96%B9%E6%B3%95%E7%9A%84%E5%8C%BA%E5%9D%97%E9%93%BE%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%B9%B3%E8%A1%8C%E9%87%91%E8%9E%8D%E7%A7%91%E6%8A%80%E7%9B%91%E7%AE%A1%E6%B2%99%E7%AE%B1/" title="基于 ACP 方法的区块链驱动的平行金融科技监管沙箱">基于 ACP 方法的区块链驱动的平行金融科技监管沙箱</a><time datetime="2021-12-14T16:00:00.000Z" title="发表于 2021-12-15 00:00:00">2021-12-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/12/12/%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A01/" title="MVC、MVP、MVVM模式概念及区别"><img src="/img/loading.gif" data-original="https://cdn.jsdelivr.net/gh/HSmiling/Images/image-20211128105409871.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MVC、MVP、MVVM模式概念及区别"/></a><div class="content"><a class="title" href="/2021/12/12/%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A01/" title="MVC、MVP、MVVM模式概念及区别">MVC、MVP、MVVM模式概念及区别</a><time datetime="2021-12-11T16:00:00.000Z" title="发表于 2021-12-12 00:00:00">2021-12-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/12/04/cftool%E5%85%A5%E9%97%A8/" title="cftool工具初识"><img src="/img/loading.gif" data-original="https://cdn.jsdelivr.net/gh/HSmiling/Images/image-20211128105409871.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="cftool工具初识"/></a><div class="content"><a class="title" href="/2021/12/04/cftool%E5%85%A5%E9%97%A8/" title="cftool工具初识">cftool工具初识</a><time datetime="2021-12-03T16:00:00.000Z" title="发表于 2021-12-04 00:00:00">2021-12-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/12/03/docker+kubernetes%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" title="基于win10的docker+kubernetes+openFaaS环境搭建"><img src="/img/loading.gif" data-original="https://cdn.jsdelivr.net/gh/HSmiling/Images/image-20211203101418885.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="基于win10的docker+kubernetes+openFaaS环境搭建"/></a><div class="content"><a class="title" href="/2021/12/03/docker+kubernetes%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" title="基于win10的docker+kubernetes+openFaaS环境搭建">基于win10的docker+kubernetes+openFaaS环境搭建</a><time datetime="2021-12-02T16:00:00.000Z" title="发表于 2021-12-03 00:00:00">2021-12-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By HSmiling</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"></div><script id="canvas_nest" defer="defer" color="62,85,94" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-nest.min.js"></script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-heart.min.js" async="async" mobile="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                preloadRatio: 1,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(n){n.imageLazyLoadSetting.processImages=o;var e=n.imageLazyLoadSetting.isSPA,i=n.imageLazyLoadSetting.preloadRatio||1,r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]"));function o(){e&&(r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")));for(var t,a=0;a<r.length;a++)0<=(t=(t=r[a]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(n.innerHeight*i||document.documentElement.clientHeight*i)&&function(){var t,e,n,i,o=r[a];t=o,e=function(){r=r.filter(function(t){return o!==t})},n=new Image,i=t.getAttribute("data-original"),n.onload=function(){t.src=i,e&&e()},t.src!==i&&(n.src=i)}()}o(),n.addEventListener("scroll",function(){var t,e;t=o,e=n,clearTimeout(t.tId),t.tId=setTimeout(function(){t.call(e)},500)})}(this);</script></body></html>

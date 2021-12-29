@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>uni-app框架：安装、部署和入门</title>
+      <link href="/2021/12/29/uni-app%E6%A1%86%E6%9E%B6%EF%BC%9A%E5%AE%89%E8%A3%85%E3%80%81%E9%83%A8%E7%BD%B2%E5%92%8C%E5%85%A5%E9%97%A8/"/>
+      <url>/2021/12/29/uni-app%E6%A1%86%E6%9E%B6%EF%BC%9A%E5%AE%89%E8%A3%85%E3%80%81%E9%83%A8%E7%BD%B2%E5%92%8C%E5%85%A5%E9%97%A8/</url>
+      
+        <content type="html"><![CDATA[<p>拟采用uni-app框架开发一款微信小程序，期望记录该过程中遇到的问题，遂开启该系列笔记</p><h1 id="uni-app安装部署"><a href="#uni-app安装部署" class="headerlink" title="uni-app安装部署"></a>uni-app安装部署</h1><p>uni-app官网地址：<a href="https://uniapp.dcloud.io/">uni-app官网 (dcloud.io)</a></p><p><strong>简介</strong></p><p>uni-app作为使用vue.js开发所有前端应用的框架，能够以一套代码发布到多个平台，通过参考，由于uni-app采用vue框架，且较于其他框架而言更加活跃，资料搜寻成本相对较低，故拟选择uni-app框架作为开发框架。</p><blockquote><p>参考博客：<br><a href="https://www.jianshu.com/p/46cc41abe91a">微信小程序主流框架汇总 - 简书 (jianshu.com)</a></p><p><a href="https://www.zhihu.com/question/280282750/answer/1284136587">(22 封私信 / 80 条消息) 微信小程序UI框架有哪些? - 知乎 (zhihu.com)</a></p><p><a href="https://developers.weixin.qq.com/community/develop/article/doc/000eaadb944de06374485c3ed51813">小程序多端框架全面测评 | 微信开放社区 (qq.com)</a></p></blockquote><p><strong>工具安装 (微信开发者工具+HBuilderX)</strong></p><p>uni-app可使用以下两种方式快速创建项目：</p><ul><li>可视化界面（较简单，无需配置node.js）</li><li>vue-cli命令行</li></ul><p>我选择可视化界面，需下载HBuilderX通用前端开发工具：</p><blockquote><p>HBuilderX官方下载地址：<a href="https://www.dcloud.io/hbuilderx.html">HBuilderX-高效极客技巧 (dcloud.io)</a></p></blockquote><p>注：下载APP开发板可直接使用，标准版需要再安装uni-app插件</p><p>部署微信小程序还需要提前下载微信开发者工具</p><p><strong>创建uni-app</strong></p><p>按照官网的教程进行安装创建，微信小程序部署部分如网页中第4部分所示：</p><p><img src="C:\Users\Rita0914\AppData\Roaming\Typora\typora-user-images\image-20211229105940572.png" alt="image-20211229105940572"></p><blockquote><p>官网参考：<a href="https://uniapp.dcloud.io/quickstart-hx">1. 通过 HBuilderX 可视化界面 - uni-app官网 (dcloud.io)</a></p></blockquote><p>注：运行前需提前打开并登录微信开发者工具，同时需要在【微信开发者工具】里打开http或cli访问的开关，即在设置-&gt;安全设置中开启，否则报错如下：</p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">uni-app Error: read EBADF at Pipe.onStreamRead(internal/stream_base_commons.js:183:27)</span><br></pre></td></tr></table></figure><blockquote><p>问题解决参考链接：<a href="https://blog.csdn.net/qq_19734597/article/details/116653759">(19条消息) uni-app Error: read EBADF at Pipe.onStreamRead (internal/stream_base_commons.js:183:27)_陈晓清的博客-CSDN博客</a></p></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> 学习笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 微信小程序 </tag>
+            
+            <tag> uni-app </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>PDSDN：一种多租户云数据中心环境策略驱动的SDN控制器改进方案</title>
       <link href="/2021/12/25/PDSDN%EF%BC%9A%E4%B8%80%E7%A7%8D%E5%A4%9A%E7%A7%9F%E6%88%B7%E4%BA%91%E6%95%B0%E6%8D%AE%E4%B8%AD%E5%BF%83%E7%8E%AF%E5%A2%83%E7%AD%96%E7%95%A5%E9%A9%B1%E5%8A%A8%E7%9A%84SDN%E6%8E%A7%E5%88%B6%E5%99%A8%E6%94%B9%E8%BF%9B%E6%96%B9%E6%A1%88/"/>
       <url>/2021/12/25/PDSDN%EF%BC%9A%E4%B8%80%E7%A7%8D%E5%A4%9A%E7%A7%9F%E6%88%B7%E4%BA%91%E6%95%B0%E6%8D%AE%E4%B8%AD%E5%BF%83%E7%8E%AF%E5%A2%83%E7%AD%96%E7%95%A5%E9%A9%B1%E5%8A%A8%E7%9A%84SDN%E6%8E%A7%E5%88%B6%E5%99%A8%E6%94%B9%E8%BF%9B%E6%96%B9%E6%A1%88/</url>
